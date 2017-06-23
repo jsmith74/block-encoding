@@ -104,6 +104,8 @@ void MeritFunction::setMeritFunction(int intParam){
 
     PAULa.resize(diffPhotonNumb);
 
+    fidelity.resize(diffPhotonNumb);
+
     return;
 
 }
@@ -155,13 +157,9 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
         std::cout << PAULa[i] << std::endl << std::endl;
 
-        std::cout << (PAULa[i].conjugate().transpose() * PAULa[i]).trace() << std::endl << std::endl;
-
-        std::cout << (PAULa[i] * PAULa[i].conjugate().transpose()).trace() << std::endl << std::endl;
+        std::cout << (PAULa[i].conjugate().transpose() * PAULa[i]).trace() / (1.0 * PAULa[i].rows() ) << std::endl << std::endl;
 
     }
-
-    assert( false );
 
     return -norm ( (PAULa[0].conjugate().transpose() * PAULa[0]).trace() );
 
