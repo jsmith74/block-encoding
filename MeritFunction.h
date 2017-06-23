@@ -27,15 +27,23 @@ class MeritFunction{
 
         int ASDimension,diffPhotonNumb;
 
+        double globalSuccess;
+
         std::vector<LinearOpticalTransform> LOCircuit;
         std::vector<AncillaAugment> La;
+        std::vector<Eigen::MatrixXcd> IdealOp;
 
         Eigen::MatrixXcd U;
 
         std::vector<Eigen::MatrixXcd> PAULa;
 
-        std::vector<double> fidelity;
+        std::vector<double> fidelity,successProbabiliy;
+        std::vector<int> nonZeroX,nonZeroY;
 
+        void setFidelity(int& i);
+        void setSuccessProbability(int& i);
+
+        void setNonZeroXandY();
         void setLOCircuit(int measOutcome,int measModes,int ancillaPhotons,int ancillaModes,std::vector<Eigen::MatrixXi>& compBasisIn,std::vector<Eigen::MatrixXi>& compBasisOut);
         void setToFullHilbertSpace(const int& subPhotons, const int& subModes,Eigen::MatrixXi& nv);
         void setInBasis(Eigen::MatrixXi& compBasis,Eigen::MatrixXi& ancillaBasis,Eigen::MatrixXi& inBasis);

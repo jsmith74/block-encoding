@@ -4,7 +4,7 @@
 
 #define INITIAL_CONDITION_RANDOM_DEGREE 2000
 
-
+#define TOLERANCE 1e-8
 
 
 void MeritFunction::setMeritFunction(int intParam){
@@ -13,7 +13,6 @@ void MeritFunction::setMeritFunction(int intParam){
 
     std::vector<int> photons,compSubspaceDim;
     std::vector<Eigen::MatrixXi> computationalBasisIn,computationalBasisOut;
-    std::vector<Eigen::MatrixXcd> IdealOp;
 
     photons.resize(diffPhotonNumb);
     compSubspaceDim.resize(diffPhotonNumb);
@@ -24,63 +23,42 @@ void MeritFunction::setMeritFunction(int intParam){
     photons[0] = 1;
     photons[1] = 2;
 
-    int modes = 6;
+    int modes = 3;
 
-    int ancillaPhotons = 1;
+    int ancillaPhotons = 2;
     int ancillaModes = 2;
 
     int measModes = 2;
-    int measOutcome = 1;
+    int measOutcome = 4;
 
-    compSubspaceDim[0] = 4;
-    compSubspaceDim[1] = 8;
+    compSubspaceDim[0] = 3;
+    compSubspaceDim[1] = 2;
 
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisIn.at(i).resize(compSubspaceDim[i],modes);
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisOut.at(i).resize(compSubspaceDim[i],modes);
 
-    computationalBasisIn[0]   << 0,0,1,0,0,0,
-                                 0,0,0,1,0,0,
-                                 0,0,0,0,1,0,
-                                 0,0,0,0,0,1;
+    computationalBasisIn[0]   << 1,0,0,
+                                 0,1,0,
+                                 0,0,1;
 
-    computationalBasisOut[0]  << 0,0,1,0,0,0,
-                                 0,0,0,1,0,0,
-                                 0,0,0,0,1,0,
-                                 0,0,0,0,0,1;
+    computationalBasisOut[0]  << 1,0,0,
+                                 0,1,0,
+                                 0,0,1;
 
-    computationalBasisIn[1]   << 1,0,1,0,0,0,
-                                 1,0,0,1,0,0,
-                                 1,0,0,0,1,0,
-                                 1,0,0,0,0,1,
-                                 0,1,1,0,0,0,
-                                 0,1,0,1,0,0,
-                                 0,1,0,0,1,0,
-                                 0,1,0,0,0,1;
+    computationalBasisIn[1]   << 1,1,0,
+                                 1,0,1;
 
-    computationalBasisOut[1]  << 1,0,1,0,0,0,
-                                 1,0,0,1,0,0,
-                                 1,0,0,0,1,0,
-                                 1,0,0,0,0,1,
-                                 0,1,1,0,0,0,
-                                 0,1,0,1,0,0,
-                                 0,1,0,0,1,0,
-                                 0,1,0,0,0,1;
+    computationalBasisOut[1]  << 1,1,0,
+                                 1,0,1;
 
     for(int i=0;i<diffPhotonNumb;i++) IdealOp.at(i).resize(compSubspaceDim.at(i),compSubspaceDim.at(i));
 
-    IdealOp[0] << 1.0,0.0,0.0,0.0,
-                  0.0,1.0,0.0,0.0,
-                  0.0,0.0,1.0,0.0,
-                  0.0,0.0,0.0,1.0;
+    IdealOp[0] << 1.0,0.0,0.0,
+                  0.0,1.0,0.0,
+                  0.0,0.0,1.0;
 
-    IdealOp[1] << 0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,
-                  1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
-                  0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,
-                  0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,
-                  0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,
-                  0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,
-                  0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,
-                  0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0;
+    IdealOp[1] << 0.0,1.0,
+                  1.0,0.0;
 
     funcDimension = (modes + ancillaModes) * (modes + ancillaModes) + 2*g(ancillaPhotons,ancillaModes);
 
@@ -105,6 +83,12 @@ void MeritFunction::setMeritFunction(int intParam){
     PAULa.resize(diffPhotonNumb);
 
     fidelity.resize(diffPhotonNumb);
+
+    successProbabiliy.resize(diffPhotonNumb);
+
+    setNonZeroXandY();
+
+    globalSuccess = -1;
 
     return;
 
@@ -155,19 +139,67 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
         PAULa[i] = LOCircuit[i].omega * La[i].AugmentMatrix;
 
-        std::cout << PAULa[i] << std::endl << std::endl;
+        setFidelity(i);
 
-        std::cout << (PAULa[i].conjugate().transpose() * PAULa[i]).trace() / (1.0 * PAULa[i].rows() ) << std::endl << std::endl;
+        setSuccessProbability(i);
 
     }
 
-    return -norm ( (PAULa[0].conjugate().transpose() * PAULa[0]).trace() );
+    return -fidelity[0] * fidelity[1];
 
 }
 
 
+void MeritFunction::setFidelity(int& i){
+
+    fidelity[i] = norm( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
+
+    fidelity[i] /= sqrt( norm( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
+
+    fidelity[i] /= PAULa[i].rows();
+
+    return;
+
+}
+
+void MeritFunction::setSuccessProbability(int& i){
+
+    successProbabiliy[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
+
+    return;
+
+}
 
 void MeritFunction::printReport(Eigen::VectorXd& position){
+
+    Eigen::VectorXd a = position.segment(2*ASDimension,U.cols()*U.rows());
+
+    U = genUnitary(a);
+
+    for(int i=0;i<diffPhotonNumb;i++){
+
+        La[i].setAugmentMatrix(position);
+
+        LOCircuit[i].setOmega(U);
+
+        PAULa[i] = LOCircuit[i].omega * La[i].AugmentMatrix;
+
+        //std::cout << PAULa[i] << std::endl << std::endl;
+
+        setFidelity(i);
+
+        setSuccessProbability(i);
+
+    }
+
+    if(successProbabiliy[0] > globalSuccess && fidelity[0]*fidelity[1] > 0.99999){
+
+        std::cout << "RESULT: " << std::setprecision(16) << fidelity[0]*fidelity[1]<< "\t";
+        std::cout << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl << std::endl;
+
+        globalSuccess = successProbabiliy[0];
+
+    }
 
     return;
 
@@ -202,6 +234,34 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
     output.segment( 2*ASDimension , a.size() ) = a;
 
     return output;
+
+}
+
+
+void MeritFunction::setNonZeroXandY(){
+
+    nonZeroX.resize(diffPhotonNumb);
+
+    nonZeroY.resize(diffPhotonNumb);
+
+    for(int k=0;k<diffPhotonNumb;k++){
+
+        for(int i=0;i<IdealOp[k].rows();i++) for(int j=0;j<IdealOp[k].cols();j++){
+
+            if(std::norm(IdealOp[k](i,j)) > TOLERANCE){
+
+                nonZeroX.at(k) = i;
+                nonZeroY.at(k) = j;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return;
 
 }
 
