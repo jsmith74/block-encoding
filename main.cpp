@@ -4,9 +4,19 @@
 
 int main( int argc, char *argv[] ){
 
-    BFGS_Optimization optimizer(4e-6,20.0,0);
+    if(argc != 2){
 
-    for(int i=0;i<200;i++) optimizer.minimize();
+        std::cout << "./LinearOpticalSimulation [epsilon]" << std::endl << std::endl;
+
+        return 1;
+
+    }
+
+    double epsilon = std::atof( argv[1] );
+
+    BFGS_Optimization optimizer(4e-6,20.0,epsilon);
+
+    for(int i=0;i<1;i++) optimizer.minimize();
 
     return 0;
 

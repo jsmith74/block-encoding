@@ -17,7 +17,7 @@ class MeritFunction{
     public:
 
         MeritFunction();
-        void setMeritFunction(int intParam);
+        void setMeritFunction(double EPS);
         double f(Eigen::VectorXd& position);
         int funcDimension;
         void printReport(Eigen::VectorXd& position);
@@ -27,7 +27,7 @@ class MeritFunction{
 
         int ASDimension,diffPhotonNumb;
 
-        double globalSuccess;
+        double globalSuccess,eps;
 
         std::vector<LinearOpticalTransform> LOCircuit;
         std::vector<AncillaAugment> La;

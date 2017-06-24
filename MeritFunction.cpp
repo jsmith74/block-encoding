@@ -6,8 +6,10 @@
 
 #define TOLERANCE 1e-8
 
+#define FIDELITY_THRESHOLD 0.9999
 
-void MeritFunction::setMeritFunction(int intParam){
+
+void MeritFunction::setMeritFunction(double EPS){
 
     diffPhotonNumb = 2;
 
@@ -88,6 +90,8 @@ void MeritFunction::setMeritFunction(int intParam){
 
     setNonZeroXandY();
 
+    eps = EPS;
+
     globalSuccess = -1;
 
     return;
@@ -145,7 +149,7 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] * fidelity[1];
+    return -fidelity[0] * fidelity[1] - eps * successProbabiliy[0]*successProbabiliy[1];
 
 }
 
@@ -184,20 +188,45 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
         PAULa[i] = LOCircuit[i].omega * La[i].AugmentMatrix;
 
-        //std::cout << PAULa[i] << std::endl << std::endl;
-
         setFidelity(i);
 
         setSuccessProbability(i);
 
     }
 
-    if(successProbabiliy[0] > globalSuccess && fidelity[0]*fidelity[1] > 0.99999){
+    std::ofstream outfile("results.dat",std::ofstream::app);
 
-        std::cout << "RESULT: " << std::setprecision(16) << fidelity[0]*fidelity[1]<< "\t";
-        std::cout << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl << std::endl;
+    outfile << std::setprecision(16) << fidelity[0] * fidelity[1] << std::endl;
 
-        globalSuccess = successProbabiliy[0];
+    outfile.close();
+
+    if( fidelity[0]*fidelity[1] > FIDELITY_THRESHOLD ){
+
+        outfile.open("Success_Probabilities.dat",std::ofstream::app);
+
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+
+        outfile.close();
+
+        outfile.open("Gate_Check.dat",std::ofstream::app);
+
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+
+        outfile << std::setprecision(4) << PAULa[0] << std::endl << std::endl << PAULa[1] << std::endl << std::endl << std::endl;
+
+        outfile.close();
+
+        if( (successProbabiliy[0]+successProbabiliy[1]) / 2 > globalSuccess){
+
+            globalSuccess = (successProbabiliy[0]+successProbabiliy[1]) / 2;
+
+            outfile.open("Max_Success.dat",std::ofstream::app);
+
+            outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+
+            outfile.close();
+
+        }
 
     }
 

@@ -2,8 +2,12 @@ CC = g++
 CFLAGS = -O3 -funroll-loops -c
 LFLAGS = -O3 -funroll-loops
 OBJS = LinearOpticalTransform.o BFGS_Optimization.o AncillaAugment.o MeritFunction.o main.o
+OMPFLAGS = -fopenmp
 
-all: LinearOpticalSimulation
+all: LinearOpticalSimulation Script
+
+Script: script.cpp
+	$(CC) $(OMPFLAGS) script.cpp -o Script
 
 LinearOpticalSimulation: $(OBJS)
 	$(CC) $(LFLAGS) $(OBJS) -o LinearOpticalSimulation
@@ -24,4 +28,4 @@ MeritFunction.o: MeritFunction.cpp
 	$(CC) $(CFLAGS) MeritFunction.cpp
 
 clean:
-	rm *.o LinearOpticalSimulation *.dat
+	rm *.o LinearOpticalSimulation *.dat Script

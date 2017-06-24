@@ -32,7 +32,7 @@
 
 /** ===== Seed Random Number Generator ============================= */
 
-#define SEED_RANDOM_NUMBER_GENERATOR
+//#define SEED_RANDOM_NUMBER_GENERATOR
 
 /** ================================================================ */
 
@@ -502,7 +502,7 @@ void BFGS_Optimization::printResultReport(){
 
 
 
-BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int intParam){
+BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,double EPS){
 
     #ifdef SEED_RANDOM_NUMBER_GENERATOR
 
@@ -526,7 +526,7 @@ BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int int
 
     alphaMax = maxStepSize;
 
-    meritFunction.setMeritFunction(intParam);
+    meritFunction.setMeritFunction(EPS);
 
     bestResult = 1e30;
 
