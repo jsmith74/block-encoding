@@ -29,6 +29,8 @@ class MeritFunction{
 
         double globalSuccess,eps;
 
+        std::string filenameMax;
+
         std::vector<LinearOpticalTransform> LOCircuit;
         std::vector<AncillaAugment> La;
         std::vector<Eigen::MatrixXcd> IdealOp;
@@ -37,7 +39,7 @@ class MeritFunction{
 
         std::vector<Eigen::MatrixXcd> PAULa;
 
-        std::vector<double> fidelity,successProbabiliy;
+        std::vector<double> fidelity,successProbability;
         std::vector<int> nonZeroX,nonZeroY;
 
         void setFidelity(int& i);
@@ -59,6 +61,8 @@ class MeritFunction{
 
         inline int g(const int& n,const int& m);
         inline double doublefactorial(int x);
+
+        void setFilename();
 };
 
 

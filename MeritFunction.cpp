@@ -86,7 +86,7 @@ void MeritFunction::setMeritFunction(double EPS){
 
     fidelity.resize(diffPhotonNumb);
 
-    successProbabiliy.resize(diffPhotonNumb);
+    successProbability.resize(diffPhotonNumb);
 
     setNonZeroXandY();
 
@@ -94,9 +94,13 @@ void MeritFunction::setMeritFunction(double EPS){
 
     globalSuccess = -1;
 
+    setFilename();
+
     return;
 
 }
+
+
 
 void MeritFunction::setLOCircuit(int measOutcome,int measModes,int ancillaPhotons,int ancillaModes,std::vector<Eigen::MatrixXi>& compBasisIn,std::vector<Eigen::MatrixXi>& compBasisOut){
 
@@ -152,7 +156,7 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] * fidelity[1] - eps * successProbabiliy[0];
+    return -fidelity[0] * fidelity[1] - eps * successProbability[0];
 
 }
 
@@ -171,9 +175,7 @@ void MeritFunction::setFidelity(int& i){
 
 void MeritFunction::setSuccessProbability(int& i){
 
-    successProbabiliy[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
-
-    std::cout << PAULa[i]( nonZeroX[i],nonZeroY[i] ) << "\t" << IdealOp[i]( nonZeroX[i],nonZeroY[i] ) << std::endl;
+    successProbability[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
 
     return;
 
@@ -209,25 +211,25 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
         outfile.open("Success_Probabilities.dat",std::ofstream::app);
 
-        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << std::endl;
 
         outfile.close();
 
         outfile.open("Gate_Check.dat",std::ofstream::app);
 
-        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << std::endl;
 
         outfile << std::setprecision(4) << PAULa[0] << std::endl << std::endl << PAULa[1] << std::endl << std::endl << std::endl;
 
         outfile.close();
 
-        if( (successProbabiliy[0]+successProbabiliy[1]) / 2 > globalSuccess){
+        if( (successProbability[0]+successProbability[1]) / 2 > globalSuccess){
 
-            globalSuccess = (successProbabiliy[0]+successProbabiliy[1]) / 2;
+            globalSuccess = (successProbability[0]+successProbability[1]) / 2;
 
-            outfile.open("Max_Success.dat",std::ofstream::app);
+            outfile.open(filenameMax.c_str());
 
-            outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbabiliy[0] << "\t" << successProbabiliy[1] << std::endl;
+            outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << globalSuccess << std::endl;
 
             outfile.close();
 
@@ -597,3 +599,17 @@ Eigen::MatrixXcd MeritFunction::matrixLog(Eigen::MatrixXcd X){
     return result;
 }
 
+
+void MeritFunction::setFilename(){
+
+    std::stringstream ss;
+
+    ss << eps;
+
+    ss >> filenameMax;
+
+    filenameMax = "Max_Success_" + filenameMax + ".dat";
+
+    return ;
+
+}
