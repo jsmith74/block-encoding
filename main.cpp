@@ -16,7 +16,7 @@ int main( int argc, char *argv[] ){
 
     BFGS_Optimization optimizer(4e-6,20.0,epsilon);
 
-    for(int i=0;i<100;i++) optimizer.minimize();
+    for(int i=0;i<50;i++) optimizer.minimize();
 
     return 0;
 

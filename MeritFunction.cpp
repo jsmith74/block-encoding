@@ -27,11 +27,11 @@ void MeritFunction::setMeritFunction(double EPS){
 
     int modes = 3;
 
-    int ancillaPhotons = 2;
+    int ancillaPhotons = 3;
     int ancillaModes = 3;
 
     int measModes = 3;
-    int measOutcome = 4;
+    int measOutcome = 10;
 
     compSubspaceDim[0] = 3;
     compSubspaceDim[1] = 2;
