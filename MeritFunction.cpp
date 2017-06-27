@@ -120,14 +120,17 @@ void MeritFunction::setLOCircuit(int measOutcome,int measModes,int ancillaPhoton
 
         std::cout << outBasis << std::endl << std::endl;
 
+        setFullIdealOp(outBasis,compBasisOut[i],IdealOp[i]);
+
         LOCircuit[i].initializeCircuit(inBasis,outBasis);
+
+        std::cout << IdealOp[i] << std::endl << std::endl;
 
     }
 
     return;
 
 }
-
 
 double MeritFunction::f(Eigen::VectorXd& position){
 
@@ -149,7 +152,7 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] * fidelity[1] - eps * successProbabiliy[0]*successProbabiliy[1];
+    return -fidelity[0] * fidelity[1] - eps * successProbabiliy[0];
 
 }
 
@@ -160,7 +163,7 @@ void MeritFunction::setFidelity(int& i){
 
     fidelity[i] /= sqrt( norm( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
 
-    fidelity[i] /= PAULa[i].rows();
+    fidelity[i] /= IdealOp[i].cols();
 
     return;
 
@@ -169,6 +172,8 @@ void MeritFunction::setFidelity(int& i){
 void MeritFunction::setSuccessProbability(int& i){
 
     successProbabiliy[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
+
+    std::cout << PAULa[i]( nonZeroX[i],nonZeroY[i] ) << "\t" << IdealOp[i]( nonZeroX[i],nonZeroY[i] ) << std::endl;
 
     return;
 
@@ -267,6 +272,35 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 }
 
 
+void MeritFunction::setFullIdealOp(Eigen::MatrixXi& outBasis,Eigen::MatrixXi& compBasisOut,Eigen::MatrixXcd& IdealOp){
+
+    Eigen::MatrixXcd fullIdealOp = Eigen::MatrixXcd::Zero(outBasis.rows(),IdealOp.cols());
+
+    int s = outBasis.cols() - compBasisOut.cols();
+
+    for(int i=0;i<compBasisOut.rows();i++){
+
+        for(int j=0;j<outBasis.rows();j++){
+
+            Eigen::MatrixXi tempVec = outBasis.block(j,s,1,compBasisOut.cols());
+
+            if( compBasisOut.row(i) == tempVec ){
+
+                fullIdealOp.row(j) = IdealOp.row(i);
+
+            }
+
+        }
+
+    }
+
+    IdealOp = fullIdealOp;
+
+    return;
+
+}
+
+
 void MeritFunction::setNonZeroXandY(){
 
     nonZeroX.resize(diffPhotonNumb);
@@ -297,11 +331,19 @@ void MeritFunction::setNonZeroXandY(){
 
 void MeritFunction::setOutBasis(Eigen::MatrixXi& compBasisOut,Eigen::MatrixXi& measBasis,Eigen::MatrixXi& outBasis){
 
-    outBasis.resize(compBasisOut.rows(),compBasisOut.cols()+measBasis.cols());
+    int photons = compBasisOut.row(0).sum();
 
-    if(measBasis.cols()>0 ) for(int i=0;i<outBasis.rows();i++) outBasis.block(i,0,1,measBasis.cols()) = measBasis;
+    int modes = compBasisOut.cols();
 
-    outBasis.block(0,measBasis.cols(),compBasisOut.rows(),compBasisOut.cols()) = compBasisOut;
+    Eigen::MatrixXi fullCompBasisOut;
+
+    setToFullHilbertSpace(photons,modes,fullCompBasisOut);
+
+    outBasis.resize( fullCompBasisOut.rows(), fullCompBasisOut.cols() + measBasis.cols() );
+
+    if( measBasis.cols()>0 ) for(int i=0;i<outBasis.rows();i++) outBasis.block(i,0,1,measBasis.cols()) = measBasis;
+
+    outBasis.block(0,measBasis.cols(),outBasis.rows(),fullCompBasisOut.cols()) = fullCompBasisOut;
 
     return;
 

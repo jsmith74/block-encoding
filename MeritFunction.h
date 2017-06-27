@@ -49,6 +49,7 @@ class MeritFunction{
         void setInBasis(Eigen::MatrixXi& compBasis,Eigen::MatrixXi& ancillaBasis,Eigen::MatrixXi& inBasis);
         void setMeasBasis(int measOutcome,int measModes,Eigen::MatrixXi& measBasis);
         void setOutBasis(Eigen::MatrixXi& compBasisOut,Eigen::MatrixXi& measBasis,Eigen::MatrixXi& outBasis);
+        void setFullIdealOp(Eigen::MatrixXi& outBasis,Eigen::MatrixXi& compBasisOut,Eigen::MatrixXcd& IdealOp);
 
         Eigen::MatrixXcd genUnitary(Eigen::VectorXd a);
         Eigen::MatrixXcd matrixLog(Eigen::MatrixXcd X);
