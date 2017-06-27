@@ -156,7 +156,7 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] * fidelity[1] - eps * successProbability[0];
+    return -fidelity[0] * fidelity[1] - eps * successProbability[0] * successProbability[1];
 
 }
 
