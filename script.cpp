@@ -3,11 +3,14 @@
 #include <sstream>
 #include <string>
 #include <stdlib.h>
+#include <unistd.h>
 
 int main(){
 
 #pragma omp parallel for schedule(dynamic)
-    for(int i=0;i<4;i++){
+    for(int i=0;i<8;i++){
+
+	usleep(2000000 * omp_get_thread_num());
 
         std::string commandLine;
 

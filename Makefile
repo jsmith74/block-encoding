@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = -O3 -funroll-loops -c
-LFLAGS = -O3 -funroll-loops
+CFLAGS = -Ofast -funroll-loops -c
+LFLAGS = -Ofast -funroll-loops
 OBJS = LinearOpticalTransform.o BFGS_Optimization.o AncillaAugment.o MeritFunction.o main.o
 OMPFLAGS = -fopenmp
 
