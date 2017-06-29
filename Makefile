@@ -1,8 +1,8 @@
-CC = icpc
-CFLAGS = -O3 -xavx -inline-forceinline -funroll-loops -c
-LFLAGS = -O3 -xavx -inline-forceinline -funroll-loops
+CC = g++
+CFLAGS = -O3 -funroll-loops -c
+LFLAGS = -O3 -funroll-loops
 OBJS = LinearOpticalTransform.o BFGS_Optimization.o AncillaAugment.o MeritFunction.o main.o
-OMPFLAGS = -openmp
+OMPFLAGS = -fopenmp
 
 all: LinearOpticalSimulation Script DataProcess
 
