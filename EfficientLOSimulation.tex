@@ -1,0 +1,268 @@
+\documentclass[aps,pra,twocolumn,showpacs,superscriptaddress,floatfix,10pt]{revtex4}
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage{amssymb,amsmath}
+\usepackage{physics}
+\usepackage{float}
+\usepackage{dsfont}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+%\usepackage[dvips]{color}
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
+
+%\setlength{\topmargin}{0.1cm}
+\begin{document}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ben}{\begin{eqnarray}}
+\newcommand{\een}{\end{eqnarray}}
+\newcommand{\bea}{\begin{array}}
+\newcommand{\eea}{\end{array}}
+\newcommand{\om}{(\omega )}
+\newcommand{\bef}{\begin{figure}}
+\newcommand{\eef}{\end{figure}}
+\newcommand{\leg}[1]{\caption{\protect\rm{\protect\footnotesize{#1}}}}
+\newcommand{\ew}[1]{\langle{#1}\rangle}
+\newcommand{\be}[1]{\mid\!{#1}\!\mid}
+\newcommand{\no}{\nonumber}
+\newcommand{\etal}{{\em et~al }}
+\newcommand{\geff}{g_{\mbox{\it{\scriptsize{eff}}}}}
+\newcommand{\da}[1]{{#1}^\dagger}
+\newcommand{\cf}{{\it cf.\/}\ }
+\newcommand{\ie}{{\it i.e.\/}\ }   
+
+\newcommand{\spazio}{\vspace{0.3cm}}%{\vspace{1.05cm}}
+\hyphenation{bio-mol-ecules}
+\newcommand{\de}[1]{\frac{\partial}{\partial{#1}}}
+\newcommand{\U}{\tilde{U}}
+\newcommand{\V}{\tilde{V}}
+
+
+\title{An Efficient Protocol for Numerical Simulation of Linear Optical Quantum Gates Applied to Elementary Entangling Operations between Deterministic Blocks of Rail-Encoded Qubits}
+
+\author{Jake~A.~Smith}
+\affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
+
+\author{Lev Kaplan}
+\affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
+
+ \begin{abstract}
+
+\end{abstract}                                                               
+                                                                            
+\date{\today}
+\pacs{***}
+\maketitle
+
+\section{Introduction}
+\label{Intro}
+An optical quantum state of $N$ photons contained in $M$ optical modes can be written in the Fock basis,
+\begin{eqnarray}
+	\label{LO State Fock Basis}
+	\ket{\psi} = c_1 \ket{N,0,\dots,0_M} + c_2 \ket{N-1,1,0,\dots, 0_M} + \\* \dots  + c_{d_H} \ket{0,0,\dots,N_M}	\nonumber \quad \quad \quad \quad
+\end{eqnarray}
+We note that the Hilbert space dimension of such a state is given by
+\begin{equation}
+\label{Hilbert Space Dimension}
+	d_H = \frac{(N+M-1)!}{N!(M-1)!}
+\end{equation}
+or the number of ways to order $N$ indistinguishable photons and $M-1$ partitions.
+
+A linear optical operation acting on such a state is generally described by the transformation of creation operators:
+\begin{equation}
+\label{LO Creation Operator Transformation}
+\hat{a}^\dagger_\alpha \rightarrow \sum_{\beta=1}^{M} U_{\alpha\beta} \hat{a}^\dagger_\beta
+\end{equation}
+where $U_{\alpha \beta}$ are the elements of some unitary complex matrix, $U$. Thus, one typically converts a state in the form of~(\ref{LO State Fock Basis}) into
+\begin{eqnarray}
+\ket{\psi} = \Big(c_1 \frac{(\hat{a}^\dagger_1)^N}{\sqrt{N!}} + c_2 \frac{ (\hat{a}^\dagger_1)^{N-1} \hat{a}^\dagger_2}{\sqrt{(N-1)!}} + \dots \\* + c_{d_H} \frac{(\hat{a}^\dagger_M)^N}{\sqrt{N!}}\Big) \ket{0,0,\dots,0_M} \quad \quad \nonumber
+\end{eqnarray}
+and applies the symbolic transformation~(\ref{LO Creation Operator Transformation}). This may be fine for an optical circuit of few components and small $N$ and $M$, but transforming the creation operators for large systems can quickly become intractable. Further, this scheme requires an explicit state to operate on, $\ket{\psi}$. This in itself can sometimes be an inconvenience. For example, computing the fidelity of a quantum logic gate implemented via linear optics will require applying this transformation to an entire set of linearly independent basis states of some computational subspace.
+
+Here, we present an efficient numerical protocol for simulating a quantum logic gate through the action of~(\ref{LO Creation Operator Transformation}) for large optical circuits consisting of many low-level components, without the need for explicitly declaring an optical state $\ket{\psi}$. This paper is organized as follows; Section~\ref{Section of Facts} will present a series of \textit{facts}. Proofs of these \textit{facts} are available in the appendix. Section~\ref{Section on Protocol} will present the protocol itself, which will make use of the results presented in~\ref{Section of Facts}. Finally, in section~\ref{Section on Performance} we will present a linear optical block encoding and the elementary entangling operations for inter-block qubit communication.
+
+Before we begin, we can define $A(U)$ as the complex matrix which represents the action of~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). An output state of our total optical circuit, $\ket{\psi^\prime}$ will determined by standard matrix-vector multiplication
+\begin{equation}
+\label{Matrix Vector Product}
+\ket{\psi^\prime} = A(U) \ket{\psi}
+\end{equation}
+The matrix elements $U_{\alpha \beta}$ in~(\ref{LO Creation Operator Transformation}) are assumed to be the very same as those of $U$ in $A(U)$.
+
+\section{A Collection of Facts}
+\label{Section of Facts}
+\begin{center}\textit{Fact 1} \end{center}
+For an optical circuit of $K$ number of components,
+\begin{equation}
+	\label{Fact 1}
+\boxed{A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K)}
+\end{equation}
+Each component $U_k$ could be a simple beam splitter, phase shifter, or an "integrated" circuit consisting of many low-level components.
+(\ref{Fact 1}) allows us to simulate the net effect of a series of low-level linear optical operations  in a more efficient way. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices. This is beneficial for two reasons. First, the $U_k$ matrices are $M$ by $M$ while the $A(U_k)$ matrices can be up to dimension $d_H$ by $d_H$. Second, the actual rendering process of building $A(U)$ from $U$ will only need to be done once.
+\begin{center}\textit{Fact 2} \end{center}
+Rewriting~(\ref{LO State Fock Basis}) as
+\begin{equation}
+\label{LO State Fock Vec Basis}
+\ket{\psi} = \sum_{\vec{n}} c_{\vec{n}} \ket{\vec{n}}
+\end{equation}
+where
+\begin{equation}
+\ket{\vec{n}} = \ket{n_1,n_2,\dots,n_M}
+\end{equation}
+are the Fock states, we define
+\begin{equation}
+\label{m definition}
+\ket{\vec{m}(\vec{n})} = \ket{m_1,m_2,\dots,m_N}
+\end{equation}
+as \textit{any} vector where $m_\alpha$ is the mode-location of photon number $\alpha$. There can be many vectors $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$, since photons are generally indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$. Then the elements of $A(U)$ are given by
+\begin{eqnarray}
+\label{Fact 2}
+A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \outerproduct{\vec{n}^\prime}{\vec{n}} 
+\end{eqnarray}
+where the summation is over all distinct permutations of integer entries in the vector $\vec{m}^\prime$.
+\begin{center}\textit{Fact 3} \end{center}
+\fbox{
+	\begin{minipage}{23em}
+		If all possible input states to our optical circuit, $\ket{\psi}$, are known to be limited to some subspace of the total Hilbert space of the system, we need only build relevant columns of $A(U)$.
+	\end{minipage}
+}
+\newline
+\newline
+\newline
+In practice, the input state to a quantum circuit $\ket{\psi}$ will often be a very simple, or even classical state e.g. $\ket{N,0,\dots,0_M}$. Alternatively, we may want to simulate an optical circuit where photons and modes are augmented in at some point. 
+\begin{center}\textit{Fact 4} \end{center}
+\fbox{
+	\begin{minipage}{23em}
+		If all possible output states of our circuit, $\ket{\psi^\prime}$ are known to be limited to some subspace of the total Hilbert space of the system, we need only build relevant rows of $A(U)$.
+	\end{minipage}
+}
+\newline
+\newline
+\newline
+We should not waste effort constructing unused elements of $A(U)$.
+\section{The Protocol}
+\label{Section on Protocol}
+\noindent The protocol for simulating a linear optical quantum circuit is separated into an initialization and rendering stage.
+\newline
+\newline
+\textbf{Initialization Stage:}
+\newline
+\newline
+		(1)  Establish the Fock basis $\{\ket{\vec{n}} \}$ of our input state, $\ket{\psi}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the span of $\ket{\psi}$, as per \textit{Fact 3}.
+		\newline
+		\newline
+		(2) For each element of the basis set, $\ket{\vec{n}}$, construct a corresponding $\ket{\vec{m}(\vec{n})}$ as defined in Eq.~(\ref{m definition}).
+		\newline
+		\newline
+		(3) Establish the Fock basis $\{\ket{\vec{n}^\prime}\}$ of our output state, $\ket{\psi^\prime}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the (known) span of $\ket{\psi^\prime}$, as per \textit{Fact 4}.
+		\newline
+		\newline
+		(4)  For each element of the basis set, $\ket{\vec{n}^\prime}$, construct a corresponding $\ket{\vec{m}^\prime(\vec{n}^\prime)}$ as defined in Eq.~(\ref{m definition}).
+		\newline
+		\newline
+		(5) Store $\vec{n}, \vec{n}^\prime, \vec{m}, \vec{m}^\prime$ as integer vectors in memory
+		\newline
+		\newline
+\textbf{Rendering Stage:}
+\newline
+\newline
+		(1)  Compile the total optical circuit composed of P components by performing the matrix multiplication $ U = U_1 U_2 \dots U_P $.
+		\newline
+		\newline
+		(2) Render the matrix representation of the quantum operator $A(U)$ using Eq.~(\ref{Fact 2}) over all of the input basis states, $\{\ket{\vec{n}}\}$ and all of the output basis states $\{\ket{\vec{n}^\prime}\}$
+Initialization needs to only be performed once. Then, one can quickly render $A(U)$ to allow fast, repeated simulation necessary for Monte-carlo techniques or numerical optimization.
+\newline
+\newline
+An implementation of this algorithm written in C++ is available for reference on Github at (include link). Compiling the code will require any C++ compiler and the linear algebra library, Eigen\cite{EIGEN}.
+\section{Conclusion}
+\label{Conclusion}
+Doug Chrisey should stop eating Cheetos.
+\appendix
+\section{Proof of \textit{Fact 1}}
+\label{Proof of Fact 1}
+\textit{Fact 1} can be proved by induction. The base case is trivial; for a lone unitary matrix $U_1$,~(\ref{Fact 1}) reads
+\begin{equation}
+	A(U_1) = A(U_1)
+\end{equation}
+We can then assume
+\begin{equation}
+\label{Inductive Step}
+	A(U_{P-1}) A(U_{P-2}) \dots A(U_1) = A(U_1 U_2 \dots U_{P-1})
+\end{equation}
+That is, applying the left hand side of~(\ref{Inductive Step}) is equivalent to the total transformation
+\begin{equation}
+	\hat{a}^\dagger_\alpha \rightarrow \sum_\beta (U_1 U_2 \dots U_{P-1})_{\alpha,\beta} \enspace \hat{a}^\dagger_\beta
+\end{equation}
+Now we add one final optical component and apply the transformation $A(U_P)$. Our total transformation is now
+\begin{equation}
+	\hat{a}^\dagger_\alpha \rightarrow \sum_\beta (U_1 U_2 \dots U_{P-1})_{\alpha,\beta} \Big(\sum_\gamma U_{\beta,\gamma}^P \hat{a}^\dagger_\gamma \Big)
+\end{equation}
+where $U_{\beta,\gamma}^P$ are the $\beta,\gamma$ elements of $U_P$. Then,
+\begin{eqnarray}
+\hat{a}^\dagger_\alpha \rightarrow \sum_{\beta,\gamma} (U_1 U_2 \dots U_{P-1})_{\alpha,\beta} U^P_{\beta,\gamma} \hat{a}^\dagger_\gamma
+\\*
+\hat{a}^\dagger_\alpha \rightarrow \sum_\gamma (U_1 U_2 \dots U_P)_{\alpha,\gamma} \hat{a}^\dagger_\gamma \quad
+\end{eqnarray}
+which is equivalent to $A(U_1 U_2 \dots U_n). \quad \quad\blacksquare $
+\section{Proof of \textit{Fact 2}}
+\label{Proof of Fact 2}
+We can write~(\ref{LO State Fock Vec Basis}) in the $\ket{\vec{m}(\vec{n})}$ basis;
+\begin{equation}
+\ket{\psi} = \sum_{\vec{n}} c_{\vec{n}} \ket{\vec{m}(\vec{n})}
+\end{equation}
+We note that because photons are Bosons, and are indistinguishable, this change of basis is not well-defined. The same Fock state $\ket{\vec{n}}$ can map to multiple $\ket{\vec{m}(\vec{n})}$ states. This mapping is injective, however. No matter which mapping we choose for each basis state, no information about the state $\ket{\psi}$ is lost. Thus, we are free to pick any mapping we want for each basis Fock state. Then
+\begin{equation}
+\ket{\psi} = \sum_{\vec{n}} \frac{\vec{c}_n}{\prod_{p=1}^{M} \sqrt{n_p !}} \hat{a}_{m_1}^\dagger \hat{a}_{m_2}^\dagger \dots \hat{a}_{m_N}^\dagger \ket{\vec{0}}
+\end{equation}
+We define the vectors
+\begin{equation}
+\vec{U}_\alpha = (U_{\alpha 1},U_{\alpha 2},\dots U_{\alpha M})
+\end{equation}
+in the basis
+\begin{equation}
+\{ \hat{a}_{1}^\dagger,\hat{a}_{2}^\dagger, \dots, \hat{a}_{M}^\dagger \}
+\end{equation}
+then
+\begin{eqnarray}
+\label{Fact 2 Proof Checkpoint}
+& \ket{\psi^\prime} = A(U) \ket{\psi} =  \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ & \nonumber
+\sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \enspace \vec{U}_{m_1} \otimes \vec{U}_{m_2} \otimes \dots \otimes \vec{U}_{m_N} \ket{\vec{0}}
+\end{eqnarray}
+The tensor product in~(\ref{Fact 2 Proof Checkpoint}) will return a massive vector of $M^N$ entries. We can use the commutative property of the creation operators to compress it;
+\begin{equation}
+[\hat{a}_i ^ \dagger,\hat{a}_j ^ \dagger] = 0 \quad \forall \quad i,j
+\end{equation}
+\begin{eqnarray}
+ \ket{\psi^\prime} = \sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \\  \nonumber \sum_{\substack{m_1^\prime = 1\\
+		m_2^\prime = m_1^\prime\\
+		\vdots \\
+		m_N^\prime = m_{N-1}^\prime}}
+\left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger \ket{\vec{0}}
+\end{eqnarray}
+Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)}$ as the photo-counting result of $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger \ket{\vec{0}}$, or the Fock state mapped to by each term in the outer summation over $\ket{\vec{m}^\prime}$
+\begin{eqnarray}
+\label{Fact 2 Proof Checkpoint 2}
+\ket{\psi^\prime} = \sum_{\vec{n}} c_{\vec{n}} \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{ \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \\ \sum_{\substack{m_1^\prime = 1\\
+		m_2^\prime = m_1^\prime\\
+		\vdots \\
+		m_N^\prime = m_{N-1}^\prime}}
+\left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \ket{\vec{n}^\prime (\vec{m}^\prime) }
+\end{eqnarray}
+We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix vector product~(\ref{Matrix Vector Product}) if we define $A(U)$ as in~(\ref{Fact 2}).  $ \blacksquare $
+\section{Proof of Facts 3 \& 4}
+These are obvious statements that immediately follow from Eq.~(\ref{Matrix Vector Product})
+\acknowledgments
+Nicholas G. Sparks, Joshwa Shipman and Er. Knutson
+
+
+\begin{thebibliography}{99}
+
+\bibitem{Bennett} C. Bennett and S.J. Wiesner, Phys. Rev. Lett. \textbf{69}, 2881, (1992).
+
+\bibitem{Matiyasevich} Y. Matiyasevich, 1970.
+
+\bibitem{EIGEN} http://eigen.tuxfamily.org/
+
+\end{thebibliography}
+
+
+\end{document}
