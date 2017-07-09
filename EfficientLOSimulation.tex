@@ -78,9 +78,9 @@ where $U_{\alpha \beta}$ are the elements of some unitary complex matrix, $U$. T
 \end{eqnarray}
 and applies the symbolic transformation~(\ref{LO Creation Operator Transformation}). This may be fine for an optical circuit of few components and small $N$ and $M$, but transforming the creation operators for large systems can otherwise become intractable. 
 
-In this paper we present an efficient numerical protocol for simulating a quantum logic gate through the action of~(\ref{LO Creation Operator Transformation}) for large optical circuits consisting of many low-level components, without the need for explicitly declaring an optical state $\ket{\psi}$. This paper is organized as follows; section~\ref{Section of Facts} will present a series of \textit{facts}. Proofs of these \textit{facts} are available in the appendix. Section~\ref{Section on Protocol} will present the protocol itself, which will make use of the results presented in~\ref{Section of Facts}. In sections~\ref{Section Block Encoding}-\ref{Section Elementary Photon Entangling Operations} we will present the linear optical block encoding and some examples elementary entangling operations for inter-block qubit communication. Finally, in section~\ref{Section Numerical Testing} we present numerical results.
+Instead, we present an efficient numerical protocol for simulating a quantum logic gate through the action of~(\ref{LO Creation Operator Transformation}) for large optical circuits consisting of many low-level components, without the need for explicitly declaring an optical state $\ket{\psi}$. This paper is organized as follows; section~\ref{Section of Facts} will present a series of \textit{facts}. Proofs of these \textit{facts} are available in the appendix. Section~\ref{Section on Protocol} will present the protocol itself, which will make use of the results presented in~\ref{Section of Facts}. In sections~\ref{Section Block Encoding}-\ref{Section Elementary Photon Entangling Operations} we will present the linear optical block encoding and some examples elementary entangling operations for inter-block qubit communication. Finally, in section~\ref{Section Numerical Testing} we present numerical results.
 
-Before we begin, we can define $A(U)$ as the complex matrix which represents the action of~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). An output state of our total optical circuit, $\ket{\psi^\prime}$ will determined by standard matrix-vector multiplication
+Before we begin, we can define $A(U)$ as the complex matrix which represents the action of~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). An output state of our total optical circuit $\ket{\psi^\prime}$ will determined by standard matrix-vector multiplication
 \begin{equation}
 \label{Matrix Vector Product}
 \ket{\psi^\prime} = A(U) \ket{\psi}
@@ -99,7 +99,7 @@ For an optical circuit of $K$ number of components,
 	\label{Fact 1}
 \boxed{A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K)}
 \end{equation}
-Each component $U_k$ could be a simple beam splitter, phase shifter, or an "integrated" circuit consisting of many low-level components.
+Each component $U_k$ could be a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components.
 (\ref{Fact 1}) allows us to simulate the net effect of a series of low-level linear optical operations with efficiency. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices. This is beneficial for two reasons. First, the $U_k$ matrices are $M$ by $M$ while the $A(U_k)$ matrices can be up to dimension $d_H$ by $d_H$. Second, the actual rendering process of building $A(U)$ from $U$ will only need to be done once.
 \begin{center}\textit{Fact 2} \end{center}
 Rewriting~(\ref{LO State Fock Basis}) as
@@ -583,20 +583,21 @@ The tensor product in~(\ref{Fact 2 Proof Checkpoint}) will return a massive vect
 [\hat{a}_i ^ \dagger,\hat{a}_j ^ \dagger] = 0 \quad \forall \quad i,j
 \end{equation}
 \begin{eqnarray}
- \ket{\psi^\prime} = \sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \\  \nonumber \sum_{\substack{m_1^\prime = 1\\
+ \ket{\psi^\prime} = \sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \\  \nonumber \sum^M_{\substack{m_1^\prime = 1\\
 		m_2^\prime = m_1^\prime\\
 		\vdots \\
 		m_N^\prime = m_{N-1}^\prime}}
 \left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger \ket{\vec{0}}
 \end{eqnarray}
-Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)}$ as the photo-counting result of $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger \ket{\vec{0}}$, or the Fock state mapped to by each term in the outer summation over $\ket{\vec{m}^\prime}$
+Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)}$ as the photo-counting result of $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger \ket{\vec{0}}$, or the Fock state mapped to by each term in the summation over elements of $\ket{\vec{m}^\prime}$
 \begin{eqnarray}
 \label{Fact 2 Proof Checkpoint 2}
-\ket{\psi^\prime} = \sum_{\vec{n}} c_{\vec{n}} \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{ \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \\ \sum_{\substack{m_1^\prime = 1\\
+\small \ket{\psi^\prime} = \sum_{\vec{n}} c_{\vec{n}}  \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \\ \sum^M_{\substack{m_1^\prime = 1\\
 		m_2^\prime = m_1^\prime\\
 		\vdots \\
 		m_N^\prime = m_{N-1}^\prime}}
-\left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \ket{\vec{n}^\prime (\vec{m}^\prime) }
+\left[ \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime(\vec{m}^\prime) !}}{ \sqrt{n_p !}} \right] \left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \nonumber \\
+\cdot \ket{\vec{n}^\prime (\vec{m}^\prime) } \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \nonumber
 \end{eqnarray}
 We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix vector product~(\ref{Matrix Vector Product}) if we define $A(U)$ as in~(\ref{Fact 2}).  $ \blacksquare $
 \section{Proof of Facts 3 \& 4}
