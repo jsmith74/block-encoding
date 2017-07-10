@@ -97,7 +97,7 @@ Thus, not all quantum logic operations on Fock states can be implemented via lin
 For an optical circuit of $K$ number of components,
 \begin{equation}
 	\label{Fact 1}
-\boxed{A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K)}
+A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K)
 \end{equation}
 Each component $U_k$ could be a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components.
 (\ref{Fact 1}) allows us to simulate the net effect of a series of low-level linear optical operations with efficiency. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices. This is beneficial for two reasons. First, the $U_k$ matrices are $M$ by $M$ while the $A(U_k)$ matrices can be up to dimension $d_H$ by $d_H$. Second, the actual rendering process of building $A(U)$ from $U$ will only need to be done once.
@@ -614,8 +614,6 @@ Phys. Rev. A 79, 042326 (2009).
 
 \bibitem{Review Paper} Kok Et. Al.
 Rev. Mod. Phys. 79, 135 (2007).
-
-\bibitem{Matiyasevich} Y. Matiyasevich, 1970.
 
 \bibitem{EIGEN} http://eigen.tuxfamily.org/
 
