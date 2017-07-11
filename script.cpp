@@ -8,7 +8,7 @@
 int main(){
 
 #pragma omp parallel for schedule(dynamic)
-    for(int i=0;i<8;i++){
+    for(int i=0;i<5000;i+=10){
 
 	usleep(2000000 * omp_get_thread_num());
 
