@@ -63,6 +63,10 @@ class MeritFunction{
         inline double doublefactorial(int x);
 
         void setFilename();
+
+        void eliminateGlobalPhaseU();
+        void setUNormAndUarg(Eigen::MatrixXcd& UNorm,Eigen::MatrixXcd& UArg);
+
 };
 
 

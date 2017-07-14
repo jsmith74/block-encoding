@@ -27,11 +27,11 @@ void MeritFunction::setMeritFunction(double EPS){
 
     int modes = 3;
 
-    int ancillaPhotons = 6;
-    int ancillaModes = 5;
+    int ancillaPhotons = 2;
+    int ancillaModes = 2;
 
-    int measModes = 5;
-    int measOutcome = 301;
+    int measModes = 2;
+    int measOutcome = 4;
 
     compSubspaceDim[0] = 3;
     compSubspaceDim[1] = 2;
@@ -231,6 +231,22 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
             outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << globalSuccess << std::endl;
 
+            outfile << std::endl << std::endl;
+
+            outfile << La[0].AugmentMatrix << std::endl << std::endl;
+
+            outfile << La[1].AugmentMatrix << std::endl << std::endl;
+
+            eliminateGlobalPhaseU();
+
+            Eigen::MatrixXcd UNorm, UArg;
+
+            setUNormAndUarg(UNorm,UArg);
+
+            outfile << UNorm << std::endl << std::endl;
+
+            outfile << UArg << std::endl << std::endl;
+
             outfile.close();
 
         }
@@ -241,7 +257,40 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
 }
 
+void MeritFunction::setUNormAndUarg(Eigen::MatrixXcd& UNorm,Eigen::MatrixXcd& UArg){
 
+    UNorm.resize(U.rows(),U.cols());
+    UArg.resize(U.rows(),U.cols());
+
+    for(int i=0;i<U.rows();i++) for(int j=0;j<U.cols();j++){
+
+        UNorm(i,j) = std::sqrt( std::norm( U(i,j) ) );
+
+        UArg(i,j) = std::arg( U(i,j) ) / PI;
+
+    }
+
+    std::cout << UNorm << std::endl << std::endl;
+
+    std::cout << UArg << std::endl << std::endl;
+
+    assert ( false );
+
+    return;
+
+}
+
+void MeritFunction::eliminateGlobalPhaseU(){
+
+    double phi = std::arg(U(0,0));
+
+    std::complex<double> I(0.0,1.0);
+
+    U = std::exp( -I * phi ) * U;
+
+    return;
+
+}
 
 Eigen::VectorXd MeritFunction::setInitialPosition(){
 
