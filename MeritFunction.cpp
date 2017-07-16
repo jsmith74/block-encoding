@@ -239,7 +239,7 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
             eliminateGlobalPhaseU();
 
-            Eigen::MatrixXcd UNorm, UArg;
+            Eigen::MatrixXd UNorm, UArg;
 
             setUNormAndUarg(UNorm,UArg);
 
@@ -249,6 +249,12 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
             outfile.close();
 
+            std::cout << UNorm << std::endl << std::endl;
+
+            std::cout << UArg << std::endl << std::endl;
+
+            checkResult(UNorm,UArg);
+
         }
 
     }
@@ -257,7 +263,39 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
 }
 
-void MeritFunction::setUNormAndUarg(Eigen::MatrixXcd& UNorm,Eigen::MatrixXcd& UArg){
+void MeritFunction::checkResult(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg){
+
+    std::complex<double> I(0.0,1.0);
+
+    for(int i=0;i<UNorm.rows();i++) for(int j=0;j<UNorm.cols();j++){
+
+        U(i,j) = UNorm(i,j) * std::exp(I * UArg(i,j) * PI);
+
+    }
+
+   for(int i=0;i<diffPhotonNumb;i++){
+
+        LOCircuit[i].setOmega(U);
+
+        PAULa[i] = LOCircuit[i].omega * La[i].AugmentMatrix;
+
+        setFidelity(i);
+
+        setSuccessProbability(i);
+
+    }
+
+    std::cout << "U Check:\n";
+
+    std::cout << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << globalSuccess << std::endl;
+
+    assert( false );
+
+    return;
+
+}
+
+void MeritFunction::setUNormAndUarg(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg){
 
     UNorm.resize(U.rows(),U.cols());
     UArg.resize(U.rows(),U.cols());
@@ -269,12 +307,6 @@ void MeritFunction::setUNormAndUarg(Eigen::MatrixXcd& UNorm,Eigen::MatrixXcd& UA
         UArg(i,j) = std::arg( U(i,j) ) / PI;
 
     }
-
-    std::cout << UNorm << std::endl << std::endl;
-
-    std::cout << UArg << std::endl << std::endl;
-
-    assert ( false );
 
     return;
 

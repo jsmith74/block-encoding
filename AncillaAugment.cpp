@@ -60,6 +60,16 @@ void AncillaAugment::setAugmentMatrix(Eigen::VectorXd& position){
     for(int i=0;i<ASdimension;i++){
 
         std::complex<double> ancillaValue = position(2*i) * exp(I*position(2*i+1))/sqrt(norm);
+
+        /** ===== SET THE ANCILLA MATRIX =========================================== */
+
+        if(i==1) ancillaValue = 1.0;
+
+        else ancillaValue = 0.0;
+
+        /** ======================================================================== */
+
+
         for(int j=0;j<HSdimension;j++) AugmentMatrix.coeffRef(i*HSdimension+j,j) = ancillaValue;
 
     }

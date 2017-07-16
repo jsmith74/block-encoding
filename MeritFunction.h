@@ -65,7 +65,8 @@ class MeritFunction{
         void setFilename();
 
         void eliminateGlobalPhaseU();
-        void setUNormAndUarg(Eigen::MatrixXcd& UNorm,Eigen::MatrixXcd& UArg);
+        void setUNormAndUarg(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg);
+        void checkResult(Eigen::MatrixXd& UNorm, Eigen::MatrixXd& UArg);
 
 };
 
