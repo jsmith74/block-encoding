@@ -237,23 +237,17 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
             outfile << La[1].AugmentMatrix << std::endl << std::endl;
 
-            eliminateGlobalPhaseU();
-
-            Eigen::MatrixXd UNorm, UArg;
-
-            setUNormAndUarg(UNorm,UArg);
-
-            outfile << UNorm << std::endl << std::endl;
-
-            outfile << UArg << std::endl << std::endl;
-
             outfile.close();
 
-            std::cout << UNorm << std::endl << std::endl;
+            std::cout << "U:\n" << U << std::endl << std::endl;
 
-            std::cout << UArg << std::endl << std::endl;
+            Eigen::MatrixXcd UTest;
 
-            checkResult(UNorm,UArg);
+            breakIntoComponents(UTest);
+
+            checkResult(UTest);
+
+            assert( false );
 
         }
 
@@ -263,19 +257,71 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
 }
 
-void MeritFunction::checkResult(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg){
+void MeritFunction::breakIntoComponents(Eigen::MatrixXcd& UTest){
 
-    std::complex<double> I(0.0,1.0);
+    int componentLevel = 7;
 
-    for(int i=0;i<UNorm.rows();i++) for(int j=0;j<UNorm.cols();j++){
+    std::vector<Eigen::MatrixXcd> topLevel,bottomLevel;
 
-        U(i,j) = UNorm(i,j) * std::exp(I * UArg(i,j) * PI);
+    topLevel.resize(1);
+
+    topLevel.at(0) = U;
+
+    for(int c=0;c<componentLevel;c++){
+
+        bottomLevel.resize( 2 * topLevel.size() );
+
+        for(int t=0;t<topLevel.size();t++){
+
+            Eigen::JacobiSVD<Eigen::MatrixXcd> svd( topLevel.at(t), Eigen::ComputeFullU | Eigen::ComputeFullV );
+
+            bottomLevel.at( 2*t ) = svd.matrixU();
+
+            bottomLevel.at( 2*t + 1 ) = svd.matrixV().conjugate().transpose();
+
+        }
+
+        topLevel = bottomLevel;
 
     }
 
+    UTest = Eigen::MatrixXcd::Identity(U.rows(),U.cols());
+
+    for(int i=0;i<topLevel.size();i++) {
+
+        UTest = UTest * topLevel.at(i);
+
+        printNorm(topLevel.at(i));
+
+    }
+
+    return;
+
+}
+
+void MeritFunction::printNorm(Eigen::MatrixXcd& M){
+
+    Eigen::MatrixXd MNorm(M.rows(),M.cols());
+
+    for(int i=0;i<M.rows();i++) for(int j=0;j<M.cols();j++){
+
+        MNorm(i,j) = std::sqrt ( std::norm(M(i,j)) );
+
+        if(MNorm(i,j) < 1e-4) MNorm(i,j) = 0;
+
+    }
+
+    std::cout << MNorm << std::endl << std::endl;
+
+    return;
+
+}
+
+void MeritFunction::checkResult(Eigen::MatrixXcd& UTest){
+
    for(int i=0;i<diffPhotonNumb;i++){
 
-        LOCircuit[i].setOmega(U);
+        LOCircuit[i].setOmega(UTest);
 
         PAULa[i] = LOCircuit[i].omega * La[i].AugmentMatrix;
 
@@ -287,9 +333,7 @@ void MeritFunction::checkResult(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg){
 
     std::cout << "U Check:\n";
 
-    std::cout << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << globalSuccess << std::endl;
-
-    assert( false );
+    std::cout << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] <<  std::endl;
 
     return;
 

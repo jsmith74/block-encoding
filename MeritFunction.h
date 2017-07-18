@@ -66,7 +66,9 @@ class MeritFunction{
 
         void eliminateGlobalPhaseU();
         void setUNormAndUarg(Eigen::MatrixXd& UNorm,Eigen::MatrixXd& UArg);
-        void checkResult(Eigen::MatrixXd& UNorm, Eigen::MatrixXd& UArg);
+        void checkResult(Eigen::MatrixXcd& UTest);
+        void printNorm(Eigen::MatrixXcd& M);
+        void breakIntoComponents(Eigen::MatrixXcd& UTest);
 
 };
 
