@@ -99,7 +99,7 @@ For an optical circuit of $K$ number of components,
 	\label{Fact 1}
 A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K).
 \end{equation}
-Each component $U_k$ could represent a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components.
+Each component $U_k$ can represent a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components.
 (\ref{Fact 1}) allows us to simulate the net effect of a series of low-level linear optical operations with efficiency. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices. This is beneficial for two reasons. First, the $U_k$ matrices are $M$ by $M$ while the $A(U_k)$ matrices can be up to dimension $d_H$ by $d_H$. Second, the actual rendering process of building $A(U)$ from $U$ will only need to be done once.
 \newpage
 \begin{center}\textit{Fact 2} \end{center}
@@ -187,7 +187,7 @@ That is, we can build a universal quantum computer or fully decodible quantum ch
 \begin{equation}
 d_H = M.
 \end{equation}
-To implement $j$ qubits, we would then need to build a system of $M=2^j$ modes. Here, we group deterministic blocks of logical qubits together in order to establish scalability. For example, two qubits can be encoded into the $N=1,M=4$ system in Table~\ref{Two Qubit Encoding Table}.
+To implement $j$ qubits, we would need to build a system of $M=2^j$ modes. Here, we group deterministic blocks of logical qubits together in order to establish scalability. For example, two qubits can be encoded into the $N=1,M=4$ system in Table~\ref{Two Qubit Encoding Table}.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -259,11 +259,11 @@ Without loss of generality, we can group two blocks together, choose the first q
 \begin{equation}
 \mbox{CNOT}_{first,last} \notin \textbf{A}.
 \end{equation}
-In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit\cite{Dual Rail}. In the KLM~\cite{KLM,Uskov} scheme, the $\mbox{CNOT}_{first,last}$ gate can be implemented for $q=1$ using probabilistic partial measurements with success probability $p=2/27$. Here, we use the protocol introduced in section~\ref{Section on Protocol} to numerically test our ability to construct the $\mbox{CNOT}_{first,last}$ gate using similar measurement-assisted transformations for $q>1$.
+In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit\cite{Dual Rail}. In the KLM~\cite{KLM,Uskov} scheme, the $\mbox{CNOT}_{first,last}$ gate can be applied to dual-rail qubits using probabilistic partial measurements with success probability $p=2/27$. In this paper, we use the protocol introduced in section~\ref{Section on Protocol} to numerically test our ability to construct the $\mbox{CNOT}_{first,last}$ gate using similar measurement-assisted transformations for $q>1$.
 \section{Elementary Photon-Entangling Operations}
 \label{Section Elementary Photon Entangling Operations}
 
- In practice, we find it useful to dismantle the $\mbox{CNOT}_{first,last}$ gate into a set of elementary entangling sub-operations. We can examine the PUSS operation acting on three modes as defined in Table~\ref{One Control Two Targets}. 
+ In practice, we find it useful to dismantle the $\mbox{CNOT}_{first,last}$ gate into a set of elementary entangling sub-operations. We can first examine the $\mathcal{C}_1$ sub-operation acting on three modes as defined in Table~\ref{One Control Two Targets}. 
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -274,13 +274,12 @@ In the special case of $q=1$, our block encoding reduces to the standard dual-ra
 		$\ket{1,0,1}$ & $\rightarrow$ & $\ket{1,1,0}$ \\
 		$\ket{1,1,0}$ & $\rightarrow$ & $\ket{1,0,1}$ \\
 	\end{tabular}
-	\caption{ \label{One Control Two Targets} An operation acting on three modes expressed as a transformation of Fock basis states. The first mode acts as the control while the second and third modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q -2}$ times.}
+	\caption{ \label{One Control Two Targets} The $\mathcal{C}_1$  operation acting on three modes expressed as a transformation of Fock basis states. The first mode acts as the control while the second and third modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q -2}$ times.}
 \end{center}
 \end{table}
-Here, the first mode is assumed to be in the control block, while the second and third modes are assumed to be in the target block. For example, lets use the PUSS operator to build the $\mbox{CNOT}_{1,4}$ in $q=2$. Referring to Table~\ref{Block Encoding Table}, we apply the PUSS operator four times, choosing the control mode as modes 3,4 and the two target modes as 5,6 and 7,8. The end result is the same as a $\mbox{CNOT}_{1,4}$; if a photon is in mode 3 or 4 we swap a photon between mode 5 and mode 6 or a photon between mode 7 and mode 8. There will never be more than a single photon in a block, so all the basis states in Table~\ref{One Control Two Targets} are the only possible inputs to the PUSS transformation.
+Here, we say the first mode is a control mode, while the second and third modes are target modes. We apply the $\mathcal{C}_1$  operator four times to build the $\mbox{CNOT}_{1,4}$ in $q=2$ by choosing the control mode as modes 3,4 in table~\ref{Block Encoding Table} and the two target modes as 5,6 and 7,8. The end result is the same as a $\mbox{CNOT}_{1,4}$; if a photon is in mode 3 or 4 we swap a photon between mode 5 and mode 6 or a photon between mode 7 and mode 8. More generally, a $\mbox{CNOT}_{first,last}$ gate for block size $q$ can be constructed by applying the $\mathcal{C}_1$  operation $2^{2q-2}$ times by setting the control mode to each of the modes in the second half of the control block, and the two target modes to every pair of modes in the target block. Because there will never be more than a single photon in a block, the basis states in Table~\ref{One Control Two Targets} will be the only possible inputs to the $\mathcal{C}_1$  transformation. If $\mathcal{C}_1$ is performed correctly, photon leakage between blocks will not occur.
 
-UP TO HERE 
-Other sub-operations we are able to simulate numerically are presented in Tables~\ref{Two Controls Two Targets}-\ref{Two Controls Four Targets}.
+Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mathcal{C}_3$, and $\mathcal{C}_4$ gates which are presented in Tables~\ref{Two Controls Two Targets}-\ref{Two Controls Four Targets}.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -294,7 +293,7 @@ Other sub-operations we are able to simulate numerically are presented in Tables
 		$\ket{0,1,0,1}$ & $\rightarrow$ & $\ket{0,1,1,0} $ \\ 
 		$\ket{0,1,1,0}$ & $\rightarrow$ & $\ket{0,1,0,1} $ \\ \\
 	\end{tabular}
-	\caption{ \label{Two Controls Two Targets} An operation acting on four modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last two modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
+	\caption{ \label{Two Controls Two Targets} The $\mathcal{C}_2$  operation acting on four modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last two modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
 \end{center}
 \end{table}
 \begin {table}[h]
@@ -311,7 +310,7 @@ Other sub-operations we are able to simulate numerically are presented in Tables
 		$\ket{1,0,1,0,0}$  & $\rightarrow$ & $\ket{1,1,0,0,0}$ \\
 		$\ket{1,1,0,0,0}$  & $\rightarrow$ & $\ket{1,0,1,0,0}$ \\
 	\end{tabular}
-	\caption{ \label{One Control Four Targets} An operation acting on five modes expressed as a transformation of Fock basis states. The first mode acts as the control while the last four modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
+	\caption{ \label{One Control Four Targets} The $\mathcal{C}_3$ operation acting on five modes expressed as a transformation of Fock basis states. The first mode acts as the control while the last four modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
 \end{center}
 \end{table}
 \begin {table}[h]
@@ -333,31 +332,45 @@ Other sub-operations we are able to simulate numerically are presented in Tables
 		$\ket{1,0,0,1,0,0}$  & $\rightarrow$ & $\ket{1,0,1,0,0,0}$ \\
 		$\ket{1,0,1,0,0,0}$  & $\rightarrow$ & $\ket{1,0,0,1,0,0}$ \\
 	\end{tabular}
-	\caption{ \label{Two Controls Four Targets} An operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 4}$ times.}
+	\caption{ \label{Two Controls Four Targets} The $\mathcal{C}_4$ operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 4}$ times.}
 \end{center}
 \end{table}
-
-The focus of our work here was to try to build these operators as probabilistic measurement-assisted transformations~\cite{KLM,Uskov}. We augment our optical computational state with an ancilla state, $\ket{\psi_a}$, apply a linear optical transformation $A(U)$, and then do a partial projective measurement. The total action of this non-unitary process can be simulated as a Kraus operator called the \textit{PAULA} operator acting on any optical quantum state in the computational subspace;
+The focus of our work here was to test our ability to build these operators as probabilistic measurement-assisted transformations. By this, we mean to augment our optical computational state with an ancilla state, apply a linear optical transformation, and then do a partial projective measurement. The total action of this non-unitary process can be written formally as a Kraus operator called the \textit{PAULA} operator which acts on any optical quantum state $\ket{\psi_{c}}$ composed of $N_c$ photons in $M_c$ modes contained to some computational subspace;
 \begin{equation}
 \label{Kraus Paula Operator}
 E = P A(U) L_a
 \end{equation} 
 \begin{equation}
-\ket{\psi^\prime} = E \ket{\psi}
+\ket{\psi_{c}^\prime} = E \ket{\psi_{c}}
 \end{equation}
-and then re-normalizing the result.  $L_a$ is a sparse operator satisfying $L_a^\dagger L_a = I$ that links the ancilla state $\ket{\psi_a}$ into the circuit;
+and then re-normalizing.  $L_a$ is the operator defined by
 \begin{equation}
 \label{Ancilla Linker}
-L_a \ket{\psi} = \ket{\psi_a} \otimes \ket{\psi} \quad  \forall \quad \ket{\psi}
+L_a \ket{\psi_{c}} = \ket{\psi_a} \otimes \ket{\psi_{c}} \quad  \forall \quad \ket{\psi_{c}}
 \end{equation}
-$A(U)$ is the standard, general unitary linear optical transformation defined in Eq.~\ref{Fact 2} and $P$ is a partial projective measurement over the ancilla modes. Note in accordance with \textit{Facts 3 and 4}, we do not construct the entire matrix $A(U)$ - only the columns mapped to by $L_a$ and the rows left after the projection $P$. We assume the projection operator is the outer product of some Fock state
+where where $\ket{\psi_a}$ is a normalized ancilla state composed of $N_a$ photons in $M_a$ optical modes. The matrix representation of $L_a$ is sparse and satisfies $L_a^\dagger L_a = I$.
+$A(U)$ is the standard, general unitary linear optical transformation as defined in Eq.~\ref{Fact 2} where $N=N_c+N_a$ and $M=M_c+M_a$. $P$ is a partial projective measurement over the ancilla modes. We assume the projection operator is the outer product of some Fock state
 \begin{equation}
-P = \outerproduct{\vec{n}}{\vec{n}}
+P = \outerproduct{\vec{n}_a}{\vec{n}_a}
 \end{equation}
-containing the same number of photons and modes in the ancilla state, $N_a,M_a$. Thus, $E$ will be represented a $d_H$ by $d_C$ rectangular matrix. 
+containing the same number of photons and modes in the ancilla state, $N_a,M_a$. $E$ therefore preserves photon and mode number. In accordance with \textit{Facts 3 and 4}, we do not construct the entire matrix $A(U)$ - only the columns mapped to by $L_a \ket{\psi_{in}}$ and the rows left after the projection $P$. We define $d_C$ as the dimension of the subspace all input states to our circuit are contained in, and $d_C^\prime$ as the full physical Hilbert space of our computational states;
+\begin{equation}
+	d_C^\prime = \frac{(N_C+M_C-1)!}{N_C! (M_C-1)!}
+\end{equation}
+$E$ can then be represented as a $d_C^\prime$ by $d_C$ rectangular matrix.
 
-The goal here is to find an optimal measurement-assisted protocol for achieving perfect gate fidelity in each of the transformations in Tables~\ref{One Control Two Targets}-\ref{Four Controls two Targets}. In each case, we want to simultaneously maximize the the gate fidelity and success probability for each subsystem containing 0, 1 and 2 photons over the same quantum optical circuit and ancilla state. We will demonstrate the details of this in the following section for the transformation acting on the subsystem of modes defined in Table~\ref{One Control Two Targets}. The main ideas can easily be extended to the transformations described in Tables~\ref{Two Controls Two Targets}-\ref{Four Controls two Targets}, so we omit detailed discussion of those cases from this paper.
-\section{Numerical Testing of The operation in Table~\ref{One Control Two Targets}}
+The gate fidelity of a \textit{PAULA} operator and unitary target operation $T$ is defined by
+\begin{equation}
+\label{Gate Fidelity}
+F(E,T) = \frac{1}{d_C} \frac{\abs{\tr(E^\dagger T)}^2}{\tr(E^\dagger E)}.
+\end{equation}
+The probability of successfully applying $E$ after projective measurement $P$ is given by
+\begin{equation}
+\label{Success Probability} 
+S(E) = \tr(E^\dagger E)
+\end{equation}
+For each $\mathcal{C}_1 \dots \mathcal{C}_4$ we want to simultaneously maximize the gate fidelity and success probability for each  $N_C=0,1,2$ over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The main ideas can easily be extended $\mathcal{C}_2 \dots \mathcal{C}_4$, and we omit detailed discussion of those cases from this paper.
+\section{Numerical Testing of $\mathcal{C}_1$}
 \label{Section Numerical Testing}
 We get the transformation acting on a system of 0 photons for free
 \begin{equation}
@@ -369,10 +382,10 @@ If only a single photon is in our subsystem of modes, we strive for a target ope
 T_1=	\begin{pmatrix} 1 & 0 & 0  \\ 0 & 1 & 0  \\ 0 & 0 & 1   \end{pmatrix}  
 \end{equation}
 \begin{equation}
-d_H = d_C = 3
+d_C = d_C^\prime = 3
 \end{equation}
 \begin{equation}
-\{ \ket{\vec{n}} \} = \{ \ket{\vec{n}^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}
+\{ \ket{\vec{n}_C} \} = \{ \ket{\vec{n}_C^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}
 \end{equation}
 If two photons are in our subspace, we strive for a target operator 
 \begin{equation}
@@ -380,46 +393,31 @@ If two photons are in our subspace, we strive for a target operator
 T_2=\begin{pmatrix} 0 & 1  \\ 1 & 0  \\ 0 & 0 \\ 0 & 0 \\ 0 & 0 \\ 0 & 0   \end{pmatrix}.  
 \end{equation}
 \begin{equation}
-d_H = 6 \quad d_C = 2
+d_C = 2 \quad d_C^\prime = 6
 \end{equation}
 \begin{equation}
-\{ \ket{\vec{n}} \} = \{ \ket{1,0,1},\ket{1,1,0} \}
+\{ \ket{\vec{n}_C} \} = \{ \ket{1,0,1},\ket{1,1,0} \}
 \end{equation}
-\begin{equation}
-\{ \ket{\vec{n}^\prime } \} = \{ \ket{1,0,1},\ket{1,1,0},\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}
-\end{equation}
-We define our measurement-assisted transformations 
+\begin{eqnarray}
+& \{ \ket{\vec{n}^\prime_C } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \} \nonumber
+\end{eqnarray}
+We define the \textit{PAULA} operators separately for each target
 \begin{equation}
 E_1(U,L_a) \quad \quad \quad E_2(U,L_a)
-\end{equation}
-where
-\begin{equation}
-E_\gamma(U,L_a) = P A_\gamma(U) L_a
 \end{equation}
 and numerically maximize the function
 \begin{equation}
 \label{Merit Function For Blocks}
-\small f(U,\psi_a) = F(E_1,T_1) \cdot F(E_2,T_2) +\epsilon S(E_1,T_1) \cdot S(E_2,T_2).
+\small f(U,\psi_a) = F(E_1,T_1) \cdot F(E_2,T_2) +\epsilon S(E_1) \cdot S(E_2)
 \end{equation}
-$F(E_n,T_n)$ and $S(E_n,T_n)$ are the gate fidelity and success probability for each system of $n$ photons respectively;
-\begin{equation}
-	\label{Gate Fidelity}
-		F(E,T) = \frac{1}{d_C} \frac{\abs{\tr(E^\dagger T)}^2}{\tr(E^\dagger E)} 
-\end{equation}
-and
-\begin{equation}
-\label{Success Probability} 
-\small	F(E,T) \rightarrow 1 \quad : \quad S(E,T) \approx \frac{\abs{E_{\alpha \beta}}^2}{\abs{T_{\alpha \beta}}^2} \quad \forall \quad T_{\alpha \beta } \ne 0.
-\end{equation}
-$\epsilon \in \{0,1\}$ is just a real numerical weight for the optimization.
+where $\epsilon \in \{0,1\}$ is just a real numerical weight for the optimization.
 
-Even if we achieve perfect fidelity, $F(E_1,T_1) \cdot F(E_2,T_2) = 1$, a difference in global phases on $T_1$ and $T_2$ will lead to an unwanted relative phase difference when we apply the full operator. Thankfully, we can always correct for this. The reader can verify for themselves that if we have a global phase difference of $e^{-i \phi}$ between $T_1$ and $T_2$, we simply apply a phase shift of $e^{i \phi}$ on every mode at the end of our circuit; we apply $A(U^\prime)$ such that
+If we achieve perfect fidelity, $F(E_1,T_1) \cdot F(E_2,T_2) = 1$, a difference in global phases on $T_1$ and $T_2$ will lead to an unwanted relative phase between Fock states of $N_C=1$ and $N_C=2$ when we apply the full operator $\mathcal{C}_1$. Fortunately, we can always correct for this. If we have a global phase difference of $e^{-i \phi}$ between $T_1$ and $T_2$, we simply apply a phase shift of $e^{i \phi}$ on every mode at the end of our circuit; we apply $A(U^\prime)$ such that
 \begin{equation}
 U^\prime = \begin{pmatrix}
-e^{i \phi} & 0 & 0 & \dots & 0 \\
-0 & e^{i \phi} & 0 & \dots & 0 \\
-\vdots & \vdots \\
-0 & 0 & 0 & \dots & e^{i \phi}
+e^{i \phi} & 0  & 0 \\
+0 & e^{i \phi}  & 0 \\
+0 & 0  & e^{i \phi}
 \end{pmatrix}.
 \end{equation}
 According to Eq.~\ref{LO Creation Operator Transformation}, any state of a single photon will be adjusted by a global phase;
@@ -432,7 +430,9 @@ A_2(U^\prime) \ket{N=2} = e^{2 i \phi} \ket{N=2}
 \end{equation}
 thus the relative phase can be corrected in this way.
 \section{Results}
-\subsection{The Entangling Operation in Table~\ref{One Control Two Targets}}
+\subsection{The Entangling Operation $\mathcal{C}_1$}
+UP TO HERE FIGURE OUT 0 PHOTON TRANSFORMATION
+\newline
 This physical operation acting on three modes is of particular importance; it can be applied a single time to two qubits encoded in the dual rail in order to apply an entangling $\mbox{CNOT}$ gate between them. In fact, after extensive numerical optimization of Eq.~\ref{Merit Function For Blocks}, we find the same optimal solution found in~\cite{Uskov}.
 \begin{eqnarray}
 & (F(E_1,T_1) \cdot F(E_2,T_2))_{max} = 1 \nonumber \\
