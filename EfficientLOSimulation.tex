@@ -353,30 +353,32 @@ $A(U)$ is the standard, general unitary linear optical transformation as defined
 \begin{equation}
 P = \outerproduct{\vec{n}_a}{\vec{n}_a}
 \end{equation}
-containing the same number of photons and modes in the ancilla state, $N_a,M_a$. $E$ therefore preserves photon and mode number. In accordance with \textit{Facts 3 and 4}, we do not construct the entire matrix $A(U)$ - only the columns mapped to by $L_a \ket{\psi_{in}}$ and the rows left after the projection $P$. We define $d_C$ as the dimension of the subspace all input states to our circuit are contained in, and $d_C^\prime$ as the full physical Hilbert space of our computational states;
+containing the same number of photons and modes in the ancilla state, $N_a,M_a$. $E$ therefore preserves photon and mode number. In accordance with \textit{Facts 3 and 4}, we do not construct the entire matrix $A(U)$ - only the columns mapped to by $L_a \ket{\psi_{c}}$ and the rows left after the projection $P$. We define $d_c$ as the dimension of the subspace all input states to our circuit are contained in, and $d_c^\prime$ as the full physical Hilbert space of our computational states;
 \begin{equation}
-	d_C^\prime = \frac{(N_C+M_C-1)!}{N_C! (M_C-1)!}
+	d_c^\prime = \frac{(N_c+M_c-1)!}{N_c! (M_c-1)!}
 \end{equation}
-$E$ can then be represented as a $d_C^\prime$ by $d_C$ rectangular matrix.
+$E$ can then be represented as a $d_c^\prime$ by $d_c$ rectangular matrix.
 
-The gate fidelity of a \textit{PAULA} operator and unitary target operation $T$ is defined by
+A measure of gate fidelity between a \textit{PAULA} operator and unitary target operation $T$ can be defined by
 \begin{equation}
 \label{Gate Fidelity}
-F(E,T) = \frac{1}{d_C} \frac{\abs{\tr(E^\dagger T)}^2}{\tr(E^\dagger E)}.
+F(E,T) = \frac{\Re[\tr(E^\dagger T)]}{\sqrt{d_c \tr(E^\dagger E)} }.
 \end{equation}
-The probability of successfully applying $E$ after projective measurement $P$ is given by
+The probability of having successfully applied $E$ after projective measurement $P$ is given by
 \begin{equation}
 \label{Success Probability} 
-S(E) = \tr(E^\dagger E)
+S(E) = \frac{\tr(E^\dagger E)}{d_c}.
 \end{equation}
-For each $\mathcal{C}_1 \dots \mathcal{C}_4$ we want to simultaneously maximize the gate fidelity and success probability for each  $N_C=0,1,2$ over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The main ideas can easily be extended $\mathcal{C}_2 \dots \mathcal{C}_4$, and we omit detailed discussion of those cases from this paper.
+
+To construct the $\mathcal{C}_1$ operation, we simultaneously maximize the gate fidelity and success probability for each  $N_c=0,1,2$ \textit{separately} over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. That is, we establish an ideal target $T_{N_c}$ and Kraus \textit{PAULA} operator $E_{N_c}$ for each photon number and attempt to find any particular $U$ and $\ket{\psi_a}$ such that all $F(E_{N_c},T_{N_c}) \rightarrow 1$ with optimal $S(E_{N_c})$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The general idea can easily be extended $\mathcal{C}_2 \dots \mathcal{C}_4$, and we omit detailed discussion of those cases from this paper.
 \section{Numerical Testing of $\mathcal{C}_1$}
 \label{Section Numerical Testing}
-We get the transformation acting on a system of 0 photons for free
+We get the transformation acting on a system of $N_c=0$ photons for free
 \begin{equation}
+\label{Free Operation}
 \ket{0,0,0} \rightarrow \ket{0,0,0}
 \end{equation}
-If only a single photon is in our subsystem of modes, we strive for a target operator
+If only a single photon is in our subsystem of modes, $N_c=1$, we strive for a target operator
 \begin{equation}
 \label{T1 1C2T}
 T_1=	\begin{pmatrix} 1 & 0 & 0  \\ 0 & 1 & 0  \\ 0 & 0 & 1   \end{pmatrix}  
@@ -384,10 +386,11 @@ T_1=	\begin{pmatrix} 1 & 0 & 0  \\ 0 & 1 & 0  \\ 0 & 0 & 1   \end{pmatrix}
 \begin{equation}
 d_C = d_C^\prime = 3
 \end{equation}
+in the basis
 \begin{equation}
-\{ \ket{\vec{n}_C} \} = \{ \ket{\vec{n}_C^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}
+\{ \ket{\vec{n}_C} \} = \{ \ket{\vec{n}_C^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}.
 \end{equation}
-If two photons are in our subspace, we strive for a target operator 
+If two photons are in our subspace, $N_c=2$, we strive for a target operator 
 \begin{equation}
 \label{T2 1C2T}
 T_2=\begin{pmatrix} 0 & 1  \\ 1 & 0  \\ 0 & 0 \\ 0 & 0 \\ 0 & 0 \\ 0 & 0   \end{pmatrix}.  
@@ -395,11 +398,12 @@ T_2=\begin{pmatrix} 0 & 1  \\ 1 & 0  \\ 0 & 0 \\ 0 & 0 \\ 0 & 0 \\ 0 & 0   \end{
 \begin{equation}
 d_C = 2 \quad d_C^\prime = 6
 \end{equation}
+in the basis
 \begin{equation}
 \{ \ket{\vec{n}_C} \} = \{ \ket{1,0,1},\ket{1,1,0} \}
 \end{equation}
 \begin{eqnarray}
-& \{ \ket{\vec{n}^\prime_C } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \} \nonumber
+& \{ \ket{\vec{n}^\prime_C } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}. \nonumber
 \end{eqnarray}
 We define the \textit{PAULA} operators separately for each target
 \begin{equation}
@@ -408,107 +412,88 @@ E_1(U,L_a) \quad \quad \quad E_2(U,L_a)
 and numerically maximize the function
 \begin{equation}
 \label{Merit Function For Blocks}
-\small f(U,\psi_a) = F(E_1,T_1) \cdot F(E_2,T_2) +\epsilon S(E_1) \cdot S(E_2)
+\small f(U,\psi_a) = F(E_1,T_1) + F(E_2,T_2) +\epsilon (S(E_1) + S(E_2) )
 \end{equation}
-where $\epsilon \in \{0,1\}$ is just a real numerical weight for the optimization.
+where $\epsilon \in \{0,1\}$ is just a real numerical weight for the optimization. We step iteratively through parameters $\epsilon$, $N_a$, $M_a$, and $P$ and repeat maximization of Eq.~(\ref{Merit Function For Blocks}) to find global solutions.
 
-If we achieve perfect fidelity, $F(E_1,T_1) \cdot F(E_2,T_2) = 1$, a difference in global phases on $T_1$ and $T_2$ will lead to an unwanted relative phase between Fock states of $N_C=1$ and $N_C=2$ when we apply the full operator $\mathcal{C}_1$. Fortunately, we can always correct for this. If we have a global phase difference of $e^{-i \phi}$ between $T_1$ and $T_2$, we simply apply a phase shift of $e^{i \phi}$ on every mode at the end of our circuit; we apply $A(U^\prime)$ such that
-\begin{equation}
-U^\prime = \begin{pmatrix}
-e^{i \phi} & 0  & 0 \\
-0 & e^{i \phi}  & 0 \\
-0 & 0  & e^{i \phi}
-\end{pmatrix}.
-\end{equation}
-According to Eq.~\ref{LO Creation Operator Transformation}, any state of a single photon will be adjusted by a global phase;
-\begin{equation}
-A_1(U^\prime) \ket{N=1} = e^{i \phi } \ket{N=1}
-\end{equation}
-and any state composed of two photons will be adjusted by a global phase;
-\begin{equation}
-A_2(U^\prime) \ket{N=2} = e^{2 i \phi} \ket{N=2}
-\end{equation}
-thus the relative phase can be corrected in this way.
+Any difference in global phases between the operators in~(\ref{Free Operation}), (\ref{T1 1C2T}) and (\ref{T2 1C2T}) will cause an unwanted relative phase shift between Fock basis states under the full transformation $\mathcal{C}_1$. For this reason, we use the gate fidelity in Eq.~(\ref{Gate Fidelity}) which accounts for a global phase difference between $E$ and $T$. 
 \section{Results}
 \subsection{The Entangling Operation $\mathcal{C}_1$}
-UP TO HERE FIGURE OUT 0 PHOTON TRANSFORMATION
-\newline
-This physical operation acting on three modes is of particular importance; it can be applied a single time to two qubits encoded in the dual rail in order to apply an entangling $\mbox{CNOT}$ gate between them. In fact, after extensive numerical optimization of Eq.~\ref{Merit Function For Blocks}, we find the same optimal solution found in~\cite{Uskov}.
+This physical operation acting on three modes is of particular importance; it can be applied a single time to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between them. After extensive numerical optimization of Eq.~\ref{Merit Function For Blocks}, we find the same optimal solution found in~\cite{Uskov}.
 \begin{eqnarray}
-& (F(E_1,T_1) \cdot F(E_2,T_2))_{max} = 1 \nonumber \\
-& S_{max}(E_1,T_1) = S_{max}(E_2,T_2) = 2/27 \\
+& F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber \\
+& S_{max}(E_1) = S_{max}(E_2) = 2/27 \\
 & N_a,M_a=2 \nonumber \\
 & P = \outerproduct{11}{11} \nonumber	
 \end{eqnarray}
-Increasing the number of ancilla resources beyond $N_a,M_a=2$ does not improve the success probability as far as we are able to test ($N_a,M_a \le 8$). Thus, for a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation in Table~\ref{One Control Two Targets} using measurement-assisted transformations to be
+Increasing the number of ancilla resources beyond $N_a,M_a=2$ does not improve the success probability as far as we are able to test ($N_a,M_a \le 8$). Thus, for a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the $\mathcal{C}_1$ operation using measurement-assisted transformations to be
 \begin{equation}
 \label{1C2T Result}
 p = (2/27)^{2^{2q-2}}
 \end{equation}
-\subsection{The Entangling Operation in Table~\ref{Two Controls Two Targets}}
-Within the number of ancilla resources we are able to test (I've done up to $M_a \le 6,N_a \le 4$, but I can go a little bit higher if we want to do this) we find the optimal solution;
+\subsection{The Entangling Operation $\mathcal{C}_2$}
+We find the optimal solution;
 \begin{eqnarray}
-&(F(E_1,T_1) \cdot F(E_2,T_2))_{max} = 1 \nonumber \\
-&S_{max}(E_1,T_1) = S_{max}(E_2,T_2) = 0.0221391 \\
+& F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber \\
+&S_{max}(E_1) = S_{max}(E_2) = 0.0221391 \\
 &N_a = 3,M_a=4 \nonumber \\
 &P = \outerproduct{1110}{1110} \nonumber	
 \end{eqnarray}
-Thus, for a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation in Table~\ref{Two Controls Two Targets} using measurement-assisted transformations to be
+For a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation $\mathcal{C}_2$ using measurement-assisted transformations to be
 \begin{equation}
 \label{2C2T Result}
 p = (0.0221391)^{2^{2q-3}}
 \end{equation}
-\subsection{The Entangling Operation in Table~\ref{One Control Four Targets}}
-Within the number of ancilla resources we are able to test (I've done up to $M_a \le 6,N_a \le 4$, but I can go a little bit higher if we want to do this) we find the optimal solution;
+\subsection{The Entangling Operation $\mathcal{C}_3$}
+We find the optimal solution;
 \begin{eqnarray}
-& (F(E_1,T_1) \cdot F(E_2,T_2))_{max} = 1 \nonumber \\
-& S_{max}(E_1,T_1) = S_{max}(E_2,T_2) = 0.0221266 \\
+& F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber \\
+& S_{max}(E_1) = S_{max}(E_2) = 0.0221266 \\
 & N_a = 3,M_a=4 \nonumber \\
 & P = \outerproduct{1110}{1110} \nonumber	
 \end{eqnarray}
-Thus, for a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation in Table~\ref{One Control Four Targets} using measurement-assisted transformations to be
+For a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation $\mathcal{C}_3$ using measurement-assisted transformations to be
 \begin{equation}
 \label{1C4T Result}
 p = (0.0221266)^{2^{2q-3}}
 \end{equation}
-\subsection{The Entangling Operation in Table~\ref{Two Controls Four Targets}}
- Within the number of ancilla resources we are able to test (I've done up to $M_a \le 4,N_a \le 4$, but I can go a little bit higher if we want to do this) we find the optimal solution;
+\subsection{The Entangling Operation $\mathcal{C}_4$}
+We find the optimal solution;
  \begin{eqnarray}
- & (F(E_1,T_1) \cdot F(E_2,T_2))_{max} = 1 \nonumber\\
- & S_{max}(E_1,T_1) = S_{max}(E_2,T_2) = 0.00241264 \\
+ & F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber\\
+ & S_{max}(E_1) = S_{max}(E_2) = 0.00241264 \\
  & N_a = 4,M_a=4 \nonumber\\
  & P = \outerproduct{1111}{1111} \nonumber	
  \end{eqnarray}
- Thus, for a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation in Table~\ref{Two Controls Four Targets} using measurement-assisted transformations to be
+For a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation $\mathcal{C}_4$ using measurement-assisted transformations to be
  \begin{equation}
  \label{2C4T Result}
  p = (0.00241264)^{2^{2q-4}}
  \end{equation}
- \subsection{The Entangling Operation in Table~\ref{Four Controls two Targets}}
- Haven't done this one yet - I should probably do this.
- \subsection{Total Results}
- \begin{figure}[H]
- 	\centering
- 	\includegraphics[width=0.5 \textwidth]{./blockencodingresults.pdf}
- 	\caption{Maximum Observed Success probabilities for implementing a full $\mbox{CNOT}_{first,last}$ gate composed entirely of the sub-operations described in Tables~\ref{One Control Two Targets}-\ref{Four Controls two Targets}, for block size $q$.}
- 	\label{Figure - Block Encoding Results}
- \end{figure}
- We immediately observe an order of magnitude increase in success probability of applying the $\mbox{CNOT}_{first,last}$ gate as we increase the size of our sub-operation components; refer to Fig.~\ref{Figure - Block Encoding Results}. This is a promising trend for applying entangling operations between blocks of qubits of size $q=3,4$ etc. Even within the reach of our numerical simulations, we find an improvement over standard KLM for applying entangling operations within the context of some quantum algorithms. For example, we can look at the toy quantum circuit 
+ \section{Conclusion}
+ \label{Section Conclusion}
+ We observe a promising increase in success probability of applying the $\mbox{CNOT}_{first,last}$ gate as we increase the size of our sub-operation components; refer to Fig.~\ref{Figure - Block Encoding Results}. 
+ \begin{figure}[h]
+  	\centering
+  	\includegraphics[width=0.5 \textwidth]{./blockencodingresults.pdf}
+  	\caption{Maximum Observed Success probabilities for implementing a full $\mbox{CNOT}_{first,last}$ gate composed entirely of the sub-operations $\mathcal{C}_1$, $\mathcal{C}_2$, $\mathcal{C}_3$, $\mathcal{C}_4$, for block size $q$. THIS NEEDS TO BE CONVERTED TO LOG SCALE THINK ABOUT IT}
+  	\label{Figure - Block Encoding Results}
+  \end{figure}
+Even within the reach of our numerical simulations, we find an improvement over standard KLM for applying entangling operations within the context of some quantum algorithms. For example, the simple quantum circuit 
  \begin{eqnarray}
  \small & \mbox{CNOT}^3 = \\ \small \nonumber & (I \otimes I \otimes \mbox{CNOT}) \cdot (I \otimes  \mbox{CNOT} \otimes I) \cdot (\mbox{CNOT} \otimes I \otimes I)
  \end{eqnarray}
- acting on four qubits presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. Thus, we find the total cost of the $\mbox{CNOT}^3$ gate; a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$ we can apply the same operation with a success probability of $0.00232161$ using ancilla resources $ N_a,M_a=4 $. This is almost a six-fold improvement, while using less ancillas.
+ acting on four qubits is presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. The total cost of the $\mbox{CNOT}^3$ gate; a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$, we can apply the same operation with a success probability of $0.00232161$ using ancilla resources $ N_a,M_a=4 $. This is almost a six-fold improvement, while using less ancillas.
  \begin{figure}[ht]
  	\centering
  	\includegraphics[width=0.25 \textwidth]{./ThreeCNOTs.pdf}
- 	\caption{The general quantum circuit for the operator $\mbox{CNOT}^3$. The lines here represent logical qubits, not optical modes.}
+ 	\caption{The quantum circuit $\mbox{CNOT}^3$ acting on four qubits.}
  	\label{Three CNOTs}
  \end{figure}
-\section{Conclusion}
-\label{Section Conclusion}
- The trend in Fig.~\ref{Figure - Block Encoding Results} seems to suggest an order of magnitude improvement if we were able to simulate larger entangling operations between blocks. A realizable protocol for implementing $\mbox{CNOT}_{first,last}$ for $q \ge 3$ could have significant implications for LOQC.
+
+ The trend in Fig.~\ref{Figure - Block Encoding Results} suggests order of magnitude improvement in success probability as we increase the size of entangling sub-operations between blocks. Future work will further increase the size of our simulations; a $\mbox{CNOT}_{first,last}$ gate built from larger sub-operations for block size $q \ge 3$ may have significant implications for linear optical quantum computing.
 \acknowledgments
-Nicholas G. Sparks, Joshwa Shipman and Er. Knutson. This research was supported in part using high performance computing (HPC) resources and services provided by Technology Services at Tulane University, New Orleans, LA.
+We are thankful for helpful discussions with N. Sparks, J. Shipman and E. Knudson. This research was supported in part using high performance computing (HPC) resources and services provided by Technology Services at Tulane University, New Orleans, LA.
 \appendix
 \section{Proof of \textit{Fact 1}}
 \label{Proof of Fact 1}
@@ -582,8 +567,6 @@ Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)}$ as the photo-counting 
 \cdot \ket{\vec{n}^\prime (\vec{m}^\prime) } \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \nonumber
 \end{eqnarray}
 We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix vector product~(\ref{Matrix Vector Product}) if we define $A(U)$ as in~(\ref{Fact 2}).  $ \blacksquare $
-\section{Proof of Facts 3 \& 4}
-These are obvious statements that immediately follow from Eq.~(\ref{Matrix Vector Product})
 
 \begin{thebibliography}{99}
 

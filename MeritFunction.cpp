@@ -27,11 +27,11 @@ void MeritFunction::setMeritFunction(double EPS){
 
     int modes = 3;
 
-    int ancillaPhotons = 6;
-    int ancillaModes = 5;
+    int ancillaPhotons = 2;
+    int ancillaModes = 2;
 
-    int measModes = 5;
-    int measOutcome = 301;
+    int measModes = 2;
+    int measOutcome = 4;
 
     compSubspaceDim[0] = 3;
     compSubspaceDim[1] = 2;
@@ -156,18 +156,24 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] * fidelity[1] - eps * successProbability[0] * successProbability[1];
+    return -fidelity[0] - fidelity[1] - eps * (successProbability[0] + successProbability[1]);
 
 }
 
 
 void MeritFunction::setFidelity(int& i){
 
-    fidelity[i] = norm( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
+    //fidelity[i] = norm( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
 
-    fidelity[i] /= sqrt( norm( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
+    //fidelity[i] /= sqrt( norm( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
 
-    fidelity[i] /= IdealOp[i].cols();
+    //fidelity[i] /= IdealOp[i].cols();
+
+    fidelity[i] = std::real( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
+
+    fidelity[i] /= std::sqrt( std::real( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
+
+    fidelity[i] /= std::sqrt( IdealOp[i].cols() );
 
     return;
 
@@ -175,7 +181,9 @@ void MeritFunction::setFidelity(int& i){
 
 void MeritFunction::setSuccessProbability(int& i){
 
-    successProbability[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
+    //successProbability[i] = norm( PAULa[i]( nonZeroX[i],nonZeroY[i] ) ) / norm( IdealOp[i]( nonZeroX[i],nonZeroY[i] ) );
+
+    successProbability[i] = std::real( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) / ( IdealOp[i].cols());
 
     return;
 
@@ -198,6 +206,9 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
         setFidelity(i);
 
         setSuccessProbability(i);
+
+        std::cout << "SP: " << successProbability[i] << std::endl;
+        std::cout << std::real( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) / ( IdealOp[i].cols()) << std::endl << std::endl;
 
     }
 

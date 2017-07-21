@@ -8,7 +8,7 @@
 int main(){
 
 #pragma omp parallel for schedule(dynamic)
-    for(int i=0;i<5000;i+=10){
+    for(int i=0;i<500;i+=1){
 
 	usleep(2000000 * omp_get_thread_num());
 
@@ -16,7 +16,7 @@ int main(){
 
         std::stringstream ss;
 
-        double eps = 100 * i * 1e-4;
+        double eps = 50 * i * 1e-4;
 
         ss << eps;
 

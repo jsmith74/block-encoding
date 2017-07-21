@@ -11,7 +11,7 @@ int main(){
 
         std::stringstream ss;
 
-        double eps = 100 * i * 1e-4;
+        double eps = 50 * i * 1e-4;
 
         ss << eps;
 
