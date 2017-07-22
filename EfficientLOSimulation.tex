@@ -47,7 +47,7 @@
 \affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
 
  \begin{abstract}
-Here, we numerically simulate probabilistic elementary entangling operations between rail encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single photon blocks wherein all quantum logic operations are deterministic and straightforward to implement. Inter-block communication is then allowed through said entangling operations. We find a promising trend in the increasing probability of successful inter-block communication within the context of quantum algorithms.
+Here, we numerically simulate probabilistic elementary entangling operations between rail encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single photon blocks wherein all quantum logic operations are deterministic and straightforward to implement. Inter-block communication is then allowed through said entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the size of our entangling operations.
 \end{abstract}                                                               
 \date{\today}
 \pacs{***}
@@ -90,7 +90,7 @@ If $N \ge 2$, the group of all linear optical operators, $ A(U) \in \textbf{A}$,
 \label{Proper Subgroup}
 \textbf{A} \subset \textbf{GU}(d_H).
 \end{equation}
-In other words, not all quantum logic operations on Fock states can be implemented via linear optical circuits. This is a consequence of the fact that linear entangling operations between photons are generally severely limited~\cite{Hong Ou Mandel}. 
+In other words, not all quantum logic operations on multi-photon Fock states can be implemented via linear optical circuits. This is a consequence of the fact that linear entangling operations between photons are generally severely limited~\cite{Hong Ou Mandel}. 
 \section{A Collection of Facts}
 \label{Section of Facts}
 \begin{center}\textit{Fact 1} \end{center}
@@ -99,9 +99,7 @@ For an optical circuit of $K$ number of components,
 	\label{Fact 1}
 A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K).
 \end{equation}
-Each component $U_k$ can represent a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components.
-(\ref{Fact 1}) allows us to simulate the net effect of a series of low-level linear optical operations with efficiency. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices. This is beneficial for two reasons. First, the $U_k$ matrices are $M$ by $M$ while the $A(U_k)$ matrices can be up to dimension $d_H$ by $d_H$. Second, the actual rendering process of building $A(U)$ from $U$ will only need to be done once.
-\newpage
+Each component $U_k$ can represent a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices.
 \begin{center}\textit{Fact 2} \end{center}
 Rewriting~(\ref{LO State Fock Basis}) as
 \begin{equation}
@@ -136,13 +134,9 @@ In practice, the input state to an optical circuit $\ket{\psi}$ will often be a 
 \begin{center}\textit{Fact 4} \end{center}
 \fbox{
 	\begin{minipage}{23em}
-		If the output states of our optical circuit, $\ket{\psi^\prime}$ are then projected onto some subspace of physical Hilbert space of the system, we need only build relevant rows of $A(U)$.
+		If the output states of our optical circuit, $\ket{\psi^\prime}$ are then projected onto some subspace of the physical Hilbert space of the system, we need only build relevant rows of $A(U)$.
 	\end{minipage}
 }
-\newline
-\newline
-\newline
-We should not waste effort constructing unused elements of $A(U)$.
 \section{The Protocol}
 \label{Section on Protocol}
 Our protocol for simulating a linear optical quantum circuit is separated into an initialization and rendering stage. Initialization needs to only be performed once; one can then quickly render $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte-carlo techniques or numerical optimization.
@@ -175,7 +169,7 @@ Our protocol for simulating a linear optical quantum circuit is separated into a
 		(2) Render the matrix representation of the quantum operator $A(U)$ using Eq.~(\ref{Fact 2}) over all of the input basis states, $\{\ket{\vec{n}}\}$ and all of the output basis states $\{\ket{\vec{n}^\prime}\}$
 \newline
 \newline
-An implementation of this algorithm written in C++ is available for reference on Github at (include link). Compiling the code will require any C++ compiler and the linear algebra library, Eigen~\cite{EIGEN}.
+For reference, an implementation of this algorithm is available on Github~\cite{GitHub}.
 \section{Rail Encoding Qubits into Deterministic Blocks}
 \label{Section Block Encoding}
 It is well established that we can build any quantum logic operator acting on a state in the Fock basis using linear optical components if only a single photon is in the system;
@@ -183,7 +177,7 @@ It is well established that we can build any quantum logic operator acting on a 
 \label{Isomorphism}
 	\mbox{if } N=1, \quad \textbf{A} = \textbf{GU}(d_H).
 \end{equation}
-That is, we can build a universal quantum computer or fully decodible quantum channel in a single-photon rail encoding~\cite{Adami,Review Paper}. However, by forcing $N=1$, we sacrifice the scalability of our hardware. For a system of $N=1$ photons propagating in $M$ optical modes, Eq.~(\ref{Hilbert Space Dimension}) simplifies to
+That is, we can build a universal quantum computer or fully decodible quantum channel in a single-photon rail encoding~\cite{Adami,Review Paper}. However, by forcing $N=1$, we sacrifice the scalability of our hardware; Eq.~(\ref{Hilbert Space Dimension}) simplifies to
 \begin{equation}
 d_H = M.
 \end{equation}
@@ -232,7 +226,7 @@ We can then encode \textit{four} qubits into the $N=2,M=8$ system partitioned in
 	\caption{ \label{Block Encoding Table} Four Qubits encoded into two single-photon blocks}
 \end{center}
 \end{table}
-In this encoding we can apply any single qubit rotation or CNOT gate between logical qubits 1 and 2 or between logical qubits 3 and 4 through simple deterministic manipulation of a single photon~\cite{Adami}. The difficulty here will be to apply entangling operations between blocks. For example, we may want to apply the $\mbox{CNOT}_{1,4}$ gate where the control is qubit 1 and the target is qubit 4. This is an operation that will require the two photons in our system to interact; if a photon is contained in modes 3 or 4, we swap mode 5 with mode 6 and mode 7 with mode 8. 
+In this encoding we can apply any single qubit rotation or CNOT gate between logical qubits 1 and 2 or between logical qubits 3 and 4 through simple deterministic manipulation of a single photon~\cite{Adami}. The difficulty here will be to apply entangling operations between blocks. For example, we may want to apply the $\mbox{CNOT}_{1,4}$ gate where the control is qubit 1 and the target is qubit 4. This is an operation that will require the two photons in our system to interact; if a photon is contained in modes 3 or 4, we swap a photon between modes 5 and 6 or between modes 7 and 8. 
 %The reader should note that the dimension of the Hilbert space of these block systems, $d_H$, is typically larger than the dimension of the computational subspace. We define the dimension of the computational subspace $d_C$, and in the case of Table~\ref{Block Encoding Table},
 %\begin{equation}
 %d_C = 16 \quad d_H = \frac{9!}{2! 7!} = 36
@@ -240,17 +234,18 @@ In this encoding we can apply any single qubit rotation or CNOT gate between log
 %All elements of the matrix representation of $\mbox{CNOT}_{1,4}$ outside of the 16 columns of the computational subspace are irrelevant since we assume all input states are contained in this subspace. All entries in the matrix representation of $\mbox{CNOT}_{1,4}$ outside the 16 computational rows but in the 16 computational columns are fixed at 0. This is to prevent any state from spreading out of the computational subspace.
 %\section{Generalized Block Encoding}
 
-Generalizing the 2-qubit block encoding in Table~\ref{Two Qubit Encoding Table}, we can encode $q$ qubits into a block of 1 photon and $2^q$ modes. Again, "entangling" operations between pairs of logical qubits contained entirely within in a block are trivial to implement, but we will need to test our ability to realize communication between blocks. We assume a  mapping between logical qubit states and Fock states within a single block as in Table~\ref{q Qubit Block Encoding}.
+Generalizing the 2-qubit block encoding in Table~\ref{Two Qubit Encoding Table}, we can encode $q$ qubits into a block of 1 photon and $2^q$ modes. Again, operations between pairs of logical qubits contained entirely within in a block are trivial to implement, but we will need to test our ability to realize communication between blocks. We assume a  mapping between logical qubit states and Fock states within a single block as in Table~\ref{q Qubit Block Encoding}.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
 		Logical Qubit State      \quad \quad \quad     & Physical Fock State \\
 		\hline 
-		\quad \quad \quad $\ket{0\dots00}$     & $\ket{1,0,0,\dots,0}$ \\
-		\quad \quad \quad $\ket{0\dots01}$            & $\ket{0,1,0,\dots,0}$ \\
-		\quad \quad \quad $\ket{0\dots10}$            & $\ket{0,0,1,\dots,0}$ \\
+		\quad \quad \quad $\ket{0\dots00}$     & $\ket{1,0,0,0,\dots,0}$ \\
+		\quad \quad \quad $\ket{0\dots01}$            & $\ket{0,1,0,0,\dots,0}$ \\
+		\quad \quad \quad $\ket{0\dots10}$            & $\ket{0,0,1,0,\dots,0}$ \\
+		\quad \quad \quad $\ket{0\dots11}$            & $\ket{0,0,0,1,\dots,0}$ \\
 		\quad \quad \quad \quad \enspace \vdots & \vdots \\
-		\quad \quad \quad $\ket{1\dots11}$            & $\ket{0,0,0,\dots,1}$ \\
+		\quad \quad \quad $\ket{1\dots11}$            & $\ket{0,0,0,0,\dots,1}$ \\
 	\end{tabular}
 	\caption{ \label{q Qubit Block Encoding} q Qubit Single Photon Block Encoding}
 \end{center}
@@ -259,7 +254,7 @@ Without loss of generality, we can group two blocks together, choose the first q
 \begin{equation}
 \mbox{CNOT}_{first,last} \notin \textbf{A}.
 \end{equation}
-In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit\cite{Dual Rail}. In the KLM~\cite{KLM,Uskov} scheme, the $\mbox{CNOT}_{first,last}$ gate can be applied to dual-rail qubits using probabilistic partial measurements with success probability $p=2/27$. In this paper, we use the protocol introduced in section~\ref{Section on Protocol} to numerically test our ability to construct the $\mbox{CNOT}_{first,last}$ gate using similar measurement-assisted transformations for $q>1$.
+In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit\cite{Dual Rail}. In the KLM~\cite{KLM,Uskov} scheme, the $\mbox{CNOT}_{first,last}$ gate can be applied to dual-rail qubits using probabilistic partial measurements with success probability $p=2/27$. 
 \section{Elementary Photon-Entangling Operations}
 \label{Section Elementary Photon Entangling Operations}
 
@@ -335,7 +330,14 @@ Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mat
 	\caption{ \label{Two Controls Four Targets} The $\mathcal{C}_4$ operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{first,last}$ gate by applying this operation $2^{2 q - 4}$ times.}
 \end{center}
 \end{table}
-The focus of our work here was to test our ability to build these operators as probabilistic measurement-assisted transformations. By this, we mean to augment our optical computational state with an ancilla state, apply a linear optical transformation, and then do a partial projective measurement. The total action of this non-unitary process can be written formally as a Kraus operator called the \textit{PAULA} operator which acts on any optical quantum state $\ket{\psi_{c}}$ composed of $N_c$ photons in $M_c$ modes contained to some computational subspace;
+The focus of our work here was to test our ability to build these operators as probabilistic measurement-assisted transformations. By this, we mean to augment our optical computational state with an ancilla state, apply a linear optical transformation, and then do a partial projective measurement (refer to Fig.~\ref{Figure - PAULA Operator}). 
+ \begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=0.5 \textwidth]{./PAULA.pdf}
+ 	\caption{A measurements assisted transformation described by $E$. An input computational state $\ket{\psi_c}$ and ancilla state $\ket{\psi_a}$ are processed through a linear circuit. Then, a partial measurement $P$ is performed and we are left with the output computational state $\ket{\psi_c^\prime}$.}
+ 	\label{Figure - PAULA Operator}
+ \end{figure}
+The total action of this non-unitary process can be written formally as a Kraus operator called the \textit{PAULA} operator which acts on any optical quantum state $\ket{\psi_{c}}$ composed of $N_c$ photons in $M_c$ modes contained to some computational subspace;
 \begin{equation}
 \label{Kraus Paula Operator}
 E = P A(U) L_a
@@ -367,8 +369,9 @@ F(E,T) = \frac{\Re[\tr(E^\dagger T)]}{\sqrt{d_c \tr(E^\dagger E)} }.
 The probability of having successfully applied $E$ after projective measurement $P$ is given by
 \begin{equation}
 \label{Success Probability} 
-S(E) = \frac{\tr(E^\dagger E)}{d_c}.
+S(E) = \frac{\tr(E^\dagger E)}{d_c}
 \end{equation}
+near $F(E,T) \rightarrow 1$.
 
 To construct the $\mathcal{C}_1$ operation, we simultaneously maximize the gate fidelity and success probability for each  $N_c=0,1,2$ \textit{separately} over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. That is, we establish an ideal target $T_{N_c}$ and Kraus \textit{PAULA} operator $E_{N_c}$ for each photon number and attempt to find any particular $U$ and $\ket{\psi_a}$ such that all $F(E_{N_c},T_{N_c}) \rightarrow 1$ with optimal $S(E_{N_c})$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The general idea can easily be extended $\mathcal{C}_2 \dots \mathcal{C}_4$, and we omit detailed discussion of those cases from this paper.
 \section{Numerical Testing of $\mathcal{C}_1$}
@@ -461,16 +464,16 @@ p = (0.0221266)^{2^{2q-3}}
 We find the optimal solution;
  \begin{eqnarray}
  & F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber\\
- & S_{max}(E_1) = S_{max}(E_2) = 0.00241264 \\
+ & S_{max}(E_1) = S_{max}(E_2) = 0.00691511 \\
  & N_a = 4,M_a=4 \nonumber\\
  & P = \outerproduct{1111}{1111} \nonumber	
  \end{eqnarray}
 For a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation $\mathcal{C}_4$ using measurement-assisted transformations to be
  \begin{equation}
  \label{2C4T Result}
- p = (0.00241264)^{2^{2q-4}}
+ p = (0.00691511)^{2^{2q-4}}
  \end{equation}
- \section{Conclusion}
+ \section{Discussion}
  \label{Section Conclusion}
  We observe a promising increase in success probability of applying the $\mbox{CNOT}_{first,last}$ gate as we increase the size of our sub-operation components; refer to Fig.~\ref{Figure - Block Encoding Results}. 
  \begin{figure}[h]
@@ -483,7 +486,7 @@ Even within the reach of our numerical simulations, we find an improvement over 
  \begin{eqnarray}
  \small & \mbox{CNOT}^3 = \\ \small \nonumber & (I \otimes I \otimes \mbox{CNOT}) \cdot (I \otimes  \mbox{CNOT} \otimes I) \cdot (\mbox{CNOT} \otimes I \otimes I)
  \end{eqnarray}
- acting on four qubits is presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. The total cost of the $\mbox{CNOT}^3$ gate; a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$, we can apply the same operation with a success probability of $0.00232161$ using ancilla resources $ N_a,M_a=4 $. This is almost a six-fold improvement, while using less ancillas.
+ acting on four qubits is presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. The total cost of the $\mbox{CNOT}^3$ gate; a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$, we can apply the same operation with a success probability of $0.00691511$ using ancilla resources $ N_a,M_a=4 $. This is almost a twenty-fold improvement, while using less ancillas.
  \begin{figure}[ht]
  	\centering
  	\includegraphics[width=0.25 \textwidth]{./ThreeCNOTs.pdf}
@@ -571,6 +574,8 @@ We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix vector 
 \begin{thebibliography}{99}
 
 \bibitem{KLM}  E. Knill, R. Laflamme, G. J. Milburn, Nature (London) 409, 46 (2001).
+
+\bibitem{GitHub} https://github.com/jsmith74/linear-optics
 
 \bibitem{Uskov} Uskov Et. Al.
 Phys. Rev. A 79, 042326 (2009).
