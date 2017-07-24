@@ -38,7 +38,7 @@
 \newcommand{\V}{\tilde{V}}
 
 
-\title{Optimal Construction of Elementary Entangling Operations between Deterministic Blocks of Rail Encoded Linear Optical Qubits}
+\title{Optimized Linear Optical Entangling Operations between Deterministic Blocks of Single-Photon Rail Encoded Qubits}
 
 \author{Jake~A.~Smith}
 \affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
@@ -47,18 +47,18 @@
 \affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
 
  \begin{abstract}
-Here, we numerically simulate probabilistic elementary entangling operations between rail encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single photon blocks wherein all quantum logic operations are deterministic and straightforward to implement. Inter-block communication is then allowed through said entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the size of our entangling operations.
+Here, we numerically simulate probabilistic elementary entangling operations between rail encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single photon blocks wherein single qubit rotations and the CNOT gate are fully deterministic and simple to implement. Inter-block communication is then allowed through said probabilistic entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the size of our entangling operations.
 \end{abstract}                                                               
 \date{\today}
 \pacs{***}
 \maketitle
 
-\section{Basic Mathematical Principles}
+\section{Mathematical Background}
 \label{Intro}
 An optical quantum state of $N$ photons contained in $M$ optical modes can be written in the Fock basis,
 \begin{eqnarray}
 	\label{LO State Fock Basis}
-	\ket{\psi} = c_1 \ket{N,0,\dots,0_M} + c_2 \ket{N-1,1,0,\dots, 0_M} + \\* \dots  + c_{d_H} \ket{0,0,\dots,N_M}	\nonumber \quad \quad \quad \quad
+	\ket{\psi} = c_1 \ket{N,0,\dots,0_M} + c_2 \ket{N-1,1,0,\dots, 0_M} + \\* \dots  + c_{d_H} \ket{0,0,\dots,N_M}.	\nonumber \quad \quad \quad \quad
 \end{eqnarray}
 We note that the Hilbert space dimension of such a state is given by
 \begin{equation}
@@ -67,41 +67,40 @@ We note that the Hilbert space dimension of such a state is given by
 \end{equation}
 or the number of ways to order $N$ indistinguishable photons and $M-1$ partitions.
 
-A linear optical operation acting on such a state is generally described by the transformation of creation operators:
+A linear optical operation acting on such a state is generally described by the transformation of creation operators~\cite{Review Paper,Reck}:
 \begin{equation}
 \label{LO Creation Operator Transformation}
 \hat{a}^\dagger_\alpha \rightarrow \sum_{\beta=1}^{M} U_{\alpha\beta} \hat{a}^\dagger_\beta
 \end{equation}
-where $U_{\alpha \beta}$ are the elements of some unitary complex matrix, $U$. Thus, one typically converts a state in the form of~(\ref{LO State Fock Basis}) into
+where $U_{\alpha \beta}$ are the elements of some unitary complex matrix, $U$. One typically converts a state in the form of~(\ref{LO State Fock Basis}) into
 \begin{eqnarray}
 \ket{\psi} = \Big(c_1 \frac{(\hat{a}^\dagger_1)^N}{\sqrt{N!}} + c_2 \frac{ (\hat{a}^\dagger_1)^{N-1} \hat{a}^\dagger_2}{\sqrt{(N-1)!}} + \dots \\* + c_{d_H} \frac{(\hat{a}^\dagger_M)^N}{\sqrt{N!}}\Big) \ket{0,0,\dots,0_M} \quad \quad \nonumber
 \end{eqnarray}
-and applies the symbolic transformation~(\ref{LO Creation Operator Transformation}). This process may be fine for an optical circuit of few components and small $N$ and $M$, but transforming the creation operators for large systems can otherwise become intractable. 
+and applies the symbolic transformation~(\ref{LO Creation Operator Transformation}). For Fock states of large $N$ and $M$, however, this process can quickly become intractable. Here, we use our own numerical protocol for simulating linear optical quantum gates or state evolution that is equivalent to the action of~(\ref{LO Creation Operator Transformation}), but can handle systems of large $N$ and $M$ with efficiency. We will present this protocol in its entirety Section~\ref{Section on Protocol}.
 
-Instead, we present a highly efficient numerical protocol for simulating linear optical quantum gates or state evolution that is equivalent to the action of~(\ref{LO Creation Operator Transformation}), but is capable of simulating large optical circuits consisting of many low-level components. The protocol is presented as follows; in section~\ref{Section of Facts} we will present a series of \textit{facts}. Proofs of these \textit{facts} are available in the appendix. Section~\ref{Section on Protocol} will present the protocol itself.
-
-Before we begin, we can define $A(U)$ as the unitary matrix which represents the action of~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). An output state of our total optical circuit $\ket{\psi^\prime}$ will determined by standard matrix-vector multiplication
+Before we begin, we define $A(U)$ as the unitary matrix which represents the action of~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). The output state of a linear optical circuit $\ket{\psi^\prime}$ will determined by standard matrix-vector multiplication
 \begin{equation}
 \label{Matrix Vector Product}
 \ket{\psi^\prime} = A(U) \ket{\psi}.
 \end{equation}
-If $N \ge 2$, the group of all linear optical operators, $ A(U) \in \textbf{A}$, is a proper (strict) subgroup of the general unitary group
+
+If $N \ge 2$, the group of all linear optical operators $ A(U) \in \textbf{A}$ is a proper (strict) subgroup of the general unitary group
 \begin{equation}
 \label{Proper Subgroup}
 \textbf{A} \subset \textbf{GU}(d_H).
 \end{equation}
-In other words, not all quantum logic operations on multi-photon Fock states can be implemented via linear optical circuits. This is a consequence of the fact that linear entangling operations between photons are generally severely limited~\cite{Hong Ou Mandel}. 
-\section{A Collection of Facts}
-\label{Section of Facts}
-\begin{center}\textit{Fact 1} \end{center}
+In other words, not all quantum logic operations on multi-photon Fock states can be implemented via linear optical circuits. This is a consequence of the fact that linear entangling operations between photons are generally severely limited~\cite{Matt Smith,Braunstein,Hong Ou Mandel,Jake Smith}. 
+\section{Numerical Simulation of Linear Optical Devices}
+\label{Section on Protocol}
 For an optical circuit of $K$ number of components,
 \begin{equation}
 	\label{Fact 1}
 A(U_K) A(U_{K-1}) \dots A(U_1) = A(U_1 U_2 \dots U_K).
 \end{equation}
-Each component $U_k$ can represent a simple beam splitter, phase shifter, or a general integrated circuit consisting of many low-level components. We can compile the $K$ optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each independently and multiply the $A(U_k)$ matrices.
-\begin{center}\textit{Fact 2} \end{center}
-Rewriting~(\ref{LO State Fock Basis}) as
+It is preferred to compile the optical hardware components via the matrix multiplication $U_1 U_2 \dots U_K$, rather than render each $A(U_k)$ independently. Proof of Eq.~(\ref{Fact 1}) is available in the appendix.
+\newline
+\newline
+\indent Rewriting~(\ref{LO State Fock Basis}) as
 \begin{equation}
 \label{LO State Fock Vec Basis}
 \ket{\psi} = \sum_{\vec{n}} c_{\vec{n}} \ket{\vec{n}}
@@ -120,38 +119,31 @@ as \textit{any} vector where $m_\alpha$ is the mode-location of photon number $\
 \label{Fact 2}
 A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \outerproduct{\vec{n}^\prime}{\vec{n}} 
 \end{eqnarray}
-where the summation is over all distinct permutations of integer entries in the vector $\vec{m}^\prime$.
-\begin{center}\textit{Fact 3} \end{center}
-\fbox{
-	\begin{minipage}{23em}
-		If the input states to our optical circuit, $\ket{\psi}$, are known to be limited to some subspace of the physical Hilbert space of the system, we need only build relevant columns of $A(U)$.
-	\end{minipage}
-}
+where the summation is over all distinct permutations of integer entries in the vector $\vec{m}^\prime$. Proof of Eq.~(\ref{Fact 2}) is available in the appendix.
 \newline
 \newline
+\indent In practice, the input state to an optical circuit $\ket{\psi}$ will often be a simple, or even classical state e.g. $\ket{N,0,\dots,0_M}$. Alternatively, a partial measurement on the output state $\ket{\psi^\prime}$ will leave us in some relevant subspace. We therefore formally state the following facts.
 \newline
-In practice, the input state to an optical circuit $\ket{\psi}$ will often be a simple, or even classical state e.g. $\ket{N,0,\dots,0_M}$. Alternatively, we may want to simulate an optical circuit where photons and modes are augmented in at some point. 
-\begin{center}\textit{Fact 4} \end{center}
-\fbox{
-	\begin{minipage}{23em}
-		If the output states of our optical circuit, $\ket{\psi^\prime}$ are then projected onto some subspace of the physical Hilbert space of the system, we need only build relevant rows of $A(U)$.
-	\end{minipage}
-}
-\section{The Protocol}
-\label{Section on Protocol}
-Our protocol for simulating a linear optical quantum circuit is separated into an initialization and rendering stage. Initialization needs to only be performed once; one can then quickly render $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte-carlo techniques or numerical optimization.
+
+\textit{Fact 1:} If the input states to our optical circuit, $\ket{\psi}$, are known to be limited to some subspace of the physical Hilbert space of the system, we need only build relevant columns of $A(U)$.
+\newline
+
+\textit{Fact 2:} If the output states of our optical circuit, $\ket{\psi^\prime}$ are then projected onto some subspace of the physical Hilbert space of the system, we need only build relevant rows of $A(U)$.
+\newline
+ 
+With Eq.~(\ref{Fact 1}), Eq.~(\ref{Fact 2}) and the \textit{Facts } we can now present our protocol for simulating a linear optical quantum circuit.
 \newline
 \newline
 \textbf{Initialization Stage:}
 \newline
 \newline
-		(1)  Establish the Fock basis $\{\ket{\vec{n}} \}$ of our input state, $\ket{\psi}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the span of $\ket{\psi}$, as per \textit{Fact 3}.
+		(1)  Establish the Fock basis $\{\ket{\vec{n}} \}$ of our input state, $\ket{\psi}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the span of $\ket{\psi}$, as per \textit{Fact 1}.
 		\newline
 		\newline
 		(2) For each element of the basis set, $\ket{\vec{n}}$, construct a corresponding $\ket{\vec{m}(\vec{n})}$ as defined in Eq.~(\ref{m definition}).
 		\newline
 		\newline
-		(3) Establish the Fock basis $\{\ket{\vec{n}^\prime}\}$ of our output state, $\ket{\psi^\prime}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the (known) span of $\ket{\psi^\prime}$, as per \textit{Fact 4}.
+		(3) Establish the Fock basis $\{\ket{\vec{n}^\prime}\}$ of our output state, $\ket{\psi^\prime}$ as in Eq.~(\ref{Matrix Vector Product}). Do not include basis states outside the relevant span of $\ket{\psi^\prime}$, as per \textit{Fact 2}.
 		\newline
 		\newline
 		(4)  For each element of the basis set, $\ket{\vec{n}^\prime}$, construct a corresponding $\ket{\vec{m}^\prime(\vec{n}^\prime)}$ as defined in Eq.~(\ref{m definition}).
@@ -166,22 +158,24 @@ Our protocol for simulating a linear optical quantum circuit is separated into a
 		(1)  Compile the total optical circuit composed of K components by performing the matrix multiplication $ U = U_1 U_2 \dots U_K $.
 		\newline
 		\newline
-		(2) Render the matrix representation of the quantum operator $A(U)$ using Eq.~(\ref{Fact 2}) over all of the input basis states, $\{\ket{\vec{n}}\}$ and all of the output basis states $\{\ket{\vec{n}^\prime}\}$
+		(2) Render the matrix representation of the quantum operator $A(U)$ using Eq.~(\ref{Fact 2}) over all of the relevant input basis states, $\{\ket{\vec{n}}\}$ and all of the relevant output basis states $\{\ket{\vec{n}^\prime}\}$
 \newline
 \newline
-For reference, an implementation of this algorithm is available on Github~\cite{GitHub}.
+ Initialization needs to only be performed once; we can then quickly render $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte-carlo techniques or numerical optimization. A free-to-use implementation of this algorithm written in C++ and Eigen~\cite{EIGEN}, is available for reference on Github~\cite{GitHub}.
 \section{Rail Encoding Qubits into Deterministic Blocks}
 \label{Section Block Encoding}
-It is well established that we can build any quantum logic operator acting on a state in the Fock basis using linear optical components if only a single photon is in the system;
+It is well established that we can build any quantum logic operator acting on a state in the Fock basis using linear optical components if only a single photon is in the system~\cite{Adami,Torma,Pittman};
 \begin{equation}
 \label{Isomorphism}
 	\mbox{if } N=1, \quad \textbf{A} = \textbf{GU}(d_H).
 \end{equation}
-That is, we can build a universal quantum computer or fully decodible quantum channel in a single-photon rail encoding~\cite{Adami,Review Paper}. However, by forcing $N=1$, we sacrifice the scalability of our hardware; Eq.~(\ref{Hilbert Space Dimension}) simplifies to
+That is, we can build a universal quantum computer or fully decodible quantum channel in a single-photon rail encoding. However, by forcing $N=1$, we sacrifice the scalability of our hardware; Eq.~(\ref{Hilbert Space Dimension}) simplifies to
 \begin{equation}
 d_H = M.
 \end{equation}
-To implement $j$ qubits, we would need to build a system of $M=2^j$ modes. Here, we group deterministic blocks of logical qubits together in order to establish scalability. For example, two qubits can be encoded into the $N=1,M=4$ system in Table~\ref{Two Qubit Encoding Table}.
+To implement $j$ qubits, we would need $M=2^j$ optical modes. Despite this, there has been significant experimental effort in developing single photon devices for the purpose of small, specialized applications, mostly in quantum networks~\cite{Starek,Barreiro,Graham,Lanyon}. Here, we propose grouping single-photon blocks of logical qubits together in order to establish scalability; we want to extend the applicability of single-photon computing to general, large scale quantum algorithms. 
+
+As an example, two qubits can be encoded into the $N=1,M=4$ system in Table~\ref{Two Qubit Encoding Table}.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -226,7 +220,7 @@ We can then encode \textit{four} qubits into the $N=2,M=8$ system partitioned in
 	\caption{ \label{Block Encoding Table} Four Qubits encoded into two single-photon blocks}
 \end{center}
 \end{table}
-In this encoding we can apply any single qubit rotation or CNOT gate between logical qubits 1 and 2 or between logical qubits 3 and 4 through simple deterministic manipulation of a single photon~\cite{Adami}. The difficulty here will be to apply entangling operations between blocks. For example, we may want to apply the $\mbox{CNOT}_{1,4}$ gate where the control is qubit 1 and the target is qubit 4. This is an operation that will require the two photons in our system to interact; if a photon is contained in modes 3 or 4, we swap a photon between modes 5 and 6 or between modes 7 and 8. 
+In this encoding we can apply any single qubit rotation or a controlled-U gate between logical qubits 1 and 2 or between logical qubits 3 and 4 through deterministic manipulation of a single photon~\cite{Review Paper,Adami,Lanyon,Bao,Zadeh}. The difficulty here will be to apply entangling operations between blocks. For example, we may want to apply the $\mbox{CNOT}_{1,4}$ gate where the control is qubit 1 and the target is qubit 4. This is an operation that will require the two photons in our system to interact; if a photon is contained in modes 3 or 4, we swap a photon between modes 5 and 6 or between modes 7 and 8. 
 %The reader should note that the dimension of the Hilbert space of these block systems, $d_H$, is typically larger than the dimension of the computational subspace. We define the dimension of the computational subspace $d_C$, and in the case of Table~\ref{Block Encoding Table},
 %\begin{equation}
 %d_C = 16 \quad d_H = \frac{9!}{2! 7!} = 36
@@ -234,7 +228,7 @@ In this encoding we can apply any single qubit rotation or CNOT gate between log
 %All elements of the matrix representation of $\mbox{CNOT}_{1,4}$ outside of the 16 columns of the computational subspace are irrelevant since we assume all input states are contained in this subspace. All entries in the matrix representation of $\mbox{CNOT}_{1,4}$ outside the 16 computational rows but in the 16 computational columns are fixed at 0. This is to prevent any state from spreading out of the computational subspace.
 %\section{Generalized Block Encoding}
 
-Generalizing the 2-qubit block encoding in Table~\ref{Two Qubit Encoding Table}, we can encode $q$ qubits into a block of 1 photon and $2^q$ modes. Again, operations between pairs of logical qubits contained entirely within in a block are trivial to implement, but we will need to test our ability to realize communication between blocks. We assume a  mapping between logical qubit states and Fock states within a single block as in Table~\ref{q Qubit Block Encoding}.
+Generalizing the 2-qubit block encoding in Table~\ref{Two Qubit Encoding Table}, we can encode $q$ qubits into a block of 1 photon and $2^q$ modes. Again, operations between pairs of logical qubits contained entirely within in a block are simple to implement, but we will need to test our ability to realize communication between blocks. We assume a  mapping between logical qubit states and Fock states within a single block as in Table~\ref{q Qubit Block Encoding}.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -254,7 +248,7 @@ Without loss of generality, we can group two blocks together, choose the first q
 \begin{equation}
 \mbox{CNOT}_{first,last} \notin \textbf{A}.
 \end{equation}
-In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit\cite{Dual Rail}. In the KLM~\cite{KLM,Uskov} scheme, the $\mbox{CNOT}_{first,last}$ gate can be applied to dual-rail qubits using probabilistic partial measurements with success probability $p=2/27$. 
+In the special case of $q=1$, our block encoding reduces to the standard dual-rail encoded qubit~\cite{Review Paper}. In the KLM~\cite{KLM,KLM2} scheme, the $\mbox{CNOT}_{first,last}$ gate can be applied to dual-rail qubits using probabilistic partial measurements with success probability $p=2/27$. 
 \section{Elementary Photon-Entangling Operations}
 \label{Section Elementary Photon Entangling Operations}
 
@@ -334,7 +328,7 @@ The focus of our work here was to test our ability to build these operators as p
  \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5 \textwidth]{./PAULA.pdf}
- 	\caption{A measurements assisted transformation described by $E$. An input computational state $\ket{\psi_c}$ and ancilla state $\ket{\psi_a}$ are processed through a linear circuit. Then, a partial measurement $P$ is performed and we are left with the output computational state $\ket{\psi_c^\prime}$.}
+ 	\caption{The measurement-assisted transformation described by $E$. An input computational state $\ket{\psi_c}$ and ancilla state $\ket{\psi_a}$ are processed through a linear circuit. Then, a partial measurement $P$ is performed and we are left with the output computational state $\ket{\psi_c^\prime}$.}
  	\label{Figure - PAULA Operator}
  \end{figure}
 The total action of this non-unitary process can be written formally as a Kraus operator called the \textit{PAULA} operator which acts on any optical quantum state $\ket{\psi_{c}}$ composed of $N_c$ photons in $M_c$ modes contained to some computational subspace;
@@ -422,7 +416,7 @@ where $\epsilon \in \{0,1\}$ is just a real numerical weight for the optimizatio
 Any difference in global phases between the operators in~(\ref{Free Operation}), (\ref{T1 1C2T}) and (\ref{T2 1C2T}) will cause an unwanted relative phase shift between Fock basis states under the full transformation $\mathcal{C}_1$. For this reason, we use the gate fidelity in Eq.~(\ref{Gate Fidelity}) which accounts for a global phase difference between $E$ and $T$. 
 \section{Results}
 \subsection{The Entangling Operation $\mathcal{C}_1$}
-This physical operation acting on three modes is of particular importance; it can be applied a single time to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between them. After extensive numerical optimization of Eq.~\ref{Merit Function For Blocks}, we find the same optimal solution found in~\cite{Uskov}.
+This physical operation acting on three modes is of particular importance; it can be applied a single time to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between them. After extensive numerical optimization of Eq.~\ref{Merit Function For Blocks}, we find the same optimal solution in~\cite{Uskov}.
 \begin{eqnarray}
 & F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber \\
 & S_{max}(E_1) = S_{max}(E_2) = 2/27 \\
@@ -496,7 +490,7 @@ Even within the reach of our numerical simulations, we find an improvement over 
 
  The trend in Fig.~\ref{Figure - Block Encoding Results} suggests order of magnitude improvement in success probability as we increase the size of entangling sub-operations between blocks. Future work will further increase the size of our simulations; a $\mbox{CNOT}_{first,last}$ gate built from larger sub-operations for block size $q \ge 3$ may have significant implications for linear optical quantum computing.
 \acknowledgments
-We are thankful for helpful discussions with N. Sparks, J. Shipman and E. Knudson. This research was supported in part using high performance computing (HPC) resources and services provided by Technology Services at Tulane University, New Orleans, LA.
+We are thankful for helpful discussions with S. Kaminsky, J. Shipman and E. Knubson. This research was supported in part using high performance computing (HPC) resources and services provided by Technology Services at Tulane University, New Orleans, LA.
 \appendix
 \section{Proof of \textit{Fact 1}}
 \label{Proof of Fact 1}
@@ -573,23 +567,55 @@ We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix vector 
 
 \begin{thebibliography}{99}
 
-\bibitem{KLM}  E. Knill, R. Laflamme, G. J. Milburn, Nature (London) 409, 46 (2001).
+\bibitem{Review Paper} Kok et. al. Rev. Mod. Phys. 79, 135 (2007).
 
-\bibitem{GitHub} https://github.com/jsmith74/linear-optics
+\bibitem{Reck} Reck et. al. Phys. Rev. Lett. 73, 58 (1994).
 
-\bibitem{Uskov} Uskov Et. Al.
-Phys. Rev. A 79, 042326 (2009).
+\bibitem{Matt Smith} D. B. Uskov, A. M. Smith, and L. Kaplan
+Phys. Rev. A 81, 012303 (2010).
 
-\bibitem{Adami} https://arxiv.org/abs/quant-ph/9806048
+\bibitem{Braunstein} P. Kok and S. L. Braunstein Phys. Rev. A 62, 064301 – Published 14 November 2000
 
-\bibitem{Review Paper} Kok Et. Al.
-Rev. Mod. Phys. 79, 135 (2007).
+\bibitem{Hong Ou Mandel} C. K. Hong, Z. Y. Ou, and L. Mandel Phys. Rev. Lett. 59, 2044 (1987).
+
+\bibitem{Jake Smith} J.A. Smith, D.B. Uskov, L. Kaplan, Phys. Rev. A 92, 022324 (2015).
 
 \bibitem{EIGEN} http://eigen.tuxfamily.org/
 
-\bibitem{Dual Rail} Dual Rail
+\bibitem{GitHub} https://github.com/jsmith74/linear-optics
 
-\bibitem{Hong Ou Mandel} Hong Ou Mandel
+\bibitem{Adami} N. J. Cerf, C. Adami, and P. G. Kwiat, Phys. Rev. A 57, R1477(R) (1998).
+
+\bibitem{Torma} P. Torma and S. Stenholm Phys. Rev. A 54, 4701 (1996).
+
+\bibitem{Pittman} T. B. Pittman, M. J. Fitch, B. C Jacobs, and J. D. Franson
+Phys. Rev. A 68, 032316 (2003).
+
+\bibitem{Starek} Starek et. al. Scientific Reports 6, Article number: 33475 (2016).
+
+\bibitem{Barreiro} Julio T. Barreiro, Nathan K. Langford, Nicholas A. Peters, and Paul G. Kwiat
+Phys. Rev. Lett. 95, 260501 (2005).
+
+\bibitem{Graham} Graham, T.M. et al. Superdense teleportation using hyperentangled photons. Nat. Commun. 6:7185 doi: 10.1038/ncomms8185 (2015).
+
+\bibitem{Lanyon} Lanyon et. al. Nature Physics 5, 134 - 140 (2009).
+
+\bibitem{Bao} Xiao-Hui Bao, Teng-Yun Chen, Qiang Zhang, Jian Yang, Han Zhang, Tao Yang, and Jian-Wei Pan
+Phys. Rev. Lett. 98, 170502 (2007).
+
+\bibitem{Zadeh} Zadeh, et. al. Nano Lett., 2016, 16 (4), pp 2289–2294
+
+\bibitem{KLM}  E. Knill, R. Laflamme, G. J. Milburn, Nature (London) 409, 46 (2001).
+
+\bibitem{KLM2} arXiv:quant-ph/0512104v1 
+
+\bibitem{Uskov} Uskov Et. Al. Phys. Rev. A 79, 042326 (2009).
+
+\bibitem{Aspuru} Aspuru-Guzik, A., Walther, P. Photonic quantum simulators. Nat. Phys. 8, 285–291 (2012).
+
+\bibitem{Schreiber} A. Schreiber, K. N. Cassemiro, V. Potoček, A. Gábris, P. J. Mosley, E. Andersson, I. Jex, and Ch. Silberhorn
+Phys. Rev. Lett. 104, 050502 (2010).
+
 
 \end{thebibliography}
 
