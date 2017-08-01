@@ -458,14 +458,14 @@ p = (0.0221266)^{2^{2q-3}}.
 We find the optimal solution:
  \begin{eqnarray}
  & F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber\\
- & S_{max}(E_1) = S_{max}(E_2) = 0.00691511 \\
+ & S_{max}(E_1) = S_{max}(E_2) = 0.00695043 \\
  & N_a = 4,M_a=4 \nonumber\\
  & P = \outerproduct{1111}{1111}. \nonumber	
  \end{eqnarray}
 For a block size of $q$ qubits, we find a maximum probability of successfully applying a $\mbox{CNOT}_{first,last}$ gate composed of the operation $\mathcal{C}_4$ using measurement-assisted transformations to be
  \begin{equation}
  \label{2C4T Result}
- p = (0.00691511)^{2^{2q-4}}.
+ p = (0.00695043)^{2^{2q-4}}.
  \end{equation}
  \section{Discussion}
  \label{Section Conclusion}
@@ -480,7 +480,7 @@ Even within the reach of our numerical simulations, we find an improvement over 
  \begin{eqnarray}
  \small & \mbox{CNOT}^3 = \\ \small \nonumber & (I \otimes I \otimes \mbox{CNOT}) \cdot (I \otimes  \mbox{CNOT} \otimes I) \cdot (\mbox{CNOT} \otimes I \otimes I)
  \end{eqnarray}
- acting on four qubits is presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. The total cost of the $\mbox{CNOT}^3$ gate using KLM is then a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$, we can apply the same operation with a success probability of $0.00691511$ using ancilla resources $ N_a,M_a=4 $. This is almost a twenty-fold improvement, while using fewer ancillas.
+ acting on four qubits is presented in Fig.~\ref{Three CNOTs}. Through the standard KLM protocol acting on qubits encoded in the dual-rail, each CNOT gate can be implemented with success probabilty $2/27$ using ancilla resources $N_a,M_a=2$. The total cost of the $\mbox{CNOT}^3$ gate using KLM is then a success probability of $(2/27)^3$ using ancilla resources $ N_a,M_a = 6 $. Grouping these four qubits into two deterministic blocks of two qubits, $q=2$, we can apply the same operation with a success probability of $0.00695043$ using ancilla resources $ N_a,M_a=4 $. This is almost a twenty-fold improvement, while using fewer ancillas.
  \begin{figure}[ht]
  	\centering
  	\includegraphics[width=0.25 \textwidth]{./ThreeCNOTs.pdf}

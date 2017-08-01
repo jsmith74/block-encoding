@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     31082,        717]
-NotebookOptionsPosition[     30658,        697]
-NotebookOutlinePosition[     30997,        712]
-CellTagsIndexPosition[     30954,        709]
+NotebookDataLength[     31139,        718]
+NotebookOptionsPosition[     30716,        698]
+NotebookOutlinePosition[     31054,        713]
+CellTagsIndexPosition[     31011,        710]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -85,7 +85,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"p2C4T", "[", "q_", "]"}], ":=", 
    RowBox[{
-    RowBox[{"(", "0.00691511", ")"}], "^", 
+    RowBox[{"(", "0.00695043", ")"}], "^", 
     RowBox[{"(", 
      RowBox[{"2", "^", 
       RowBox[{"(", 
@@ -229,7 +229,8 @@ Cell[BoxData[{
    3.710087648351161*^9, 3.7100876903820257`*^9}, {3.710087799523035*^9, 
    3.710087838986843*^9}, {3.7100880430612383`*^9, 3.7100881319240637`*^9}, {
    3.710088177778964*^9, 3.710088186976159*^9}, {3.710088281488673*^9, 
-   3.710088281702725*^9}, {3.710088363673841*^9, 3.710088384369626*^9}},
+   3.710088281702725*^9}, {3.710088363673841*^9, 3.710088384369626*^9}, {
+   3.710595928846628*^9, 3.710595931387661*^9}},
  ExpressionUUID -> "0b08d004-554e-46e6-a6cb-836b8f634fa1"],
 
 Cell[BoxData[
@@ -255,9 +256,9 @@ Cell[BoxData[
          AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
            StyleBox["\[FilledSquare]",
             StripOnInput->False,
-            FontSize->32], {0., 0.}], {{{1., -1.2435116016360899`}}, {{
-          2., -4.9740464065443595`}}, {{3., -19.896185626177438`}}, {{
-          4., -79.58474250470975}}}]}, {}}, {}, {}, {{}, {}}}, InsetBox[
+            FontSize->32], {0., 0.}], {{{1., -1.242237937703935}}, {{
+          2., -4.96895175081574}}, {{3., -19.87580700326296}}, {{
+          4., -79.50322801305184}}}]}, {}}, {}, {}, {{}, {}}}, InsetBox[
        TemplateBox[{
         "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(1\\)]\\)\"",
          "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(2\\)]\\),\\!\\(\
@@ -604,9 +605,9 @@ Cell[BoxData[
           GeometricTransformation[
            Inset[
             Style[$CellContext`\[FilledSquare], FontSize -> 32], {0., 
-            0.}], {{{1., -1.2435116016360899`}}, {{
-           2., -4.9740464065443595`}}, {{3., -19.896185626177438`}}, {{
-           4., -79.58474250470975}}}]}, {}}}, {}, {}, {{}, {}}}, {
+            0.}], {{{1., -1.242237937703935}}, {{2., -4.96895175081574}}, {{
+           3., -19.87580700326296}}, {{
+           4., -79.50322801305184}}}]}, {}}}, {}, {}, {{}, {}}}, {
       DisplayFunction -> Identity, GridLines -> {None, None}, DisplayFunction -> 
        Identity, DisplayFunction -> Identity, DisplayFunction -> Identity, 
        PlotRangePadding -> {{0, 0}, {0, 0}}, 
@@ -691,12 +692,12 @@ Cell[BoxData[
    3.710087652954689*^9, 3.710087690734501*^9}, {3.7100878036910467`*^9, 
    3.710087839388131*^9}, {3.710088051312932*^9, 3.710088132274435*^9}, {
    3.7100882743795433`*^9, 3.710088282213112*^9}, {3.710088372104101*^9, 
-   3.710088384793765*^9}},
+   3.710088384793765*^9}, 3.710595932674365*^9},
  ExpressionUUID -> "5ba4fe2b-dd57-4c2d-a3f0-e8b0a25066c3"]
 }, Open  ]]
 },
 WindowSize->{1600, 848},
-WindowMargins->{{23, Automatic}, {0, Automatic}},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
 FrontEndVersion->"11.0 for Linux x86 (64-bit) (September 21, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -716,8 +717,8 @@ Cell[580, 22, 499, 17, 57, "Input"],
 Cell[1082, 41, 127, 2, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1246, 48, 6877, 184, 287, "Input"],
-Cell[8126, 234, 22516, 460, 663, "Output"]
+Cell[1246, 48, 6927, 185, 287, "Input"],
+Cell[8176, 235, 22524, 460, 663, "Output"]
 }, Open  ]]
 }
 ]
