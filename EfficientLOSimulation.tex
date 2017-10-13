@@ -48,22 +48,21 @@
 \affiliation{Tulane University, Department of Physics, New Orleans, Louisiana 70118, USA}
 
  \begin{abstract}
-Here, we numerically simulate probabilistic elementary entangling operations between rail-encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single-photon blocks wherein single-qubit rotations and the CNOT gate are fully deterministic and simple to implement. Inter-block communication is then allowed through said probabilistic entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the size (i.e. number of optical modes operated on) of our elementary entangling operations.
+Here, we numerically simulate probabilistic elementary entangling operations between rail-encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single-photon blocks wherein single-qubit rotations and the CNOT gate are fully deterministic and simple to implement. Inter-block communication is then allowed through said probabilistic entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the number of optical modes operated on by our elementary entangling operations.
 \end{abstract}                                                               
 \date{\today}
 \pacs{03.67.-a, 03.67.Ac, 03.67.Lx, 42.50.Ex}
 \maketitle
 
 \section{Introduction}
+ 
+***information processing using photons advantages and disadvantages - entangling problem***
 
+*** discuss literature on probabilistic operations using dual rail encoding - KLM - producing CNOT and other entangling gates ***
 
-%***information processing using photons advantages and disadvantages - entangling problem***
-%
-%*** discuss literature on probabilistic operations using dual rail encoding - KLM - producing CNOT and other entangling gates ***
-%
-%***why do we want to form blocks***
-%
-%***outline with key results: In Sec.~\ref{Intro}...***
+***why do we want to form blocks move sentence about specialized quantum networks to here.***
+
+***outline with key results: In Sec.~\ref{Intro}...***
 
 \section{Mathematical Background}
 \label{Intro}
@@ -125,7 +124,7 @@ are the Fock states, we define
 \label{m definition}
 \ket{\vec{m}(\vec{n})} = \ket{m_1,m_2,\dots,m_N}
 \end{equation}
-as \textit{some} vector where $m_\alpha$ is the mode-location of photon number $\alpha$. Of course the choice of vector $\ket{\vec{m}(\vec{n})}$ for a given $\ket{\vec{n}}$ is not unique, since photons are indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$. Then the elements of $A(U)$ are given by
+as \textit{some} vector where $m_\alpha$ is the mode-location of photon number $\alpha$. Of course the choice of vector $\ket{\vec{m}(\vec{n})}$ for a given $\ket{\vec{n}}$ is not unique, since photons are indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$. Then the elements of $A(U)$ in the basis $\outerproduct{\vec{n}^\prime}{\vec{n}}$ are given by
 \begin{eqnarray}
 \label{Fact 2}
 A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \,,
@@ -275,7 +274,7 @@ In the special case $q=1$, our block encoding reduces to the standard dual-rail 
 		$\ket{1,0,1}$ & $\rightarrow$ & $\ket{1,1,0}$ \\
 		$\ket{1,1,0}$ & $\rightarrow$ & $\ket{1,0,1}$ \\
 	\end{tabular}
-	\caption{ \label{One Control Two Targets} The $\mathcal{C}_1$  operation acting on three modes expressed as a transformation of Fock basis states. The first mode acts as the control while the second and third modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q -2}$ times.}
+	\caption{ \label{One Control Two Targets} The $\mathcal{C}_1$  operation acting on three modes expressed as a transformation of Fock basis states. The first mode acts as the control while the second and third modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q -2}$ times for block size $q \ge 1 $.}
 \end{center}
 \end{table}
 Here, the first mode is a control mode, while the second and third modes are target modes. We apply the $\mathcal{C}_1$  operator four times to build the $\mbox{CNOT}_{1,4}$ in $q=2$, where in each sub-operation the control mode take values 3 or 4 in Table~\ref{Block Encoding Table} and the pair of target modes takes values 5,6 or 7,8. The end result is the $\mbox{CNOT}_{1,4}$ operation: If a photon is in mode 3 or 4 we swap a photon between mode 5 and mode 6 or a photon between mode 7 and mode 8. More generally, a $\mbox{CNOT}_{\rm first,last}$ gate for block size $q$ can be constructed by applying the $\mathcal{C}_1$  operation $2^{2q-2}$ times by setting the control mode to each of the modes in the second half of the control block, and the two target modes to every sequential pair of modes in the target block. Because there will never be more than a single photon in a block, the basis states in Table~\ref{One Control Two Targets} will be the only possible inputs to the $\mathcal{C}_1$  transformation. If $\mathcal{C}_1$ is performed correctly, photon leakage between blocks cannot occur.
@@ -294,7 +293,7 @@ Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mat
 		$\ket{0,1,0,1}$ & $\rightarrow$ & $\ket{0,1,1,0} $ \\ 
 		$\ket{0,1,1,0}$ & $\rightarrow$ & $\ket{0,1,0,1} $ \\ \\
 	\end{tabular}
-	\caption{ \label{Two Controls Two Targets} The $\mathcal{C}_2$  operation acting on four modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last two modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
+	\caption{ \label{Two Controls Two Targets} The $\mathcal{C}_2$  operation acting on four modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last two modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 3}$ times for block size $ q \ge 2 $.}
 \end{center}
 \end{table}
 \begin {table}[h]
@@ -311,7 +310,7 @@ Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mat
 		$\ket{1,0,1,0,0}$  & $\rightarrow$ & $\ket{1,1,0,0,0}$ \\
 		$\ket{1,1,0,0,0}$  & $\rightarrow$ & $\ket{1,0,1,0,0}$ \\
 	\end{tabular}
-	\caption{ \label{One Control Four Targets} The $\mathcal{C}_3$ operation acting on five modes expressed as a transformation of Fock basis states. The first mode acts as the control while the last four modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 3}$ times.}
+	\caption{ \label{One Control Four Targets} The $\mathcal{C}_3$ operation acting on five modes expressed as a transformation of Fock basis states. The first mode acts as the control while the last four modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 3}$ times for block size $q \ge 2$.}
 \end{center}
 \end{table}
 \begin {table}[h]
@@ -333,7 +332,7 @@ Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mat
 		$\ket{1,0,0,1,0,0}$  & $\rightarrow$ & $\ket{1,0,1,0,0,0}$ \\
 		$\ket{1,0,1,0,0,0}$  & $\rightarrow$ & $\ket{1,0,0,1,0,0}$ \\
 	\end{tabular}
-	\caption{ \label{Two Controls Four Targets} The $\mathcal{C}_4$ operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 4}$ times.}
+	\caption{ \label{Two Controls Four Targets} The $\mathcal{C}_4$ operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 4}$ times for block size $q \ge 2$.}
 \end{center}
 \end{table}
 The focus of our work here is to test our ability to build these operators as probabilistic measurement-assisted transformations. By this, we mean that we augment our optical computational state $\ket{\psi_c}$ with an ancilla state $\ket{\psi_a}$, apply a linear optical transformation, and then perform a partial projective measurement (refer to Fig.~\ref{Figure - PAULA Operator}). 
