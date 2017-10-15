@@ -55,14 +55,11 @@ Here, we numerically simulate probabilistic elementary entangling operations bet
 \maketitle
 
 \section{Introduction}
+ Since the discovery of several high-profile quantum algorithms in the 1990's, there has been significant interest in developing a universal quantum computer that is both scalable and reliable. Among the wide variety of physical systems in which quantum behavior is observed, photon quanta have persisted as worthy candidates for carrying out information tasks. In particular, photons do not strongly interact with their environment and thus optical quantum states tend to resist decoherence better than other kinds of physical qudit states. On the other hand, photon-photon interaction also tends to be weak; linear entangling operations are limited to Hong-Ou-Mandel interference. Early proposals for an optical quantum computer circumvented this problem by encoding information into the degrees of freedom of a single photon, but this approach lacked scalability. In 2001, Knill Laflamme and Milburn discovered that universal entangling operations between qubits encoded into separate photons (i.e. the CNOT or CZ gate) could be achieved probabilistically using ancillla photons and partial measurements. Despite this, significant experimental effort continues to develop small single-photon devices for specialized applications, mostly in quantum networks~\cite{Starek,Barreiro,Graham,Lanyon}.
  
-***information processing using photons advantages and disadvantages - entangling problem***
-
-*** discuss literature on probabilistic operations using dual rail encoding - KLM - producing CNOT and other entangling gates ***
-
-***why do we want to form blocks move sentence about specialized quantum networks to here.***
-
-***outline with key results: In Sec.~\ref{Intro}...***
+  In this paper, we explore a balance between single photon and multi-photon optical quantum computing. We propose encoding a few qubits into single-photon blocks so that within each block "entangling" operations between qubits are carried out through simple deterministic linear elements. Success of this model depends completely on reliable communication between blocks which is accomplished through photon-pair entangling operations. Here, we numerically test our ability to carry out these inter-block operations using only linear optical circuit elements  (i.e. beam splitters and phase shifters), ancilla states and probabilistic partial measurements.
+  
+  This paper is presented as follows: in Sections~\ref{Intro} and~\ref{Section on Protocol} we review mathematical definitions and methods for simulating linear optical quantum circuits. Then, in Section~\ref{Section Block Encoding}, we discuss the single-photon block encoding model in detail. In Sections~\ref{Section Elementary Photon Entangling Operations}-\ref{Section Numerical Testing} we present the most fundamental entangling operations between pairs of photons and a formalism for quantifying their success. Finally, in Sections~\ref{Section on Results}-\ref{Section Conclusion} we present our results.
 
 \section{Mathematical Background}
 \label{Intro}
@@ -175,7 +172,7 @@ With Eq.~(\ref{Fact 1}), Eq.~(\ref{Fact 2}) and the \textit{Facts}, we can now p
  Initialization needs only to be performed once; we can then quickly build $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte Carlo applications or numerical optimization. A free-to-use implementation of this algorithm written in C++ and Eigen~\cite{EIGEN} is available for reference on Github~\cite{GitHub}.
 \section{Rail Encoding Qubits into Deterministic Blocks}
 \label{Section Block Encoding}
-It is well established that we can implement any quantum transformation acting on states in the Fock basis using linear optical components if only a singlephoton is in the system~\cite{Adami,Torma,Pittman}:
+It is well established that we can implement any quantum transformation acting on states in the Fock basis using linear optical components if only a single photon is in the system~\cite{Adami,Torma,Pittman}:
 \begin{equation}
 \label{Isomorphism}
 	\mbox{If } N=1, \quad \textbf{A} = \textbf{U}(d_H)\,.
@@ -184,7 +181,7 @@ That is, we can build a universal quantum computer or fully decodable quantum ch
 \begin{equation}
 d_H = M.
 \end{equation}
-To implement $j$ qubits, we would need $M=2^j$ optical modes. Despite this, there has been significant experimental effort in developing small single-photon devices for specialized applications, mostly in quantum networks~\cite{Starek,Barreiro,Graham,Lanyon}. Here, we propose grouping single-photon blocks of logical qubits together in order to establish scalability; we want to extend the applicability of single-photon computing to general, large-scale quantum algorithms. 
+To implement $j$ qubits, we would need $M=2^j$ optical modes. Here, we propose grouping single-photon blocks of logical qubits together in order to establish scalability; we want to extend the applicability of single-photon computing to general, large-scale quantum algorithms. 
 
 As an example, two qubits can be encoded into an $N=1,M=4$ system as shown in Table~\ref{Two Qubit Encoding Table}.
 \begin {table}[h]
@@ -428,8 +425,9 @@ where $\epsilon \in \{0,1\}$ is a real-valued numerical weight for the optimizat
 
 Any difference in global phases between the operations in Eqs.~(\ref{Free Operation}), (\ref{T1 1C2T}), and (\ref{T2 1C2T}) will cause an unwanted relative phase shift between Fock basis states in the full transformation $\mathcal{C}_1$. For this reason, we use the gate fidelity amplitude defined in Eq.~(\ref{Gate Fidelity}), which accounts for a global phase difference between $E$ and $T$. 
 \section{Results}
+\label{Section on Results}
 \subsection{The Entangling Operation $\mathcal{C}_1$}
-This physical operation acting on three modes is of particular importance; it can be applied once to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between the two qubits. Numerical optimization of Eq.~(\ref{Merit Function For Blocks}) leads to the same optimal solution as the one given in~\cite{Uskov}, with two ancilla photons in two modes:
+The physical operation $\mathcal{C}_1$ acting on three modes is of particular importance; it can be applied once to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between the two qubits. Numerical optimization of Eq.~(\ref{Merit Function For Blocks}) leads to the same optimal solution as the one given in~\cite{Uskov}, with two ancilla photons in two modes:
 \begin{eqnarray}
 & F(E_1,T_1)_{\rm max} = F(E_2,T_2)_{\rm max} = 1 \nonumber \\
 & S_{\rm max}(E_1) = S_{\rm max}(E_2) = 2/27 \\
@@ -563,7 +561,7 @@ to compress it:
 		m_N^\prime = m_{N-1}^\prime}}
 \left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle.
 \end{eqnarray}
-Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)} = \frac{\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger}{\prod_{p=1}^{M} \sqrt{ n_p^\prime(\vec{m}^\prime)! }} |\vec{0} \rangle$ and
+Finally, we set $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle =  \prod_{p=1}^{M} \sqrt{ n_p^\prime(\vec{m}^\prime)! } \ket{\vec{n}^\prime(\vec{m}^\prime)} $ and
 \begin{eqnarray}
 \label{Fact 2 Proof Checkpoint 2}
 \small \ket{\psi^\prime} = \sum_{\vec{n}} c_{\vec{n}}  \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \\ \sum^M_{\substack{m_1^\prime = 1\\
@@ -575,8 +573,6 @@ Finally, we define $\ket{\vec{n}^\prime(\vec{m}^\prime)} = \frac{\hat{a}_{m_1^\p
 \end{eqnarray}
 We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix-vector product, Eq.~(\ref{Matrix Vector Product}), if we define $A(U)$ as in Eq.~(\ref{Fact 2}).  $ \blacksquare $
 
-
-	*** list all authors, first initial before last name, comma after names, volume in boldface ***
 	
 \begin{thebibliography}{99}
 	
