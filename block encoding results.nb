@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     30538,        715]
-NotebookOptionsPosition[     29871,        691]
-NotebookOutlinePosition[     30205,        706]
-CellTagsIndexPosition[     30162,        703]
+NotebookDataLength[     30760,        718]
+NotebookOptionsPosition[     30092,        694]
+NotebookOutlinePosition[     30427,        709]
+CellTagsIndexPosition[     30384,        706]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -140,7 +140,7 @@ Cell[BoxData[{
     RowBox[{"C1", ",", "C2", ",", "C4"}], "}"}], ",", 
    RowBox[{"AxesLabel", "\[Rule]", 
     RowBox[{"{", 
-     RowBox[{"\"\<q\>\"", ",", "\"\<S(E)\>\""}], "}"}]}], ",", 
+     RowBox[{"\"\<q\>\"", ",", "\"\<p\>\""}], "}"}]}], ",", 
    RowBox[{"Ticks", "\[Rule]", 
     RowBox[{"{", 
      RowBox[{
@@ -188,9 +188,9 @@ Cell[BoxData[{
          RowBox[{
          "\"\<\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(1\)]\)\>\"", ",", 
           "\"\<\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \
-\(2\)]\),\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(3\)]\)\>\"", ",", 
-          "\"\<\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(4\)]\)\>\""}], 
-         "}"}], ",", 
+\(2\)]\)\[TildeEqual]\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(3\)]\)\>\"", 
+          ",", "\"\<\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(4\)]\)\>\""}],
+          "}"}], ",", 
         RowBox[{"LegendFunction", "\[Rule]", "\"\<Frame\>\""}]}], "]"}], ",", 
       
       RowBox[{"{", 
@@ -231,7 +231,9 @@ Cell[BoxData[{
    3.710088177778964*^9, 3.710088186976159*^9}, {3.710088281488673*^9, 
    3.710088281702725*^9}, {3.710088363673841*^9, 3.710088384369626*^9}, {
    3.710595928846628*^9, 3.710595931387661*^9}, {3.7169043585029*^9, 
-   3.716904363742235*^9}},ExpressionUUID->"0b08d004-554e-46e6-a6cb-\
+   3.716904363742235*^9}, 3.717172852173397*^9, {3.717173043826243*^9, 
+   3.717173050464946*^9}, {3.717173105336203*^9, 
+   3.717173111330151*^9}},ExpressionUUID->"0b08d004-554e-46e6-a6cb-\
 836b8f634fa1"],
 
 Cell[BoxData[
@@ -260,8 +262,8 @@ Cell[BoxData[
     InsetBox[
      TemplateBox[{
       "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(1\\)]\\)\"",
-       "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \
-\\(2\\)]\\),\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(3\\)]\\)\"",
+       "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(2\\)]\\)\
+\[TildeEqual]\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(3\\)]\\)\"",
        "\"\\!\\(\\*SubscriptBox[\\(\[ScriptCapitalC]\\), \\(4\\)]\\)\""},
       "PointLegend",
       DisplayFunction->(FormBox[
@@ -527,7 +529,7 @@ Cell[BoxData[
    Axes->{True, True},
    AxesLabel->{
      FormBox["\"q\"", TraditionalForm], 
-     FormBox["\"S(E)\"", TraditionalForm]},
+     FormBox["\"p\"", TraditionalForm]},
    AxesOrigin->{0.7675, -183.26875508495525`},
    DisplayFunction->Identity,
    Frame->{{False, False}, {False, False}},
@@ -611,7 +613,7 @@ Cell[BoxData[
          Log[
           Rational[812, 27]]}}, PlotRangeClipping -> True, ImagePadding -> 
       All, DisplayFunction -> Identity, AspectRatio -> GoldenRatio^(-1), 
-      Axes -> {True, True}, AxesLabel -> {"q", "S(E)"}, 
+      Axes -> {True, True}, AxesLabel -> {"q", "p"}, 
       AxesOrigin -> {0.7675, -183.26875508495525`}, DisplayFunction :> 
       Identity, Frame -> {{False, False}, {False, False}}, 
       FrameLabel -> {{None, None}, {None, None}}, FrameTicks -> {{
@@ -655,7 +657,7 @@ Cell[BoxData[
          AbsoluteThickness[1.6]]}, {
        "\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(1\)]\)", 
         "\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \
-\(2\)]\),\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(3\)]\)", 
+\(2\)]\)\[TildeEqual]\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(3\)]\)", 
         "\!\(\*SubscriptBox[\(\[ScriptCapitalC]\), \(4\)]\)"}, 
        LegendMarkers -> {{$CellContext`\[FilledCircle], 
           30}, {$CellContext`\[FilledUpTriangle], 
@@ -685,12 +687,13 @@ Cell[BoxData[
    3.710087839388131*^9}, {3.710088051312932*^9, 3.710088132274435*^9}, {
    3.7100882743795433`*^9, 3.710088282213112*^9}, {3.710088372104101*^9, 
    3.710088384793765*^9}, 3.710595932674365*^9, {3.716904346999989*^9, 
-   3.716904365591309*^9}},ExpressionUUID->"d1276796-fc3e-4d14-9bd2-\
-a10389fe7716"]
+   3.716904365591309*^9}, 3.717172853480391*^9, {3.717173108605247*^9, 
+   3.717173111987771*^9}},ExpressionUUID->"8a64927a-7f7c-4d8e-983d-\
+fb93c98834c1"]
 }, Open  ]]
 },
 WindowSize->{1600, 876},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowMargins->{{0, Automatic}, {Automatic, 56}},
 FrontEndVersion->"11.1 for Linux x86 (64-bit) (April 18, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -712,10 +715,10 @@ Cell[1082, 41, 127, 2, 31, "Output", "ExpressionUUID" -> \
 "5447a422-0051-4944-acd6-9c29bc6df6c9"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1246, 48, 6973, 186, 264, "Input", "ExpressionUUID" -> \
+Cell[1246, 48, 7104, 188, 287, "Input", "ExpressionUUID" -> \
 "0b08d004-554e-46e6-a6cb-836b8f634fa1"],
-Cell[8222, 236, 21633, 452, 663, "Output", "ExpressionUUID" -> \
-"d1276796-fc3e-4d14-9bd2-a10389fe7716"]
+Cell[8353, 238, 21723, 453, 630, "Output", "ExpressionUUID" -> \
+"8a64927a-7f7c-4d8e-983d-fb93c98834c1"]
 }, Open  ]]
 }
 ]
