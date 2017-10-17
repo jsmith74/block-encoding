@@ -55,11 +55,11 @@ Here, we numerically simulate probabilistic elementary entangling operations bet
 \maketitle
 
 \section{Introduction}
- Since the discovery of several highly profitable quantum algorithms in the 1990's, there has been significant interest in developing hardware that is reliable and scalable. One particular approach has been the linear optical quantum computer, where qubits are encoded into the spatial and polarization states of a small number of photons. The advantage to using photons is that they tend to not interact with their environment and optical quantum states are thus naturally resistant to decoherence~\cite{Review Paper}. On the other hand, photon-photon interaction also tends to be weak; linear entangling operations are limited to bosonic interference effects~\cite{Review Paper,Hong Ou Mandel}. Early proposals for an optical quantum computer circumvented this problem by encoding information into the degrees of freedom of a single photon, but this approach lacked scalability~\cite{Adami,Torma,Pittman}. In 2001, Knill Laflamme and Milburn discovered that universal entangling operations between a pair of qubits encoded into separate photons could be achieved probabilistically using ancillla photons and partial measurements~\cite{KLM,KLM2}. Still, experimental efforts continue to develop and use single-photon devices, often for specialized applications~\cite{Bao,Starek,Barreiro,Graham,Lanyon, Schreiber, Sansoni,Zadeh}.
+ Since the discovery of several high profile quantum algorithms in the 1990's, there has been significant interest in developing programmable quantum hardware that is both reliable and scalable. One particular approach has been the linear optical quantum computing paradigm, where qubits are encoded into the spatial and polarization states of a small number of photons. The advantage to using photons is that they tend to not interact with their environment and optical quantum states are thus naturally resistant to decoherence~\cite{Review Paper}. On the other hand, photon-photon interaction also tends to be weak and linear entangling operations are limited to bosonic interference effects~\cite{Review Paper,Hong Ou Mandel}. Early proposals for an optical quantum computer circumvented this problem by encoding information into the degrees of freedom of a single photon, but this approach limited scalability~\cite{Adami,Torma,Pittman}. In 2001, Knill Laflamme and Milburn discovered that universal entangling operations between a pair of qubits encoded into separate photons could be achieved probabilistically using ancillla photons and partial measurements~\cite{KLM,KLM2}. Still, experimental efforts continue to develop and use single-photon devices, often for specialized applications~\cite{Bao,Starek,Barreiro,Graham,Lanyon, Schreiber, Sansoni,Zadeh}.
  
   In our work here, we explore a balance between the reliability of single photon computing and the scalability of multi-photon computing. We propose encoding a few qubits into single-photon blocks so that within each block ``entangling'' operations between qubits are carried out through simple deterministic linear elements. Success of this model depends completely on reliable communication between blocks which is accomplished through photon-pair entangling operations. Here, we numerically test our ability to carry out these inter-block operations using only linear optical circuit elements  (i.e. beam splitters and phase shifters), ancilla states and probabilistic partial measurements.
   
-  This paper is presented as follows: in Sections~\ref{Intro} and~\ref{Section on Protocol} we review mathematical definitions and methods for simulating linear optical quantum circuits. Then, in Section~\ref{Section Block Encoding}, we discuss the single-photon block encoding model in detail. In Sections~\ref{Section Elementary Photon Entangling Operations}-\ref{Section Numerical Testing} we present the most fundamental entangling operations between pairs of photons and a formalism for quantifying their success. Finally, in Sections~\ref{Section on Results}-\ref{Section Conclusion} we present our results.
+  This paper is presented as follows: in Sections~\ref{Intro} and~\ref{Section on Protocol} we review mathematical definitions and introduce methods for simulating linear optical quantum circuits. Then, in Section~\ref{Section Block Encoding}, we discuss the single-photon block encoding model in detail. In Sections~\ref{Section Elementary Photon Entangling Operations}-\ref{Section Numerical Testing} we present a formalism for describing the most fundamental entangling operations between pairs of photons. Finally, in Sections~\ref{Section on Results}-\ref{Section Conclusion} we present our results.
 
 \section{Mathematical Background}
 \label{Intro}
@@ -97,7 +97,7 @@ If $N \ge 2$, the group $\textbf{A}=\{ A(U) \}$  of all possible linear optical 
 \label{Proper Subgroup}
 \textbf{A} \subset \textbf{U}(d_H).
 \end{equation}
-In other words, not all quantum transformations on multi-photon Fock states can be implemented via linear optical circuits. Indeed, the accessible linear entangling operations between photons are generally found to be severely restrictive~\cite{Matt Smith,Braunstein,Jake Smith,Lougovski,Lutkenhaus,Carollo,Pavicic}. 
+In other words, not all quantum transformations on multi-photon Fock states can be implemented via linear optical circuits. Indeed, the accessible linear entangling operations between photons are generally found to be severely restricting~\cite{Matt Smith,Braunstein,Jake Smith,Lougovski,Lutkenhaus,Carollo,Pavicic}. 
 \section{Numerical Simulation of Linear Optical Devices}
 \label{Section on Protocol}
 For an optical circuit made up of $K$ components,
@@ -627,7 +627,7 @@ Phys. Rev. A {\bf 81}, 012303 (2010).
 
 \bibitem{Carollo} A. Carollo and G. M. Palma, J. Mod. Opt. {\bf 49}, 1147 (2002).
 
-\bibitem{Pavicic} M. Pavicic Phys. Rev. A {\bf 107} 080403 (2011) (retracted).
+\bibitem{Pavicic} M. Pavicic Phys. Rev. Lett. {\bf 107} 080403 (2011) (retracted).
 
 \bibitem{GitHub} https://github.com/jsmith74/linear-optics
 
