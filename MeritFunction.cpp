@@ -11,7 +11,7 @@
 
 void MeritFunction::setMeritFunction(double EPS){
 
-    diffPhotonNumb = 2;
+    diffPhotonNumb = 3;
 
     std::vector<int> photons,compSubspaceDim;
     std::vector<Eigen::MatrixXi> computationalBasisIn,computationalBasisOut;
@@ -22,8 +22,9 @@ void MeritFunction::setMeritFunction(double EPS){
     computationalBasisIn.resize(diffPhotonNumb);
     computationalBasisOut.resize(diffPhotonNumb);
 
-    photons[0] = 1;
-    photons[1] = 2;
+    photons[0] = 0;
+    photons[1] = 1;
+    photons[2] = 2;
 
     int modes = 3;
 
@@ -33,33 +34,40 @@ void MeritFunction::setMeritFunction(double EPS){
     int measModes = 2;
     int measOutcome = 4;
 
-    compSubspaceDim[0] = 3;
-    compSubspaceDim[1] = 2;
+    compSubspaceDim[0] = 1;
+    compSubspaceDim[1] = 3;
+    compSubspaceDim[2] = 2;
 
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisIn.at(i).resize(compSubspaceDim[i],modes);
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisOut.at(i).resize(compSubspaceDim[i],modes);
 
-    computationalBasisIn[0]   << 1,0,0,
+    computationalBasisIn[0] << 0,0,0;
+
+    computationalBasisOut[0] << 0,0,0;
+
+    computationalBasisIn[1]   << 1,0,0,
                                  0,1,0,
                                  0,0,1;
 
-    computationalBasisOut[0]  << 1,0,0,
+    computationalBasisOut[1]  << 1,0,0,
                                  0,1,0,
                                  0,0,1;
 
-    computationalBasisIn[1]   << 1,1,0,
+    computationalBasisIn[2]   << 1,1,0,
                                  1,0,1;
 
-    computationalBasisOut[1]  << 1,1,0,
+    computationalBasisOut[2]  << 1,1,0,
                                  1,0,1;
 
     for(int i=0;i<diffPhotonNumb;i++) IdealOp.at(i).resize(compSubspaceDim.at(i),compSubspaceDim.at(i));
 
-    IdealOp[0] << 1.0,0.0,0.0,
+    IdealOp[0] << 1.0;
+
+    IdealOp[1] << 1.0,0.0,0.0,
                   0.0,1.0,0.0,
                   0.0,0.0,1.0;
 
-    IdealOp[1] << 0.0,1.0,
+    IdealOp[2] << 0.0,1.0,
                   1.0,0.0;
 
     funcDimension = (modes + ancillaModes) * (modes + ancillaModes) + 2*g(ancillaPhotons,ancillaModes);
@@ -156,18 +164,12 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     }
 
-    return -fidelity[0] - fidelity[1] - eps * (successProbability[0] + successProbability[1]);
+    return -fidelity[0] - fidelity[1] - fidelity[2] - eps * ( successProbability[0] + successProbability[1] + successProbability[2] );
 
 }
 
 
 void MeritFunction::setFidelity(int& i){
-
-    //fidelity[i] = norm( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
-
-    //fidelity[i] /= sqrt( norm( ( PAULa[i].conjugate().transpose() * PAULa[i] ).trace() ) );
-
-    //fidelity[i] /= IdealOp[i].cols();
 
     fidelity[i] = std::real( ( PAULa[i].conjugate().transpose() * IdealOp[i] ).trace() );
 
@@ -214,33 +216,36 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
     std::ofstream outfile("results.dat",std::ofstream::app);
 
-    outfile << std::setprecision(16) << fidelity[0] * fidelity[1] << std::endl;
+    outfile << std::setprecision(16) << fidelity[0] * fidelity[1] * fidelity[2] << std::endl;
 
     outfile.close();
 
-    if( fidelity[0]*fidelity[1] > FIDELITY_THRESHOLD ){
+    if( fidelity[1]*fidelity[2] > FIDELITY_THRESHOLD ){
 
         outfile.open("Success_Probabilities.dat",std::ofstream::app);
 
-        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << std::endl;
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << fidelity[2] << "\t" << successProbability[0] << "\t";
+        outfile << successProbability[1] << "\t" << successProbability[2] << std::endl;
 
         outfile.close();
 
         outfile.open("Gate_Check.dat",std::ofstream::app);
 
-        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << std::endl;
+        outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << fidelity[2] << "\t" << successProbability[0] << "\t";
+        outfile << successProbability[1] << "\t" << successProbability[2] << std::endl;
 
-        outfile << std::setprecision(4) << PAULa[0] << std::endl << std::endl << PAULa[1] << std::endl << std::endl << std::endl;
+        outfile << std::setprecision(4) << PAULa[0] << std::endl << std::endl << PAULa[1] << std::endl << std::endl;
+        outfile << PAULa[2] << std::endl << std::endl << std::endl;
 
         outfile.close();
 
-        if( (successProbability[0]+successProbability[1]) / 2 > globalSuccess){
+        if( (successProbability[0]+successProbability[1]+successProbability[2]) / 3 > globalSuccess){
 
-            globalSuccess = (successProbability[0]+successProbability[1]) / 2;
+            globalSuccess = (successProbability[0]+successProbability[1]+successProbability[2]) / 3;
 
             outfile.open(filenameMax.c_str());
 
-            outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << globalSuccess << std::endl;
+            outfile << eps << "\t" << std::setprecision(16) << fidelity[0] << "\t" << fidelity[1] << "\t" << fidelity[2] << "\t" << successProbability[0] << "\t" << successProbability[1] << "\t" << successProbability[2] << "\t" << globalSuccess << std::endl;
 
             outfile.close();
 

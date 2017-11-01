@@ -121,7 +121,7 @@ are the Fock states, we define
 \label{m definition}
 \ket{\vec{m}(\vec{n})} = \ket{m_1,m_2,\dots,m_N}
 \end{equation}
-as \textit{some} vector where $m_\alpha$ is the mode-location of photon number $\alpha$. Of course the choice of vector $\ket{\vec{m}(\vec{n})}$ for a given $\ket{\vec{n}}$ is not unique, since photons are indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$. Then the elements of $A(U)$ in the basis $\outerproduct{\vec{n}^\prime}{\vec{n}}$ are given by
+where $m_\alpha$ is the mode-location of photon number $\alpha$. Of course the choice of vector $\ket{\vec{m}(\vec{n})}$ for a given $\ket{\vec{n}}$ is not unique, since photons are indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$. Then the elements of $A(U)$ in the basis $\outerproduct{\vec{n}^\prime}{\vec{n}}$ are given by
 \begin{eqnarray}
 \label{Fact 2}
 A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \,, 
@@ -357,7 +357,7 @@ containing the same number of photons $N_a$ and modes $M_a$ as the input ancilla
 \end{equation}
 $E$ can be represented as a $d_c^\prime$ by $d_c$ rectangular matrix.
 
-A measure of gate fidelity (more precisely, the real part of the fidelity amplitude) between the \textit{PAULA} operator $E$ and a unitary target operation $T$ can be defined by
+A measure of gate fidelity (more precisely, the real part of the fidelity amplitude) between the \textit{PAULA} operator $E$ and a target operation $T$ can be defined by
 \begin{equation}
 \label{Gate Fidelity}
 F(E,T) = \frac{\Re[\tr(E^\dagger T)]}{\sqrt{d_c \tr(E^\dagger E)} }.
@@ -409,11 +409,12 @@ in the basis
 & \{ \ket{\vec{n}^\prime_c } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}. \nonumber
 \end{eqnarray}
 
-We define the \textit{PAULA} operators  $E_1(U,L_a)$ and  $E_2(U,L_a)$ separately for the $N_c=1$ and $N_c=2$ subspaces,
+We define the \textit{PAULA} operators $E_{N_c}(U,L_a)$ separately for the $N_c=0$, $N_c=1$ and $N_c=2$ subspaces,
 and numerically maximize the function
 \begin{equation}
 \label{Merit Function For Blocks}
-\small f(U,\psi_a) = F(E_1,T_1) + F(E_2,T_2) +\epsilon (S(E_1) + S(E_2) ) \,,
+\small f(U,\psi_a) = \sum_{N_c=0}^{2} \Big[ F(E_{N_c},T_{N_c}) + \epsilon S(E_{N_c}) \Big]
+%\small f(U,\psi_a) = F(E_1,T_1) + F(E_2,T_2) +\epsilon (S(E_1) + S(E_2) ) \,,
 \end{equation}
 where $\epsilon > 0$ is a real-valued numerical weight for the optimization, or equivalently a Lagrange multiplier. We systematically vary parameters $\epsilon$, $N_a$, $M_a$, and partial measurement $P$, and repeat maximization of Eq.~(\ref{Merit Function For Blocks}) to find global solutions.
 
