@@ -1,4 +1,4 @@
-\documentclass[aps,pra,twocolumn,showpacs,superscriptaddress,floatfix,10pt]{revtex4}
+\documentclass[aps,pra,twocolumn,superscriptaddress,floatfix,10pt]{revtex4}
 \usepackage{graphicx}
 \usepackage{psfrag}
 \usepackage{amssymb,amsmath}
@@ -51,15 +51,15 @@
 Here, we numerically simulate probabilistic elementary entangling operations between rail-encoded photons for the purpose of scalable universal quantum computation or communication. We propose grouping logical qubits into single-photon blocks wherein single-qubit rotations and the CNOT gate are fully deterministic and simple to implement. Inter-block communication is then allowed through said probabilistic entangling operations. We find a promising trend in the increasing probability of successful inter-block communication as we increase the number of optical modes operated on by our elementary entangling operations.
 \end{abstract}                                                               
 \date{\today}
-\pacs{03.67.-a, 03.67.Ac, 03.67.Lx, 42.50.Ex}
+%\pacs{03.67.-a, 03.67.Ac, 03.67.Lx, 42.50.Ex}
 \maketitle
 
 \section{Introduction}
- Since the discovery of several high profile quantum algorithms in the 1990's, there has been significant interest in developing programmable quantum hardware that is both reliable and scalable. One particular approach has been the linear optical quantum computing paradigm, where qubits are encoded into the spatial and polarization states of a small number of photons. The advantage to using photons is that they tend to not interact with their environment and optical quantum states are thus naturally resistant to decoherence~\cite{Review Paper}. On the other hand, photon-photon interaction also tends to be weak and linear entangling operations are limited to bosonic interference effects~\cite{Review Paper,Hong Ou Mandel}. Early proposals for an optical quantum computer circumvented this problem by encoding information into the degrees of freedom of a single photon, but this approach limited scalability~\cite{Adami,Torma,Pittman}. In 2001, Knill Laflamme and Milburn discovered that universal entangling operations between a pair of qubits encoded into separate photons could be achieved probabilistically using ancillla photons and partial measurements~\cite{KLM,KLM2}. Still, experimental efforts continue to develop and use single-photon devices, often for specialized applications~\cite{Bao,Starek,Barreiro,Graham,Lanyon, Schreiber, Sansoni,Zadeh}.
+ Since the discovery of several high-profile quantum algorithms in the 1990s, there has been significant interest in developing programmable quantum hardware that is both reliable and scalable. One particular approach has been the linear optical quantum computing paradigm, where qubits are encoded into the spatial and polarization states of a small number of photons. The advantage to using photons is that they tend to not interact with their environment and optical quantum states are thus naturally resistant to decoherence~\cite{Review Paper}. On the other hand, photon-photon interaction is weak and linear entangling operations are limited to bosonic interference effects~\cite{Review Paper,Hong Ou Mandel}. Early proposals for an optical quantum computer circumvented this problem by encoding information into the degrees of freedom of a single photon, but this approach limited scalability~\cite{Adami,Torma,Pittman}. In 2001, Knill, Laflamme, and Milburn discovered that universal entangling operations between a pair of qubits encoded into separate photons could be achieved probabilistically using ancillla photons and partial measurements~\cite{KLM,KLM2}. Still, experimental efforts continue to develop and use single-photon devices, often for specialized applications~\cite{Bao,Starek,Barreiro,Graham,Lanyon, Schreiber, Sansoni,Zadeh}.
  
-  In our work here, we explore a balance between the reliability of single photon computing and the scalability of multi-photon computing. We propose encoding a few qubits into single-photon blocks so that within each block ``entangling'' operations between qubits are carried out through simple deterministic linear elements. Success of this model depends completely on reliable communication between blocks which is accomplished through photon-pair entangling operations. Here, we numerically test our ability to carry out these inter-block operations using only linear optical circuit elements  (i.e. beam splitters and phase shifters), ancilla states and probabilistic partial measurements.
+  In our work here, we explore a balance between the reliability of single photon computing and the scalability of multi-photon computing. We propose encoding a few qubits into single-photon blocks so that within each block ``entangling'' operations between qubits are carried out through simple deterministic linear elements. Success of this model depends completely on reliable communication between blocks, which is accomplished through photon-pair entangling operations. Here, we numerically test our ability to carry out these inter-block operations using only linear optical circuit elements  (i.e., beam splitters and phase shifters), ancilla states, and probabilistic partial measurements.
   
-  This paper is presented as follows: in Sections~\ref{Intro} and~\ref{Section on Protocol} we review mathematical definitions and introduce methods for simulating linear optical quantum circuits. Then, in Section~\ref{Section Block Encoding}, we discuss the single-photon block encoding model in detail. In Sections~\ref{Section Elementary Photon Entangling Operations}-\ref{Section Numerical Testing} we present a formalism for describing the most fundamental entangling operations between pairs of photons. Finally, in Sections~\ref{Section on Results}-\ref{Section Conclusion} we present our results.
+  This paper is organized as follows: in Sections~\ref{Intro} and~\ref{Section on Protocol} we review mathematical definitions and introduce methods for simulating linear optical quantum circuits. Then, in Section~\ref{Section Block Encoding}, we discuss the single-photon block encoding model in detail. In Sections~\ref{Section Elementary Photon Entangling Operations}-\ref{Section Numerical Testing} we present a formalism for describing the most fundamental entangling operations between pairs of photons. Finally, in Sections~\ref{Section on Results}-\ref{Section Conclusion} we present our results.
 
 \section{Mathematical Background}
 \label{Intro}
@@ -82,9 +82,9 @@ A linear optical operation acting on a quantum state is generally described by t
 \end{equation}
 where $U_{\alpha \beta}$ are the elements of a unitary complex matrix, $U$. One typically writes a state given by Eq.~(\ref{LO State Fock Basis}) as
 \begin{eqnarray}
-\ket{\psi} = \Big(c_1 \frac{(\hat{a}^\dagger_1)^N}{\sqrt{N!}} + c_2 \frac{ (\hat{a}^\dagger_1)^{N-1} \hat{a}^\dagger_2}{\sqrt{(N-1)!}} + \dots \\* + c_{d_H} \frac{(\hat{a}^\dagger_M)^N}{\sqrt{N!}}\Big) \ket{0,0,\dots,0_M} \quad \quad \nonumber
+\ket{\psi} = \left[c_1 \frac{(\hat{a}^\dagger_1)^N}{\sqrt{N!}} + c_2 \frac{ (\hat{a}^\dagger_1)^{N-1} \hat{a}^\dagger_2}{\sqrt{(N-1)!}} + \dots \right.  \\*  \left.+ c_{d_H} \frac{(\hat{a}^\dagger_M)^N}{\sqrt{N!}}\right] \ket{0,0,\dots,0_M} \quad \quad \nonumber
 \end{eqnarray}
-and applies the symbolic transformation~(\ref{LO Creation Operator Transformation}). For large $N$ and $M$, however, this process can quickly become intractable. Here, we use an efficient and highly parallelizable numerical protocol for simulating linear optical quantum gates or state evolution that is equivalent to the action of Eq.~(\ref{LO Creation Operator Transformation}), but can effectively handle large values of $N$ and $M$. We will present this protocol in its entirety in Section~\ref{Section on Protocol}.
+and applies the symbolic transformation, Eq.~(\ref{LO Creation Operator Transformation}). For large $N$ and $M$, however, this process can quickly become intractable. Here, we use an efficient and highly parallelizable numerical protocol for simulating linear optical quantum gates or state evolution that is equivalent to the action of Eq.~(\ref{LO Creation Operator Transformation}), but can effectively handle large values of $N$ and $M$. We will present this protocol in its entirety in Section~\ref{Section on Protocol}.
 
 Before we begin, we define $A(U)$ as the unitary matrix which represents the action of Eq.~(\ref{LO Creation Operator Transformation}) on a quantum state in the Fock basis~(\ref{LO State Fock Basis}). The output state $\ket{\psi^\prime}$ of a linear optical circuit will be determined by standard matrix-vector multiplication,
 \begin{equation}
@@ -92,12 +92,12 @@ Before we begin, we define $A(U)$ as the unitary matrix which represents the act
 \ket{\psi^\prime} = A(U) \ket{\psi}.
 \end{equation}
 
-If $N \ge 2$, the group $\textbf{A}=\{ A(U) \}$  of all possible linear optical operators is a proper (strict) subgroup of the unitary group
+If $N \ge 2$, the group $\textbf{A}=\{ A(U) \}$  of all possible linear optical operators is a proper (strict) subgroup of the unitary group,
 \begin{equation}
 \label{Proper Subgroup}
 \textbf{A} \subset \textbf{U}(d_H).
 \end{equation}
-In other words, not all quantum transformations on multi-photon Fock states can be implemented via linear optical circuits. Indeed, the accessible linear entangling operations between photons are generally found to be severely restricting~\cite{Matt Smith,Braunstein,Jake Smith,Lougovski,Lutkenhaus,Carollo,Pavicic}. 
+In other words, not all quantum transformations on multi-photon Fock states can be implemented via linear optical circuits. Indeed, the condition that entangling operations between photons be linearly accessible is  generally found to be severely restricting~\cite{Matt Smith,Braunstein,Jake Smith,Lougovski,Lutkenhaus,Carollo,Pavicic}. 
 \section{Numerical Simulation of Linear Optical Devices}
 \label{Section on Protocol}
 For an optical circuit made up of $K$ components,
@@ -124,8 +124,7 @@ are the Fock states, we define
 as \textit{some} vector where $m_\alpha$ is the mode-location of photon number $\alpha$. Of course the choice of vector $\ket{\vec{m}(\vec{n})}$ for a given $\ket{\vec{n}}$ is not unique, since photons are indistinguishable and labeling them is an arbitrary process. We simply need to choose \textit{some} labeling and pick any valid $\ket{\vec{m}(\vec{n})}$ for each $\ket{\vec{n}}$. Then the elements of $A(U)$ in the basis $\outerproduct{\vec{n}^\prime}{\vec{n}}$ are given by
 \begin{eqnarray}
 \label{Fact 2}
-A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \,,
-%\outerproduct{\vec{n}^\prime}{\vec{n}} 
+A(U)_{\vec{n}^\prime,\vec{n}} = \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\ \small \nonumber \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime !}}{\sqrt{n_p !}} \left[\sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} U_{m_2 m_2^\prime} \dots U_{m_N m_N^\prime} \right] \,, 
 \end{eqnarray}
 where the summation is over all distinct permutations of integer entries in the vector $\vec{m}^\prime$. The proof of Eq.~(\ref{Fact 2}) appears in Appendix~\ref{Proof of Fact 2}.
 \\
@@ -169,10 +168,10 @@ With Eq.~(\ref{Fact 1}), Eq.~(\ref{Fact 2}) and the \textit{Facts}, we can now p
 		(2) Render the matrix representation of the quantum operator $A(U)$ using Eq.~(\ref{Fact 2}) for all of the relevant input basis states $\{\ket{\vec{n}}\}$ and all of the relevant output basis states $\{\ket{\vec{n}^\prime}\}$.
 \newline
 \newline \indent
- Initialization needs only to be performed once; we can then quickly build $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte Carlo applications or numerical optimization. For an open source implementation of this algorithm, see~\cite{GitHub}.
+ Initialization needs only to be performed once; we can then quickly build $A(U)$ for any particular optical circuit design, $U$. This allows fast, repeated simulation necessary for Monte Carlo applications or numerical optimization. For an open source implementation of this algorithm, see Ref.~\cite{GitHub}.
 \section{Rail Encoding Qubits into Deterministic Blocks}
 \label{Section Block Encoding}
-It is well-established that we can implement any quantum transformation acting on states in the Fock basis using linear optical components if only a single photon is in the system~\cite{Adami,Torma,Pittman}:
+It is well established that we can implement any quantum transformation acting on states in the Fock basis using linear optical components if only a single photon is in the system~\cite{Adami,Torma,Pittman}:
 \begin{equation}
 \label{Isomorphism}
 	\mbox{If } N=1, \quad \textbf{A} = \textbf{U}(d_H)\,.
@@ -181,7 +180,7 @@ That is, we can build a universal quantum computer or fully decodable quantum ch
 \begin{equation}
 d_H = M.
 \end{equation}
-To implement $j$ qubits, we would need $M=2^j$ optical modes. Here, we propose grouping single-photon blocks of logical qubits together in order to establish scalability; we want to extend the applicability of single-photon computing to general, large-scale quantum algorithms. 
+To implement $j$ qubits, we need $M=2^j$ optical modes. Here, we propose grouping single-photon blocks of logical qubits together in order to establish scalability; we want to extend the applicability of single-photon computing to general, large-scale quantum algorithms. 
 
 As an example, two qubits can be encoded into an $N=1,M=4$ system as shown in Table~\ref{Two Qubit Encoding Table}.
 \begin {table}[h]
@@ -229,12 +228,6 @@ We can then encode \textit{four} qubits into the $N=2,M=8$ system partitioned in
 \end{center}
 \end{table}
 In this encoding, we can apply any single-qubit rotation or a controlled-Unitary gate between logical qubits 1 and 2 or between logical qubits 3 and 4 through deterministic manipulation of a single photon~\cite{Review Paper,Adami,Lanyon,Bao,Zadeh}. The difficulty here lies in the application of entangling operations between blocks. For example, we may want to apply the $\mbox{CNOT}_{1,4}$ gate meaning that the control is logical qubit 1 and the target is logical qubit 4. This operation requires the two photons in our system to interact; if a photon is contained in modes 3 or 4, we swap a photon between modes 5 and 6 or between modes 7 and 8. 
-%The reader should note that the dimension of the Hilbert space of these block systems, $d_H$, is typically larger than the dimension of the computational subspace. We define the dimension of the computational subspace $d_C$, and in the case of Table~\ref{Block Encoding Table},
-%\begin{equation}
-%d_C = 16 \quad d_H = \frac{9!}{2! 7!} = 36
-%\end{equation}
-%All elements of the matrix representation of $\mbox{CNOT}_{1,4}$ outside of the 16 columns of the computational subspace are irrelevant since we assume all input states are contained in this subspace. All entries in the matrix representation of $\mbox{CNOT}_{1,4}$ outside the 16 computational rows but in the 16 computational columns are fixed at 0. This is to prevent any state from spreading out of the computational subspace.
-%\section{Generalized Block Encoding}
 
 Generalizing the 2-qubit block encoding in Table~\ref{Two Qubit Encoding Table}, we can encode $q$ qubits into a block of 1 photon in $2^q$ modes. Again, operations between pairs of logical qubits contained entirely within in a block are simple to implement using linear optics, but we will need to test our ability to realize communication between blocks. We assume a  mapping between logical qubit states and Fock states within a single block as in Table~\ref{q Qubit Block Encoding}.
 \begin {table}[h]
@@ -375,7 +368,7 @@ The probability of having successfully applied $E$ for $F(E,T) \rightarrow 1$ is
 S(E) = \frac{\tr(E^\dagger E)}{d_c}.
 \end{equation}
 
-To construct the $\mathcal{C}_1$ operation defined in Table~\ref{One Control Two Targets}, which acts on inputs states having 0, 1, or 2 photons, we simultaneously maximize the gate fidelity and success probability for each  $N_c=0,1,2$ \textit{separately} over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. That is, we establish an ideal target $T_{N_c}$ and Kraus \textit{PAULA} operator $E_{N_c}$ for each photon number $N_c$ and attempt to find an optical mode transformation $U$ and ancilla input $\ket{\psi_a}$ such that  $F(E_{N_c},T_{N_c}) \rightarrow 1$ for all $N_c$ with optimal $S(E_{N_c})$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The same approach is readily extended to $\mathcal{C}_2 \dots \mathcal{C}_4$, and in the following we omit a detailed discussion of the optimization relating to those operators, instead showing only the final results.
+To construct the $\mathcal{C}_1$ operation defined in Table~\ref{One Control Two Targets}, which acts on input states having 0, 1, or 2 photons, we simultaneously maximize the gate fidelity and success probability for each  $N_c=0,1,2$ \textit{separately} over the same quantum optical circuit $U$ and ancilla state $\ket{\psi_a}$. That is, we establish an ideal target $T_{N_c}$ and Kraus \textit{PAULA} operator $E_{N_c}$ for each photon number $N_c$ and attempt to find an optical mode transformation $U$ and ancilla input $\ket{\psi_a}$ such that  $F(E_{N_c},T_{N_c}) \rightarrow 1$ for all $N_c$ with optimal $S(E_{N_c})$. We will demonstrate the details of this in the following section for $\mathcal{C}_1$. The same approach is readily extended to $\mathcal{C}_2 \dots \mathcal{C}_4$, and in the following we omit a detailed discussion of the optimization relating to those operators, instead showing only the final results.
 \section{Numerical Analysis of $\mathcal{C}_1$}
 \label{Section Numerical Testing}
 We consider first $\mathcal{C}_1$ acting on the subspace of $N_c=0$ photons. Here we get the correct transformation for free:
@@ -383,51 +376,51 @@ We consider first $\mathcal{C}_1$ acting on the subspace of $N_c=0$ photons. Her
 \label{Free Operation}
 \ket{0,0,0} \rightarrow \ket{0,0,0}.
 \end{equation}
-Up to a possible overall phase (see below), this will be the result for any linear optical circuit  $U$ and any ancilla state $\ket{\psi_a}$, just because $E$ in this subspace is always a 1 by 1 matrix: $d_C = d_C^\prime = 1$.
+Up to a possible overall phase (see below), this will be the result for any linear optical circuit  $U$ and any ancilla state $\ket{\psi_a}$, just because $E$ in this subspace is always a 1 by 1 matrix: $d_c = d_c^\prime = 1$.
 
 
 If only a single photon is found in the three modes, $N_c=1$, we have
 \begin{equation}
-d_C = d_C^\prime = 3\,,
+d_c = d_c^\prime = 3\,,
 \end{equation}
-and we strive for a target operator
+and we strive for a target operator,
 \begin{equation}
 \label{T1 1C2T}
 T_1=	\begin{pmatrix} 1 & 0 & 0  \\ 0 & 1 & 0  \\ 0 & 0 & 1   \end{pmatrix}  
 \end{equation}
 in the basis
 \begin{equation}
-\{ \ket{\vec{n}_C} \} = \{ \ket{\vec{n}_C^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}.
+\{ \ket{\vec{n}_c} \} = \{ \ket{\vec{n}_c^\prime} \} = \{ \ket{0,0,1},\ket{0,1,0},\ket{1,0,0} \}.
 \end{equation}
 Finally, in the two-photon subspace, $N_c=2$, we have
 \begin{equation}
-d_C = 2 \quad d_C^\prime = 6 \,,
+d_c = 2 \quad d_c^\prime = 6 \,,
 \end{equation}
-and strive for a target operator 
+and strive for a target operator,
 \begin{equation}
 \label{T2 1C2T}
 T_2=\begin{pmatrix} 0 & 1  \\ 1 & 0  \\ 0 & 0 \\ 0 & 0 \\ 0 & 0 \\ 0 & 0   \end{pmatrix}  
 \end{equation}
 in the basis
 \begin{equation}
-\{ \ket{\vec{n}_C} \} = \{ \ket{1,0,1},\ket{1,1,0} \}
+\{ \ket{\vec{n}_c} \} = \{ \ket{1,0,1},\ket{1,1,0} \}
 \end{equation}
 \begin{eqnarray}
-& \{ \ket{\vec{n}^\prime_C } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}. \nonumber
+& \{ \ket{\vec{n}^\prime_c } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}. \nonumber
 \end{eqnarray}
 
 We define the \textit{PAULA} operators  $E_1(U,L_a)$ and  $E_2(U,L_a)$ separately for the $N_c=1$ and $N_c=2$ subspaces,
 and numerically maximize the function
 \begin{equation}
 \label{Merit Function For Blocks}
-\small f(U,\psi_a) = F(E_1,T_1) + F(E_2,T_2) +\epsilon (S(E_1) + S(E_2) )
+\small f(U,\psi_a) = F(E_1,T_1) + F(E_2,T_2) +\epsilon (S(E_1) + S(E_2) ) \,,
 \end{equation}
-where $\epsilon \in \{0,1\}$ is a real-valued numerical weight for the optimization, or equivalently a Lagrange multiplier. We systematically vary parameters $\epsilon$, $N_a$, $M_a$, and partial measurement $P$, and repeat maximization of Eq.~(\ref{Merit Function For Blocks}) to find global solutions.
+where $\epsilon > 0$ is a real-valued numerical weight for the optimization, or equivalently a Lagrange multiplier. We systematically vary parameters $\epsilon$, $N_a$, $M_a$, and partial measurement $P$, and repeat maximization of Eq.~(\ref{Merit Function For Blocks}) to find global solutions.
 
 Any difference in global phases between the operations in Eqs.~(\ref{Free Operation}), (\ref{T1 1C2T}), and (\ref{T2 1C2T}) will cause an unwanted relative phase shift between Fock basis states in the full transformation $\mathcal{C}_1$. For this reason, we use the gate fidelity amplitude defined in Eq.~(\ref{Gate Fidelity}), which accounts for a global phase difference between $E$ and $T$. 
 \section{Results}
 \label{Section on Results}
-\subsection{The Entangling Operation $\mathcal{C}_1$}
+\subsection{The entangling operation $\mathcal{C}_1$}
 The physical operation $\mathcal{C}_1$ acting on three modes is of particular importance; it can be applied once to two qubits encoded in the dual rail ($q=1$) in order to apply an entangling $\mbox{CNOT}$ gate between the two qubits. Numerical optimization of Eq.~(\ref{Merit Function For Blocks}) leads to the same optimal solution as the one given in~\cite{Uskov}, with two ancilla photons in two modes:
 \begin{eqnarray}
 & F(E_1,T_1)_{\rm max} = F(E_2,T_2)_{\rm max} = 1 \nonumber \\
@@ -440,7 +433,7 @@ Increasing the number of ancilla resources beyond $N_a=M_a=2$ does not improve t
 \label{1C2T Result}
 p = (2/27)^{2^{2q-2}}.
 \end{equation}
-\subsection{The Entangling Operation $\mathcal{C}_2$}
+\subsection{The entangling operation $\mathcal{C}_2$}
 We find the optimal solution:
 \begin{eqnarray}
 & F(E_1,T_1)_{\rm max} = F(E_2,T_2)_{\rm max} = 1 \nonumber \\
@@ -453,7 +446,7 @@ For a block size of $q \ge 2$ qubits, we find a maximum probability of successfu
 \label{2C2T Result}
 p = (0.0221391)^{2^{2q-3}}.
 \end{equation}
-\subsection{The Entangling Operation $\mathcal{C}_3$}
+\subsection{The entangling operation $\mathcal{C}_3$}
 We find the optimal solution:
 \begin{eqnarray}
 & F(E_1,T_1)_{\rm max} = F(E_2,T_2)_{\rm max} = 1 \nonumber \\
@@ -466,7 +459,7 @@ For a block size of $q \ge 2 $ qubits, we find a maximum probability of successf
 \label{1C4T Result}
 p = (0.0221266)^{2^{2q-3}}.
 \end{equation}
-\subsection{The Entangling Operation $\mathcal{C}_4$}
+\subsection{The entangling operation $\mathcal{C}_4$}
 We find the optimal solution:
  \begin{eqnarray}
  & F(E_1,T_1)_{max} = F(E_2,T_2)_{max} = 1 \nonumber\\
@@ -500,7 +493,7 @@ Even within the reach of our numerical simulations, we find an improvement over 
  	\label{Three CNOTs}
  \end{figure}
 
- The trend in Fig.~\ref{Figure - Block Encoding Results} suggests an order of magnitude improvement in success probability as we increase the size (i.e. number of modes operated on) of entangling sub-operations between blocks. Future work can further increase the simulation size to confirm this trend. A high probability $\mbox{CNOT}_{\rm first,last}$ gate built from larger sub-operations for block size $q \ge 3$ would have significant implications for linear optical quantum computing.
+ The trend in Fig.~\ref{Figure - Block Encoding Results} suggests an order of magnitude improvement in success probability as we increase the size (i.e., number of modes operated on) of entangling sub-operations between blocks. Future work can further increase the simulation size to confirm this trend. A high probability $\mbox{CNOT}_{\rm first,last}$ gate built from larger sub-operations for block size $q \ge 3$ would have significant implications for linear optical quantum computing.
 \acknowledgments
 We are thankful for helpful discussions with S. Kaminsky, E. Knutson, and J. Shipman. This research was supported in part using high performance computing (HPC) resources and services provided by Technology Services at Tulane University, New Orleans, LA.
 \appendix
@@ -521,13 +514,13 @@ That is, applying the left hand side of~(\ref{Inductive Step}) is equivalent to 
 \end{equation}
 Now we add one final optical component and apply the transformation $A(U_K)$. Our total transformation is now
 \begin{equation}
-	\hat{a}^\dagger_\alpha \rightarrow \sum_\beta (U_1 U_2 \dots U_{K-1})_{\alpha,\beta} \Big(\sum_\gamma U_{\beta,\gamma}^K \hat{a}^\dagger_\gamma \Big)
+	\hat{a}^\dagger_\alpha \rightarrow \sum_\beta (U_1 U_2 \dots U_{K-1})_{\alpha,\beta} \Big(\sum_\gamma U_{\beta,\gamma}^K \hat{a}^\dagger_\gamma \Big)\,,
 \end{equation}
 where $U_{\beta,\gamma}^K$ are the $\beta,\gamma$ elements of $U_K$. Then,
 \begin{eqnarray}
 \hat{a}^\dagger_\alpha \rightarrow \sum_{\beta,\gamma} (U_1 U_2 \dots U_{K-1})_{\alpha,\beta} U^K_{\beta,\gamma} \hat{a}^\dagger_\gamma
 \\*
-\hat{a}^\dagger_\alpha \rightarrow \sum_\gamma (U_1 U_2 \dots U_K)_{\alpha,\gamma} \hat{a}^\dagger_\gamma \quad
+= \sum_\gamma (U_1 U_2 \dots U_K)_{\alpha,\gamma} \hat{a}^\dagger_\gamma \,, \quad \quad
 \end{eqnarray}
 which is equivalent to $A(U_1 U_2 \dots U_K). \quad \quad\blacksquare $
 \section{Proof of Eq.~(\ref{Fact 2})}
@@ -555,83 +548,77 @@ The product of operators $\hat{U}_\alpha$ in~(\ref{Fact 2 Proof Checkpoint}) wil
 [\hat{a}_i ^ \dagger,\hat{a}_j ^ \dagger] = 0 \quad \quad \forall\, i,j \,
 \end{equation}
 to compress it:
-\newline
-\newline\newline \newline \newline
+%\newline
+%\newline\newline \newline \newline
 \begin{eqnarray}
-\ket{\psi^\prime} = \sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \\  \nonumber \sum^M_{\substack{m_1^\prime = 1\\
-		m_2^\prime = m_1^\prime\\
-		\vdots \\
-		m_N^\prime = m_{N-1}^\prime}}
-\left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle.
+\ket{\psi^\prime} = \sum_{\vec{n}} \frac{c_{\vec{n}}}{\prod_{p=1}^{M} \sqrt{n_p !}} \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \\  \nonumber \sum_{\substack{1 \le m_1^\prime \le \cdots \\ \le m_N^\prime \le M}}
+\left[ \sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle.
 \end{eqnarray}
-Finally, we set $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle =  \prod_{p=1}^{M} \sqrt{ n_p^\prime(\vec{m}^\prime)! } \ket{\vec{n}^\prime(\vec{m}^\prime)} $ and
+Finally, we use $\hat{a}_{m_1^\prime}^\dagger \dots \hat{a}_{m_N^\prime}^\dagger |\vec{0} \rangle =  \prod_{p=1}^{M} \sqrt{ n_p^\prime(\vec{m}^\prime)! } \ket{\vec{n}^\prime(\vec{m}^\prime)} $ to obtain
 \begin{eqnarray}
 \label{Fact 2 Proof Checkpoint 2}
-\small \ket{\psi^\prime} = \sum_{\vec{n}} c_{\vec{n}}  \cdot \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \\ \sum^M_{\substack{m_1^\prime = 1\\
-		m_2^\prime = m_1^\prime\\
-		\vdots \\
-		m_N^\prime = m_{N-1}^\prime}}
-\left[ \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime(\vec{m}^\prime) !}}{ \sqrt{n_p !}} \right] \left[ \sum_{perm(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] \nonumber \\
-\cdot \ket{\vec{n}^\prime (\vec{m}^\prime) } . \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \nonumber
+\small \ket{\psi^\prime} &=& \sum_{\vec{n}} c_{\vec{n}}   \sum_{1 \le m_1^\prime \le \cdots \le m_N^\prime \le M}
+\left[ \prod_{p=1}^{M} \frac{\sqrt{n_p^\prime(\vec{m}^\prime) !}}{ \sqrt{n_p !}} \right] \\  \nonumber &\cdot&  \left[ \sum_{\textrm{perm}(\vec{m}^\prime)} U_{m_1 m_1^\prime} \dots U_{m_N m_N^\prime} \right] 
+ \ket{\vec{n}^\prime (\vec{m}^\prime) } .
 \end{eqnarray}
-We recognize~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix-vector product, Eq.~(\ref{Matrix Vector Product}), if we define $A(U)$ as in Eq.~(\ref{Fact 2}).  $ \blacksquare $
+We recognize Eq.~(\ref{Fact 2 Proof Checkpoint 2}) as the result of a matrix-vector product, Eq.~(\ref{Matrix Vector Product}), if we define $A(U)$ as in Eq.~(\ref{Fact 2}).  $ \blacksquare $
 
 \begin{thebibliography}{99}
 	
 \bibitem{Review Paper}  P. Kok, W. J. Munro,   K.   Nemoto,   T. C.   Ralph,   J. P.
 Dowling, and G. J. Milburn, Rev. Mod. Phys. {\bf 79}, 135 (2007).
 
-\bibitem{Hong Ou Mandel} C. K. Hong, Z. Y. Ou, and L. Mandel Phys. Rev. Lett. {\bf 59}, 2044 (1987).
+\bibitem{Hong Ou Mandel} C. K. Hong, Z. Y. Ou, and L. Mandel, Phys. Rev. Lett. {\bf 59}, 2044 (1987).
 
 \bibitem{Adami} N. J. Cerf, C. Adami, and P. G. Kwiat, Phys. Rev. A {\bf 57}, R1477(R) (1998).
 
-\bibitem{Torma} P. Torma and S. Stenholm Phys. Rev. A {\bf 54}, 4701 (1996).
+\bibitem{Torma} P. T\"orm\"a and S. Stenholm, Phys. Rev. A {\bf 54}, 4701 (1996).
 
-\bibitem{Pittman} T. B. Pittman, M. J. Fitch, B. C Jacobs, and J. D. Franson
+\bibitem{Pittman} T. B. Pittman, M. J. Fitch, B. C. Jacobs, and J. D. Franson,
 Phys. Rev. A {\bf 68}, 032316 (2003).
 
-\bibitem{KLM}  E. Knill, R. Laflamme, G. J. Milburn, Nature (London) 409, 46 (2001).
+\bibitem{KLM}  E. Knill, R. Laflamme, G. J. Milburn, Nature (London) {\bf 409}, 46 (2001).
 
-\bibitem{KLM2} arXiv:quant-ph/0512104v1 (2005).
+\bibitem{KLM2} C. R. Myers and R. Laflamme, arXiv:quant-ph/0512104 (2005).
 
-\bibitem{Bao} X.-H. Bao, T.-Y. Chen, Q. Zhang, J. Yang, H. Zhang, T. Yang, and J.-W. Pan
+\bibitem{Bao} X.-H. Bao, T.-Y. Chen, Q. Zhang, J. Yang, H. Zhang, T. Yang, and J.-W. Pan,
 Phys. Rev. Lett. {\bf 98}, 170502 (2007).
 
-\bibitem{Starek} R. St\'{a}rek, M. Mi\v{c}uda, M. Mikov\'{a}, I. Straka, M. Du\u{s}ek, M. Je\u{z}ek and J. Fiur\'{a}\u{s}ek, Scientific Reports { \bf 6}, Article number: 33475 (2016).
+\bibitem{Starek} R. St\'{a}rek, M. Mi\v{c}uda, M. Mikov\'{a}, I. Straka, M. Du\v{s}ek, M. Je\v{z}ek and J. Fiur\'{a}\v{s}ek, Scientific Reports { \bf 6},  33475 (2016).
 
-\bibitem{Barreiro} J. T. Barreiro, N. K. Langford, N. A. Peters, and P. G. Kwiat
+\bibitem{Barreiro} J. T. Barreiro, N. K. Langford, N. A. Peters, and P. G. Kwiat,
 Phys. Rev. Lett. {\bf 95}, 260501 (2005).
 
-\bibitem{Graham} T. M. Graham, H. J. Berstein, T.-C. Wei, M. Junge, and P. G. Kwiat, Nat. Commun. {\bf 6}, 7185 (2015).
+\bibitem{Graham} T. M. Graham, H. J. Bernstein, T.-C. Wei, M. Junge, and P. G. Kwiat, Nat. Commun. {\bf 6}, 7185 (2015).
 
-\bibitem{Lanyon} B. P. Lanyon et. al. Nature Physics {\bf 5}, 134 - 140 (2009).
+\bibitem{Lanyon} B. P. Lanyon, M. Barbieri, M. P. Almeida, T. Jennewein, T. C. Ralph, K. J. Resch, G. J. Pryde, J. L. O'Brien, A. Gilchrist, and A. G. White, Nature Physics {\bf 5}, 134 (2009).
 
-\bibitem{Schreiber} A. Schreiber, K. N. Cassemiro, V. Potocek, A. Gabris, P. J. Mosley, E. Andersson, I. Jex and Ch. Silberhorn, Phys. Rev. Lett.{ \bf 104 }050502 (2010).
+\bibitem{Schreiber} A. Schreiber, K. N. Cassemiro, V. Poto\v{c}ek, A. G\'{a}bris, P. J. Mosley, E. Andersson, I. Jex, and Ch. Silberhorn, Phys. Rev. Lett. {\bf 104 } 050502 (2010).
 
 \bibitem{Sansoni} L. Sansoni, F. Sciarrino, G. Vallone, P. Mataloni, A. Crespi, R. Ramponi, and R. Osellame, Phys. Rev. Lett. {\bf 108}, 010502 (2012).
 
-\bibitem{Zadeh} I. M. Zadeh, A. W. Elshaari, K. D. Jons, A. Fognini, D. Dalacu, P. J. Poole, M. E. Reimer and V. Zwiller, Nano Lett, {\bf 16}, 2289 - 2294 (2016).
+\bibitem{Zadeh} I. M. Zadeh, A. W. Elshaari, K. D. J\"ons, A. Fognini, D. Dalacu, P. J. Poole, M. E. Reimer, and V. Zwiller, Nano Lett. {\bf 16}, 2289  (2016).
 
-\bibitem{Reck} M. Reck, A. Zeilinger, H. J. Bernstein, and P. Bertani. Phys. Rev. Lett. {\bf 73}, 58 (1994).
+\bibitem{Reck} M. Reck, A. Zeilinger, H. J. Bernstein, and P. Bertani, Phys. Rev. Lett. {\bf 73}, 58 (1994).
 
-\bibitem{Matt Smith} D. B. Uskov, A. M. Smith, and L. Kaplan
+\bibitem{Matt Smith} D. B. Uskov, A. M. Smith, and L. Kaplan,
 Phys. Rev. A {\bf 81}, 012303 (2010).
 
 \bibitem{Braunstein} P. Kok and S. L. Braunstein, Phys. Rev. A {\bf 62}, 064301 (2000).
 
 \bibitem{Jake Smith} J. A. Smith, D. B. Uskov, and L. Kaplan, Phys. Rev. A {\bf 92}, 022324 (2015).
 
-\bibitem{Lougovski} P. Lougovski and D. B. Uskov Phys. Rev. A {\bf 92}, 022303 (2015).
+\bibitem{Lougovski} P. Lougovski and D. B. Uskov, Phys. Rev. A {\bf 92}, 022303 (2015).
 
-\bibitem{Lutkenhaus} N. Lutkenhaus, J. Calsamiglia and K.-A. Suominen, Phys. Rev. A {\bf 59} 3259 (1998).
+\bibitem{Lutkenhaus} N. L\"utkenhaus, J. Calsamiglia, and K.-A. Suominen, Phys. Rev. A {\bf 59}, 3295 (1998).
 
 \bibitem{Carollo} A. Carollo and G. M. Palma, J. Mod. Opt. {\bf 49}, 1147 (2002).
 
-\bibitem{Pavicic} M. Pavicic Phys. Rev. Lett. {\bf 107} 080403 (2011) (retracted).
+\bibitem{Pavicic} M. Pavi\v{c}i\'c, Phys. Rev. Lett. {\bf 107}, 080403 (2011) (retracted).
 
 \bibitem{GitHub} https://github.com/jsmith74/linear-optics
 
-\bibitem{Uskov} D. Uskov, L. Kaplan, A. M. Smith, S. D. Huver and J. P. Dowling, Phys. Rev. A {\bf 79}, 042326 (2009).
+\bibitem{Uskov} D. Uskov, L. Kaplan, A. M. Smith, S. D. Huver, and J. P. Dowling, Phys. Rev. A {\bf 79}, 042326 (2009).
 
 
 \end{thebibliography}
