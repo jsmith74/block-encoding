@@ -267,9 +267,7 @@ In the special case $q=1$, our block encoding reduces to the standard dual-rail 
 	\caption{ \label{One Control Two Targets} The $\mathcal{C}_1$  operation acting on three modes expressed as a transformation of Fock basis states. The first mode acts as the control while the second and third modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q -2}$ times for block size $q \ge 1 $.}
 \end{center}
 \end{table}
-Here, the first mode is a control mode, while the second and third modes are target modes. We apply the $\mathcal{C}_1$  operator four times to build the $\mbox{CNOT}_{1,4}$ in $q=2$, where in each sub-operation the control mode take values 3 or 4 in Table~\ref{Block Encoding Table} and the pair of target modes takes values 5,6 or 7,8. The end result is the $\mbox{CNOT}_{1,4}$ operation: If a photon is in mode 3 or 4 we swap a photon between mode 5 and mode 6 or a photon between mode 7 and mode 8. More generally, a $\mbox{CNOT}_{\rm first,last}$ gate for block size $q$ can be constructed by applying the $\mathcal{C}_1$  operation $2^{2q-2}$ times by setting the control mode to each of the modes in the second half of the control block, and the two target modes to every sequential pair of modes in the target block. Because there will never be more than a single photon in a block, the basis states in Table~\ref{One Control Two Targets} will be the only possible inputs to the $\mathcal{C}_1$  transformation. If $\mathcal{C}_1$ is performed correctly, photon leakage between blocks cannot occur.
-
-Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mathcal{C}_3$, and $\mathcal{C}_4$ gates which are presented in Tables~\ref{Two Controls Two Targets}-\ref{Two Controls Four Targets}. As the sub-operations get increasingly more complex, a smaller number of such sub-operations is required to implement the inter-block logical operation  $\mbox{CNOT}_{\rm first,last}$.
+Here, the first mode is a control mode, while the second and third modes are target modes. We apply the $\mathcal{C}_1$  operator four times to build the $\mbox{CNOT}_{1,4}$ in $q=2$, where in each sub-operation the control mode take values 3 or 4 in Table~\ref{Block Encoding Table} and the pair of target modes takes values 5,6 or 7,8. The end result is the $\mbox{CNOT}_{1,4}$ operation: If a photon is in mode 3 or 4 we swap a photon between mode 5 and mode 6 or a photon between mode 7 and mode 8. More generally, a $\mbox{CNOT}_{\rm first,last}$ gate for block size $q$ can be constructed by applying the $\mathcal{C}_1$  operation $2^{2q-2}$ times by setting the control mode to each of the modes in the second half of the control block, and the two target modes to every sequential pair of modes in the target block. Because there will never be more than a single photon in a block, the basis states in Table~\ref{One Control Two Targets} will be the only possible inputs to the $\mathcal{C}_1$  transformation. If $\mathcal{C}_1$ is performed correctly, photon leakage between blocks cannot occur. Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mathcal{C}_3$, and $\mathcal{C}_4$ gates which are presented in Tables~\ref{Two Controls Two Targets}-\ref{Two Controls Four Targets}. As the sub-operations get increasingly more complex, a smaller number of such sub-operations is required to implement the inter-block logical operation  $\mbox{CNOT}_{\rm first,last}$.
 \begin {table}[h]
 \begin{center}
 	\begin{tabular}{l*{6}{c}r} 
@@ -325,6 +323,7 @@ Other entangling sub-operations we study here include the $\mathcal{C}_2$, $\mat
 	\caption{ \label{Two Controls Four Targets} The $\mathcal{C}_4$ operation acting on six modes expressed as a transformation of Fock basis states. The first two modes act as the controls while the last four modes act as targets. We can build the $\mbox{CNOT}_{\rm first,last}$ gate by applying this operation $2^{2 q - 4}$ times for block size $q \ge 2$.}
 \end{center}
 \end{table}
+
 The focus of our work here is to test our ability to build these operators as probabilistic measurement-assisted transformations. By this, we mean that we augment our optical computational state $\ket{\psi_c}$ with an ancilla state $\ket{\psi_a}$, apply a linear optical transformation, and then perform a partial projective measurement (refer to Fig.~\ref{Figure - PAULA Operator}). 
  \begin{figure}[h]
  	\centering
@@ -409,7 +408,7 @@ in the basis
 & \{ \ket{\vec{n}^\prime_c } \} = \{ \ket{1,0,1},\ket{1,1,0}, \\ &\ket{2,0,0},\ket{0,2,0},\ket{0,1,1},\ket{0,0,2} \}. \nonumber
 \end{eqnarray}
 
-We define the \textit{PAULA} operators $E_{N_c}(U,L_a)$ separately for the $N_c=0$, $N_c=1$ and $N_c=2$ subspaces,
+We define the \textit{PAULA} operators $E_{N_c}(U,\psi_a)$ separately for the $N_c=0$, $N_c=1$ and $N_c=2$ subspaces,
 and numerically maximize the function
 \begin{equation}
 \label{Merit Function For Blocks}

@@ -26,49 +26,58 @@ void MeritFunction::setMeritFunction(double EPS){
     photons[1] = 1;
     photons[2] = 2;
 
-    int modes = 3;
+    int modes = 4;
 
-    int ancillaPhotons = 2;
-    int ancillaModes = 2;
+    int ancillaPhotons = 3;
+    int ancillaModes = 4;
 
-    int measModes = 2;
-    int measOutcome = 4;
+    int measModes = 4;
+    int measOutcome = 20;
 
     compSubspaceDim[0] = 1;
-    compSubspaceDim[1] = 3;
-    compSubspaceDim[2] = 2;
+    compSubspaceDim[1] = 4;
+    compSubspaceDim[2] = 4;
 
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisIn.at(i).resize(compSubspaceDim[i],modes);
     for(int i=0;i<diffPhotonNumb;i++) computationalBasisOut.at(i).resize(compSubspaceDim[i],modes);
 
-    computationalBasisIn[0] << 0,0,0;
+    computationalBasisIn[0] << 0,0,0,0;
 
-    computationalBasisOut[0] << 0,0,0;
+    computationalBasisOut[0] << 0,0,0,0;
 
-    computationalBasisIn[1]   << 1,0,0,
-                                 0,1,0,
-                                 0,0,1;
+    computationalBasisIn[1]   << 1,0,0,0,
+                                 0,1,0,0,
+                                 0,0,1,0,
+                                 0,0,0,1;
 
-    computationalBasisOut[1]  << 1,0,0,
-                                 0,1,0,
-                                 0,0,1;
+    computationalBasisOut[1]  << 1,0,0,0,
+                                 0,1,0,0,
+                                 0,0,1,0,
+                                 0,0,0,1;
 
-    computationalBasisIn[2]   << 1,1,0,
-                                 1,0,1;
+    computationalBasisIn[2]   << 1,0,0,1,
+                                 1,0,1,0,
+                                 0,1,0,1,
+                                 0,1,1,0;
 
-    computationalBasisOut[2]  << 1,1,0,
-                                 1,0,1;
+    computationalBasisOut[2]  << 1,0,0,1,
+                                 1,0,1,0,
+                                 0,1,0,1,
+                                 0,1,1,0;
 
     for(int i=0;i<diffPhotonNumb;i++) IdealOp.at(i).resize(compSubspaceDim.at(i),compSubspaceDim.at(i));
 
     IdealOp[0] << 1.0;
 
-    IdealOp[1] << 1.0,0.0,0.0,
-                  0.0,1.0,0.0,
-                  0.0,0.0,1.0;
+    IdealOp[1] << 1.0,0.0,0.0,0.0,
+                  0.0,1.0,0.0,0.0,
+                  0.0,0.0,1.0,0.0,
+                  0.0,0.0,0.0,1.0;
 
-    IdealOp[2] << 0.0,1.0,
-                  1.0,0.0;
+    IdealOp[2] << 0.0,1.0,0.0,0.0,
+                  1.0,0.0,0.0,0.0,
+                  0.0,0.0,0.0,1.0,
+                  0.0,0.0,1.0,0.0;
 
     funcDimension = (modes + ancillaModes) * (modes + ancillaModes) + 2*g(ancillaPhotons,ancillaModes);
 
