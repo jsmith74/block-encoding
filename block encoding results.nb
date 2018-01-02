@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     30760,        718]
-NotebookOptionsPosition[     30092,        694]
-NotebookOutlinePosition[     30427,        709]
-CellTagsIndexPosition[     30384,        706]
+NotebookDataLength[     31326,        733]
+NotebookOptionsPosition[     30658,        709]
+NotebookOutlinePosition[     30993,        724]
+CellTagsIndexPosition[     30950,        721]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -37,11 +37,14 @@ Cell[BoxData[{
     ")"}]}]}], "\[IndentingNewLine]", 
  RowBox[{"g", "[", 
   RowBox[{"2", ",", "6"}], "]"}]}], "Input",
- CellChangeTimes->{{3.708294553753901*^9, 3.708294577383294*^9}}],
+ CellChangeTimes->{{3.708294553753901*^9, 
+  3.708294577383294*^9}},ExpressionUUID->"b533ca47-8d78-4cb7-9172-\
+f1d08bbe2c4f"],
 
-Cell[BoxData[
- FormBox["21", TraditionalForm]], "Output",
- CellChangeTimes->{{3.7082945737358723`*^9, 3.7082945780754623`*^9}}]
+Cell[BoxData["21"], "Output",
+ CellChangeTimes->{{3.7082945737358723`*^9, 3.7082945780754623`*^9}, 
+   3.723908773535151*^9},ExpressionUUID->"0078ad9f-c724-40d6-be3c-\
+8407178658e5"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -152,12 +155,17 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"N", "[", 
          RowBox[{"2", "/", "27"}], "]"}], ",", 
-        RowBox[{"N", "[", 
-         RowBox[{"1", "/", 
-          RowBox[{"10", "^", "14"}]}], "]"}], ",", 
-        RowBox[{"N", "[", 
-         RowBox[{"1", "/", 
-          RowBox[{"10", "^", "55"}]}], "]"}]}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"SetPrecision", "[", 
+         RowBox[{
+          RowBox[{"N", "[", 
+           RowBox[{"1", "/", 
+            RowBox[{"10", "^", "14"}]}], "]"}], ",", "2"}], "]"}], ",", 
+        RowBox[{"SetPrecision", "[", 
+         RowBox[{
+          RowBox[{"N", "[", 
+           RowBox[{"1", "/", 
+            RowBox[{"10", "^", "55"}]}], "]"}], ",", "2"}], "]"}]}], "}"}]}], 
+     "}"}]}], ",", 
    RowBox[{"PlotMarkers", "\[Rule]", 
     RowBox[{"{", 
      RowBox[{
@@ -232,8 +240,9 @@ Cell[BoxData[{
    3.710088281702725*^9}, {3.710088363673841*^9, 3.710088384369626*^9}, {
    3.710595928846628*^9, 3.710595931387661*^9}, {3.7169043585029*^9, 
    3.716904363742235*^9}, 3.717172852173397*^9, {3.717173043826243*^9, 
-   3.717173050464946*^9}, {3.717173105336203*^9, 
-   3.717173111330151*^9}},ExpressionUUID->"0b08d004-554e-46e6-a6cb-\
+   3.717173050464946*^9}, {3.717173105336203*^9, 3.717173111330151*^9}, {
+   3.723908781366364*^9, 
+   3.723908798325403*^9}},ExpressionUUID->"0b08d004-554e-46e6-a6cb-\
 836b8f634fa1"],
 
 Cell[BoxData[
@@ -568,8 +577,10 @@ Cell[BoxData[
        FormBox["3", TraditionalForm]}, {4, 
        FormBox["4", TraditionalForm]}}, {{-2.6026896854443837`, 
        FormBox["0.07407407407407407`", TraditionalForm]}, {-32.23619130191664, 
-       FormBox["1.`*^-14", TraditionalForm]}, {-126.64218011467251`, 
-       FormBox["1.`*^-55", TraditionalForm]}}}],
+       FormBox[
+       "9.99999999999999998819309`2.*^-15", 
+        TraditionalForm]}, {-126.64218011467251`, 
+       FormBox["9.99999999999999994576`2.*^-56", TraditionalForm]}}}],
   InterpretTemplate[Legended[
     Graphics[{{}, {{{
          Directive[
@@ -637,9 +648,12 @@ Cell[BoxData[
          Log[
           Rational[812, 27]]}}, PlotRangeClipping -> True, 
       PlotRangePadding -> {{0, 0}, {0, 0}}, 
-      Ticks -> {{1, 2, 3, 4}, {{-2.6026896854443837`, 
-        0.07407407407407407}, {-32.23619130191664, 
-        1.*^-14}, {-126.64218011467251`, 1.*^-55}}}}], 
+      Ticks -> {{1, 2, 3, 
+        4}, {{-2.6026896854443837`, 
+         0.07407407407407407}, {-32.2361913019166395774`3.5083437243777005, 
+          9.99999999999999998819309`2.*^-15}, \
+{-126.6421801146725126264`4.102578378193708, 
+          9.99999999999999994576`2.*^-56}}}}], 
     Placed[
      Unevaluated[
       PointLegend[{
@@ -688,12 +702,13 @@ Cell[BoxData[
    3.7100882743795433`*^9, 3.710088282213112*^9}, {3.710088372104101*^9, 
    3.710088384793765*^9}, 3.710595932674365*^9, {3.716904346999989*^9, 
    3.716904365591309*^9}, 3.717172853480391*^9, {3.717173108605247*^9, 
-   3.717173111987771*^9}},ExpressionUUID->"8a64927a-7f7c-4d8e-983d-\
-fb93c98834c1"]
+   3.717173111987771*^9}, {3.72390877592745*^9, 
+   3.723908798860675*^9}},ExpressionUUID->"3d596599-0e8b-49d1-b09a-\
+103cc53be2e9"]
 }, Open  ]]
 },
 WindowSize->{1600, 876},
-WindowMargins->{{0, Automatic}, {Automatic, 56}},
+WindowMargins->{{0, Automatic}, {Automatic, 84}},
 FrontEndVersion->"11.1 for Linux x86 (64-bit) (April 18, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -709,16 +724,16 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 499, 17, 57, "Input", "ExpressionUUID" -> \
+Cell[580, 22, 559, 19, 57, "Input", "ExpressionUUID" -> \
 "b533ca47-8d78-4cb7-9172-f1d08bbe2c4f"],
-Cell[1082, 41, 127, 2, 31, "Output", "ExpressionUUID" -> \
-"5447a422-0051-4944-acd6-9c29bc6df6c9"]
+Cell[1142, 43, 182, 3, 32, "Output", "ExpressionUUID" -> \
+"0078ad9f-c724-40d6-be3c-8407178658e5"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1246, 48, 7104, 188, 287, "Input", "ExpressionUUID" -> \
+Cell[1361, 51, 7322, 194, 310, "Input", "ExpressionUUID" -> \
 "0b08d004-554e-46e6-a6cb-836b8f634fa1"],
-Cell[8353, 238, 21723, 453, 630, "Output", "ExpressionUUID" -> \
-"8a64927a-7f7c-4d8e-983d-fb93c98834c1"]
+Cell[8686, 247, 21956, 459, 663, "Output", "ExpressionUUID" -> \
+"3d596599-0e8b-49d1-b09a-103cc53be2e9"]
 }, Open  ]]
 }
 ]
